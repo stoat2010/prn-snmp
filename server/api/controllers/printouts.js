@@ -37,6 +37,7 @@ module.exports.dataDevice = function(req, res) {
 
 module.exports.dataGraph = function(req, res) {
     var arr02=[0,0,0,0,0,0,0,0,0,0,0,0];
+    var prouts = [];
     Loc
     .find({device: req.params.deviceid},{printouts: 1, month: 1,  _id: 0}).sort({date: 1}).limit(12)
     .exec(function(err, device){
@@ -48,7 +49,11 @@ module.exports.dataGraph = function(req, res) {
             var maxMonth = Math.max.apply(null, months)-1;
             var arr03 = arr02.concat(arr01);
             var arr04 = arr03.slice((maxMonth+ arr01.length -1), arr03.length);
-            sendJSONResponse(res, 200,arr04);
+            for( var i=1; i<=maxMonth; i++ ){
+                var val = arr04[i]-arr04[i-1];
+                prouts.push(val);
+            }
+            sendJSONResponse(res, 200,prouts);
         }
     });
 };
