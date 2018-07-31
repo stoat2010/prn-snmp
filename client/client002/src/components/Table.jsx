@@ -18,7 +18,7 @@ export default function MainTable(props) {
                     <th>Отпечатки</th>
                     <th>Опрошен</th>
                     <th>Записать</th>
-                    <th>График</th>
+                    <th>График {new Date().getFullYear()}</th>
                     <th>Удалить</th>
                 </tr>
                 {/* <CommandRow devices={props.devlist} toggleVisible={props.toggleVisible} handleChange={props.handleChange} /> */}
