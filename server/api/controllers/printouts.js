@@ -46,9 +46,9 @@ module.exports.dataGraph = function(req, res) {
         }else{
             var arr01 = device.map(item => item.printouts);
             var months = device.map(item=> item.month);
-            var maxMonth = Math.max.apply(null, months)-1;
+            var maxMonth = Math.max.apply(null, months);
             var arr03 = arr02.concat(arr01);
-            var arr04 = arr03.slice((maxMonth+ arr01.length -1), arr03.length);
+            var arr04 = arr03.slice((maxMonth + 1), arr03.length);
             for( var i=1; i<=maxMonth; i++ ){
                 var val = arr04[i]-arr04[i-1];
                 prouts.push(val);
