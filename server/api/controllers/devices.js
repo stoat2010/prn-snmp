@@ -10,7 +10,8 @@ module.exports.deviceCreate = function(req, res) {
         device: req.body.device,
         build: req.body.build,
         office: req.body.office,
-        unit: req.body.unit
+        unit: req.body.unit,
+        balance: req.body.balance
     }, function(err, device){
         if(err){
             sendJSONResponse(res, 440, err);

@@ -30,7 +30,7 @@ export default {
         'right': '0px'
     },
     sidenav: {
-        'height': '45%',
+        'height': '55%',
         'width': '2px',
         'position': 'fixed',
         'zIndex': 1,
@@ -45,7 +45,7 @@ export default {
         'transition': '0.5s'
     },
     sidenavActive: {
-        'height': '45%',
+        'height': '55%',
         'width': '27%',
         'position': 'fixed',
         'zIndex': 1,

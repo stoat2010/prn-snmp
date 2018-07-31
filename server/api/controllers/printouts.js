@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Loc = mongoose.model('printout');
+var LocDev = mongoose.model('device');
 
 var sendJSONResponse = function(res, status, content) {
     res.status(status);
@@ -38,15 +39,17 @@ module.exports.dataDevice = function(req, res) {
 module.exports.dataGraph = function(req, res) {
 
     var prouts = [0];
-    
+
     Loc
     .find({device: req.params.deviceid, year: new Date().getFullYear()},{printouts: 1, month: 1,  _id: 0}).sort({date: 1}).limit(12)
     .exec(function(err, device){
         if(err){
             sendJSONResponse(res, 440, err);
         }else{
+
             var months = device.map(item=> item.month);
             var maxMonth = Math.max.apply(null, months);
+            var firstMonth = Math.min.apply(null, months);
         
             var arr01 = device.map(item => item.printouts);
             var k = maxMonth-arr01.length;
@@ -56,7 +59,11 @@ module.exports.dataGraph = function(req, res) {
             };
 
             for( var i=1; i<=maxMonth; i++ ){
-                var val = arr01[i]-arr01[i-1];
+                if (i === firstMonth){
+                    var val = arr01[i]-balance;
+                }else{
+                    var val = arr01[i]-arr01[i-1];
+                }
                 prouts.push(val); 
             }
             sendJSONResponse(res, 200,prouts);

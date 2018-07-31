@@ -54,7 +54,8 @@ class App extends Component {
         device: this.refs['device'].value,
         build: this.refs['build'].value,
         office: this.refs['office'].value,
-        unit: this.refs['unit'].value
+        unit: this.refs['unit'].value,
+        balance: this.refs['balance'].value
       };
 
       this.toBase(send);
@@ -62,6 +63,7 @@ class App extends Component {
       this.refs['build'].value = '';
       this.refs['office'].value = '';
       this.refs['unit'].value = '';
+      this.refs['balance'].value = '';
       this.toggleVisible();
     }else{
       swal('Ошибка при вводе IP адреса!');
@@ -153,6 +155,10 @@ class App extends Component {
               <div className="input-field ">
                 <input id="unit" type="text" className="validate" ref="unit" />
                 <label htmlFor="unit">Подразделение/служба</label>
+              </div>
+              <div className="input-field ">
+                <input id="balance" type="text" className="validate" ref="balance" />
+                <label htmlFor="unit">Начальный остаток</label>
               </div>
               <div className="center-align">
                 <button className="btn waves-effect waves-light" type="submit" name="action">Добавить
