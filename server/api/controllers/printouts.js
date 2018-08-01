@@ -80,7 +80,6 @@ function balanceLoad(req) {
         if (err){
             console.log(err);
         }else{
-            //console.log(balance);
             resolve (balance);
         }
     })})
