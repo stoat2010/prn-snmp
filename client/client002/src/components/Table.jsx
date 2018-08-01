@@ -6,7 +6,7 @@ import Row from './Row';
 export default function MainTable(props) {
     return(
         <div className="row">
-        <table className='centered col s12'>
+        <table className='highlight centered col s12'>
             <thead className="grey darken-1 white-text">
                 <tr>
                     <th>Статус</th>

@@ -42,7 +42,7 @@ module.exports.dataGraph = function(req, res) {
 
     Loc
     .find({device: req.params.deviceid, year: new Date().getFullYear()},{printouts: 1, month: 1,  _id: 0}).sort({date: 1}).limit(12)
-    .exec(function(err, device){
+    .exec(async function(err, device){
         if(err){
             sendJSONResponse(res, 440, err);
         }else{
@@ -54,13 +54,16 @@ module.exports.dataGraph = function(req, res) {
             var arr01 = device.map(item => item.printouts);
             var k = maxMonth-arr01.length;
 
+            var bal = await balanceLoad(req.params.deviceid);
+            var bal1 = bal.map(item=>item.balance);
+
             for (var j=0; j< k; j++){
                 var t = arr01.unshift(0);
             };
 
             for( var i=1; i<=maxMonth; i++ ){
-                if (i === firstMonth){
-                    var val = arr01[i]-balance;
+                if (i === firstMonth-1 && firstMonth>0){
+                    var val = arr01[i]-bal1[0];
                 }else{
                     var val = arr01[i]-arr01[i-1];
                 }
@@ -70,3 +73,15 @@ module.exports.dataGraph = function(req, res) {
         }
     });
 };
+
+function balanceLoad(req) {
+    return new Promise( resolve =>{
+    LocDev.find({device: req},{balance: 1, _id:0},function(err, balance){
+        if (err){
+            console.log(err);
+        }else{
+            //console.log(balance);
+            resolve (balance);
+        }
+    })})
+}

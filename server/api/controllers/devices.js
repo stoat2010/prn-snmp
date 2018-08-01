@@ -38,6 +38,15 @@ module.exports.deviceOne = function(req, res) {
     });
 };
 
+module.exports.buildOne = function(req, res) {
+    Loc
+    .find({build: req.params.buildid})
+    .exec(function(err, device){
+        console.log(device);
+        sendJSONResponse(res, 200, device);
+    });
+};
+
 module.exports.deviceDeleteOne = function (req, res) {
     var deviceid = req.params.deviceid;
     if (deviceid) {

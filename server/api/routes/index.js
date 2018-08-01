@@ -15,5 +15,6 @@ router.get('/datagraph/:deviceid', ctrlData.dataGraph);
 router.post('/data', ctrlData.dataCreate);
 
 router.get('/devcol/:deviceid', ctrlDevices.deviceOne);
+router.get('/buildcol/:buildid', ctrlDevices.buildOne);
 
 module.exports = router;
