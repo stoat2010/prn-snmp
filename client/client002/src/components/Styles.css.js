@@ -11,7 +11,7 @@ export default {
     },
     btnadd: {
         'position': 'absolute',
-        'top': '5px',
+        'bottom': '5px',
         'right': '1%'
     },
     btnExpand: {
@@ -71,11 +71,11 @@ export default {
         'borderStyle': 'solid',
         'borderRadius': '0px 0px 10px 10px',
         'borderColor': '#8d6e63',
-        'transition': '1s',
+        'transition': '0.5s',
         'overflow': 'hidden'
     },
     topnavActive: {
-        'height': '50%',
+        'height': '30%',
         'width': '20%',
         'position': 'fixed',
         'zIndex': 1,
@@ -87,7 +87,7 @@ export default {
         'borderStyle': 'solid',
         'borderRadius': '0px 0px 10px 10px',
         'borderColor': '#8d6e63',
-        'transition': '1s'
+        'transition': '0.5s'
     },
     topnavLabel: {
         'position': 'absolute',

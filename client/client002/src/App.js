@@ -26,6 +26,7 @@ class App extends Component {
     this.toggleTopVisible = this.toggleTopVisible.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeBuild = this.handleChangeBuild.bind(this);
+    this.handleChangeUnit = this.handleChangeUnit.bind(this);
     this.sideStyle = styles.sidenav;
     this.topStyle = styles.topnav;
   }
@@ -87,6 +88,16 @@ class App extends Component {
       addr = 'http://127.0.0.1:3333/api/devices';
     }else{
       addr = 'http://127.0.0.1:3333/api/buildcol/'+event.target.value;
+    }
+    this.dbConn(addr);
+  }
+
+  handleChangeUnit(event){
+    var addr ='';
+    if (event.target.value === '0'){
+      addr = 'http://127.0.0.1:3333/api/devices';
+    }else{
+      addr = 'http://127.0.0.1:3333/api/unitcol/'+event.target.value;
     }
     this.dbConn(addr);
   }
@@ -185,7 +196,8 @@ class App extends Component {
           toggleTopVisible={this.toggleTopVisible} 
           devices={this.state.devlist} 
           handleChange={this.handleChange}
-          handleChangeBuild={this.handleChangeBuild} />
+          handleChangeBuild={this.handleChangeBuild}
+          handleChangeUnit={this.handleChangeUnit} />
         
         <button className="btn-floating btn-large waves-effect waves-light red z-depth-5" style={styles.btnadd} onClick={this.toggleVisible}><i className="material-icons">add</i></button>
       </div>

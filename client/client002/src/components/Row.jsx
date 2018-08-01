@@ -168,7 +168,7 @@ export default class Row extends Component {
 
         this.state.classes === 1 ? this.classN = "btn-floating btn-small waves-effect waves-light red lighten-3" : this.classN = "btn-floating btn-small waves-effect waves-light teal lighten-3";
         this.state.classes === 1 ? this.classS = "disabled btn-flat" : this.classS = "btn-flat";
-        this.state.dataAllow === 1 ? this.classS = "disabled btn-flat white" : this.classS = "btn-flat white";
+        this.state.dataAllow === 1 ? this.classS = "disabled btn-flat" : this.classS = "btn-flat";
         return (
             <tr>
                 <td><button className={this.classN} onClick={this.devInfo}><i className="material-icons">refresh</i></button></td>

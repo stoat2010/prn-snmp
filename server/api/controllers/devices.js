@@ -42,7 +42,14 @@ module.exports.buildOne = function(req, res) {
     Loc
     .find({build: req.params.buildid})
     .exec(function(err, device){
-        console.log(device);
+        sendJSONResponse(res, 200, device);
+    });
+};
+
+module.exports.unitOne = function(req, res) {
+    Loc
+    .find({unit: req.params.unitid})
+    .exec(function(err, device){
         sendJSONResponse(res, 200, device);
     });
 };
