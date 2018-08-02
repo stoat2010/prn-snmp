@@ -11,7 +11,10 @@ module.exports.deviceCreate = function(req, res) {
         build: req.body.build,
         office: req.body.office,
         unit: req.body.unit,
-        balance: req.body.balance
+        balance: req.body.balance,
+        model: req.body.model,
+        serial: req.body.serial,
+        vendor: req.body.vendor
     }, function(err, device){
         if(err){
             sendJSONResponse(res, 440, err);
@@ -49,6 +52,14 @@ module.exports.buildOne = function(req, res) {
 module.exports.unitOne = function(req, res) {
     Loc
     .find({unit: req.params.unitid})
+    .exec(function(err, device){
+        sendJSONResponse(res, 200, device);
+    });
+};
+
+module.exports.vendorOne = function(req, res) {
+    Loc
+    .find({vendor: req.params.vendorid})
     .exec(function(err, device){
         sendJSONResponse(res, 200, device);
     });

@@ -17,6 +17,7 @@ export default class Row extends Component {
         this.classN = "btn-floating btn-small waves-effect waves-light yellow lighten-3";
         this.classS = "disabled btn-flat white";
         this.classG = "btn-floating btn-small waves-effect waves-light blue darken-3";
+        this.classIP = "black-text";
         this.readStatus = this.readStatus.bind(this);
         this.readData = this.readData.bind(this);
         this.devInfo = this.devInfo.bind(this);
@@ -24,45 +25,6 @@ export default class Row extends Component {
         this.readMonthData = this.readMonthData.bind(this);
         this.readGraphData = this.readGraphData.bind(this);
 
-        this.graphData= {
-            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ],
-            datasets:[
-                /* {
-                    label: "",
-                    type: "line",
-                    data: [470, 470, 470, 470, 470, 470, 470, 470, 470, 470, 470, 470],
-                    borderColor: "#ad1457",
-                    fill: false,
-                    borderWidth: 0.5,
-                    radius: 0
-                }, */
-                {
-                    label: "",
-                    data: [530, 600, 550, 500, 590, 560, 505, 180, 490, 540, 580, 300],
-                    //data: this.state.dataGraph,
-                    backgroundColor: "#efebe9",
-                    borderColor: "#bcaaa4",
-                    borderWidth: 1
-            }]
-        };
-        this.graphOptions= {
-            maintainAspectRatio: false,
-            responsive: true,
-            legend: {
-                display: false
-            },
-            scales: {
-                xAxes: [{
-                    gridLines: {
-                        offsetGridLines: true
-                    },
-                    barPercentage: 0.8
-                }]
-            },
-            tooltips: {
-                backgroundColor: "#9e9e9e"
-            }
-        };
     }
 
     readStatus() {
@@ -169,6 +131,8 @@ export default class Row extends Component {
         this.state.classes === 1 ? this.classN = "btn-floating btn-small waves-effect waves-light red lighten-3" : this.classN = "btn-floating btn-small waves-effect waves-light teal lighten-3";
         this.state.classes === 1 ? this.classS = "disabled btn-flat" : this.classS = "btn-flat";
         this.state.dataAllow === 1 ? this.classS = "disabled btn-flat" : this.classS = "btn-flat";
+        this.props.device.serial ? this.classIP = "black-text" : this.classIP = "pink-text";
+
         return (
             <tr>
                 <td><button className={this.classN} onClick={this.devInfo}><i className="material-icons">refresh</i></button></td>
@@ -180,7 +144,7 @@ export default class Row extends Component {
                 </td>
                 <td style={styles.cell}>{this.state.devData[0]}</td>
                 <td style={styles.cell}>{this.state.devData[1]}</td>
-                <td style={styles.cell}>{this.state.devData[2]}</td>
+                <td style={styles.cell} className={this.classIP}>{this.state.devData[2]}</td>
                 <td style={styles.cell}>{this.state.devData[3]}</td>
                 <td 
                     style={styles.cell}>

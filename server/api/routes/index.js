@@ -17,5 +17,6 @@ router.post('/data', ctrlData.dataCreate);
 router.get('/devcol/:deviceid', ctrlDevices.deviceOne);
 router.get('/buildcol/:buildid', ctrlDevices.buildOne);
 router.get('/unitcol/:unitid', ctrlDevices.unitOne);
+router.get('/vendorcol/:vendorid', ctrlDevices.vendorOne);
 
 module.exports = router;

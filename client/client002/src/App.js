@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import swal from 'sweetalert';
 
-import MainTable from './components/Table';
+//import MainTable from './components/Table';
+import Row from './components/Row';
 import TopNav from './components/TopNav';
 import styles from './components/Styles.css.js';
 const isIp = require ('is-ip');
@@ -16,30 +17,52 @@ class App extends Component {
       devlist: [],
       isVisible: false,
       isTopVisible: false,
-      btnArrows: 'arrow_downward'
+      btnArrows: 'arrow_downward',
+      devData1: {}
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.toBase = this.toBase.bind(this);
+    this.readData = this.readData.bind(this);
     this.dbConn = this.dbConn.bind(this);
     this.toggleVisible = this.toggleVisible.bind(this);
     this.toggleTopVisible = this.toggleTopVisible.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeBuild = this.handleChangeBuild.bind(this);
     this.handleChangeUnit = this.handleChangeUnit.bind(this);
+    this.handleChangeVendor = this.handleChangeVendor.bind(this);
+    this.handleIP = this.handleIP.bind(this);
     this.sideStyle = styles.sidenav;
     this.topStyle = styles.topnav;
   }
 
+  readData(devid) {
+    var options = {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'default'
+    };
+
+    fetch("http://127.0.0.1:3333/devdata/" + devid, options)
+    .then((res => {
+        return res.json();
+    }))
+    .then(devData1 => {this.setState({ devData1 });});
+}
+
   toggleVisible() {
     const newVisibleState = !this.state.isVisible;
-    this.setState({isVisible: newVisibleState});
+    this.setState(
+      {
+        isVisible: newVisibleState,
+        devData1: {}
+      });
     this.state.isVisible === false ? this.sideStyle=styles.sidenav : this.sideStyle=styles.sidenavActive;
   }
 
   toggleTopVisible() {
     const newTopVisibleState = !this.state.isTopVisible;
-    this.setState({isTopVisible: newTopVisibleState});
+    this.setState({isTopVisible: newTopVisibleState,});
     this.state.isTopVisible === false ? this.topStyle=styles.topnav : this.topStyle=styles.topnavActive;
     this.state.isTopVisible === false ? this.setState({btnArrows: 'arrow_downward'}) : this.setState({btnArrows: 'arrow_upward'});
   }
@@ -57,7 +80,10 @@ class App extends Component {
         build: this.refs['build'].value,
         office: this.refs['office'].value,
         unit: this.refs['unit'].value,
-        balance: this.refs['balance'].value
+        balance: this.state.devData1[3],
+        serial: this.state.devData1[2],
+        vendor: this.state.devData1[1],
+        model: this.state.devData1[0]
       };
 
       this.toBase(send);
@@ -65,7 +91,7 @@ class App extends Component {
       this.refs['build'].value = '';
       this.refs['office'].value = '';
       this.refs['unit'].value = '';
-      this.refs['balance'].value = '';
+      this.setState({devData1: {}});
       this.toggleVisible();
     }else{
       swal('Ошибка при вводе IP адреса!');
@@ -102,7 +128,29 @@ class App extends Component {
     this.dbConn(addr);
   }
 
+  handleChangeVendor(event){
+    var addr ='';
+    if (event.target.value === '0'){
+      addr = 'http://127.0.0.1:3333/api/devices';
+    }else{
+      addr = 'http://127.0.0.1:3333/api/vendorcol/'+event.target.value;
+    }
+    this.dbConn(addr);
+  }
+
+  handleIP(event){
+    event.preventDefault()
+
+    var rightIp = isIp(event.target.value);
+    if (rightIp) { 
+      this.readData(event.target.value);
+
+    }
+  }
+
   toBase(submitted) {
+
+    console.log(submitted);
 
     fetch('http://127.0.0.1:3333/api/devices', {
       method: 'POST',
@@ -148,7 +196,31 @@ class App extends Component {
             </div>
         </nav>
 
-        <MainTable devices={this.state.devices} devlist={this.state.devlist} dbConn={this.dbConn} toggleVisible={this.toggleVisible} handleChange={this.handleChange} />
+        <div className="row">
+          <table className='highlight centered col s12'>
+            <thead className="grey darken-1 white-text">
+                <tr>
+                    <th>Статус</th>
+                    <th>IP</th>
+                    <th>Описание</th>
+                    <th>Модель</th>
+                    <th>Производитель</th>
+                    <th>S/N</th>
+                    <th>Отпечатки</th>
+                    <th>Опрошен</th>
+                    <th>Записать</th>
+                    <th>График {new Date().getFullYear()}</th>
+                    <th>Удалить</th>
+                </tr>
+              </thead>
+            <tbody>
+                
+                {this.state.devices.map(device=> <Row key={device._id} device={device} dbConn={this.dbConn} />)}
+            </tbody>
+          </table>
+        </div>
+
+        {/* <MainTable devices={this.state.devices} devlist={this.state.devlist} dbConn={this.dbConn} toggleVisible={this.toggleVisible} handleChange={this.handleChange} /> */}
 
         <div id="mySidenav" className="z-depth-5" style={this.sideStyle}>
           <button
@@ -159,11 +231,29 @@ class App extends Component {
           </button>
           <div className="container">
             <form onSubmit={this.handleSubmit}>
+            <div className="container grey lighten-3">
+              <table>
+                <tbody>
+                <tr>
+                  <td style={styles.spanLbl}>Вендор: </td><td style={styles.spanSNMP}>{this.state.devData1[1]}</td>
+                </tr>
+                <tr>
+                  <td style={styles.spanLbl}>Модель: </td><td style={styles.spanSNMP}>{this.state.devData1[0]}</td>
+                </tr>
+                <tr>
+                  <td style={styles.spanLbl}>S/N: </td><td style={styles.spanSNMP}>{this.state.devData1[2]}</td>
+                </tr>
+                <tr>
+                  <td style={styles.spanLbl}>Отпечатки: </td><td style={styles.spanSNMP}>{this.state.devData1[3]}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
               <div>
                 <h6 className="brown-text"><b>Добавить новое устройство</b></h6>
               </div>
               <div className="input-field">
-                <input id="device" type="text" className="validate" ref="device" />
+                <input id="device" type="text" className="validate" ref="device" onBlur={this.handleIP} />
                 <label htmlFor="device">IP адрес</label>
               </div>
               <div className="input-field">
@@ -178,10 +268,11 @@ class App extends Component {
                 <input id="unit" type="text" className="validate" ref="unit" />
                 <label htmlFor="unit">Подразделение/служба</label>
               </div>
-              <div className="input-field ">
+              {/* <div className="input-field ">
                 <input id="balance" type="text" className="validate" ref="balance" />
-                <label htmlFor="unit">Начальный остаток</label>
-              </div>
+                <label htmlFor="balance">Начальный остаток</label>
+              </div> */}
+
               <div className="center-align">
                 <button className="btn waves-effect waves-light" type="submit" name="action">Добавить
                   <i className="material-icons right">print</i>
@@ -197,7 +288,8 @@ class App extends Component {
           devices={this.state.devlist} 
           handleChange={this.handleChange}
           handleChangeBuild={this.handleChangeBuild}
-          handleChangeUnit={this.handleChangeUnit} />
+          handleChangeUnit={this.handleChangeUnit}
+          handleChangeVendor={this.handleChangeVendor} />
         
         <button className="btn-floating btn-large waves-effect waves-light red z-depth-5" style={styles.btnadd} onClick={this.toggleVisible}><i className="material-icons">add</i></button>
       </div>

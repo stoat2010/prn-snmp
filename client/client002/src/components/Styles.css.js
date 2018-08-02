@@ -30,7 +30,7 @@ export default {
         'right': '0px'
     },
     sidenav: {
-        'height': '55%',
+        'height': '30%',
         'width': '2px',
         'position': 'fixed',
         'zIndex': 1,
@@ -38,14 +38,14 @@ export default {
         'left': 0,
         'backgroundColor': '#eeeeee',
         'overflowX': 'hidden',
-        'paddingTop': '60px',
+        'paddingTop': '30px',
         'borderStyle': 'solid',
         'borderRadius': '0px 5px 5px 0px',
         'borderColor': '#8d6e63',
         'transition': '0.5s'
     },
     sidenavActive: {
-        'height': '55%',
+        'height': '65%',
         'width': '27%',
         'position': 'fixed',
         'zIndex': 1,
@@ -53,9 +53,9 @@ export default {
         'left': 0,
         'backgroundColor': '#eeeeee',
         'overflowX': 'hidden',
-        'paddingTop': '60px',
+        'paddingTop': '30px',
         'borderStyle': 'solid',
-        'borderRadius': '0px 10px 10px 0px',
+        'borderRadius': '10px 10px 10px 0px',
         'borderColor': '#8d6e63',
         'transition': '0.5s'
     },
@@ -108,5 +108,13 @@ export default {
     },
     commandRow: {
         'paddingTop': '0px'
+    },
+    spanLbl: {
+        'fontSize': 'x-small',
+        'color': 'grey'
+    },
+    spanSNMP: {
+        'fontSize': 'x-small',
+        'color': 'brown'
     }
 };

@@ -6,6 +6,7 @@ export default function TopNav(props) {
 
     var builds = [... new Set(props.devices.map(item => item.build))];
     var units = [... new Set(props.devices.map(item => item.unit))];
+    var vendors = [... new Set(props.devices.map(item => item.vendor))];
 
     return (
         <div className="z-depth-5 center-align" style={props.topStyle}>
@@ -25,6 +26,11 @@ export default function TopNav(props) {
                     {units.map(unit => <option key={unit} value={unit}>{unit}</option>)}
                 </select>
                 <label htmlFor="myTopNavBuild" className="teal-text">Отбор по подразделению</label>
+                <select id="myTopNavVendor" className="browser-default z-depth-50" style={styles.slcDev} onChange={props.handleChangeVendor}>
+                    <option value={0}>Все</option>
+                    {vendors.map(vendor => <option key={vendor} value={vendor}>{vendor}</option>)}
+                </select>
+                <label htmlFor="myTopNavVendor" className="teal-text">Отбор по производителю</label>
             </div>
 
                 <div style={styles.topnavLabel}>
