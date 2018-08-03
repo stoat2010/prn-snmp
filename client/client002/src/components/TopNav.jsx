@@ -1,9 +1,12 @@
 import React from 'react';
 
+import ListFilter from './ListFilter';
+
 import styles from './Styles.css.js';
 
 export default function TopNav(props) {
 
+    var devices = [... new Set(props.devices.map(item => item.device))];
     var builds = [... new Set(props.devices.map(item => item.build))];
     var units = [... new Set(props.devices.map(item => item.unit))];
     var vendors = [... new Set(props.devices.map(item => item.vendor))];
@@ -11,26 +14,15 @@ export default function TopNav(props) {
     return (
         <div className="z-depth-5 center-align" style={props.topStyle}>
             <div className="container">
-                <select id="myTopNavIp" className="browser-default z-depth-50" style={styles.slcDev} onChange={props.handleChange}>
-                    <option value={0}>Все</option>
-                    {props.devices.map(device => <option key={device.device} value={device.device}>{device.device}</option>)}
-                </select>
                 <label htmlFor="myTopNavIp" className="teal-text">Отбор по IP адресу</label>
-                <select id="myTopNavBuild" className="browser-default z-depth-50" style={styles.slcDev} onChange={props.handleChangeBuild}>
-                    <option value={0}>Все</option>
-                    {builds.map(build => <option key={build} value={build}>{build}</option>)}
-                </select>
+                <ListFilter style = {styles.slcDev} values={devices} handleChange={props.handleChange} />
                 <label htmlFor="myTopNavBuild" className="teal-text">Отбор по корпусу</label>
-                <select id="myTopNavUnit" className="browser-default z-depth-50" style={styles.slcDev} onChange={props.handleChangeUnit}>
-                    <option value={0}>Все</option>
-                    {units.map(unit => <option key={unit} value={unit}>{unit}</option>)}
-                </select>
+                <ListFilter style = {styles.slcDev} values={builds} handleChange={props.handleChangeBuild} />
                 <label htmlFor="myTopNavBuild" className="teal-text">Отбор по подразделению</label>
-                <select id="myTopNavVendor" className="browser-default z-depth-50" style={styles.slcDev} onChange={props.handleChangeVendor}>
-                    <option value={0}>Все</option>
-                    {vendors.map(vendor => <option key={vendor} value={vendor}>{vendor}</option>)}
-                </select>
+                <ListFilter style = {styles.slcDev} values={units} handleChange={props.handleChangeUnit} />
                 <label htmlFor="myTopNavVendor" className="teal-text">Отбор по производителю</label>
+                <ListFilter style = {styles.slcDev} values={vendors} handleChange={props.handleChangeVendor} />
+                
             </div>
 
                 <div style={styles.topnavLabel}>

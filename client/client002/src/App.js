@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import swal from 'sweetalert';
+import { FadeLoader } from 'react-spinners';
 
-//import MainTable from './components/Table';
 import Row from './components/Row';
 import TopNav from './components/TopNav';
 import styles from './components/Styles.css.js';
-const isIp = require ('is-ip');
+const isIp = require('is-ip');
 
 class App extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       tab: 0,
@@ -18,7 +18,8 @@ class App extends Component {
       isVisible: false,
       isTopVisible: false,
       btnArrows: 'arrow_downward',
-      devData1: {}
+      devData1: {},
+      loadSNMP: false
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -37,18 +38,21 @@ class App extends Component {
   }
 
   readData(devid) {
+
+    this.setState({ loadSNMP: true });
+
     var options = {
-        method: 'GET',
-        mode: 'cors',
-        cache: 'default'
+      method: 'GET',
+      mode: 'cors',
+      cache: 'default'
     };
 
     fetch("http://127.0.0.1:3333/devdata/" + devid, options)
-    .then((res => {
+      .then((res => {
         return res.json();
-    }))
-    .then(devData1 => {this.setState({ devData1 });});
-}
+      }))
+      .then(devData1 => { this.setState({ devData1, loadSNMP: false }); });
+  }
 
   toggleVisible() {
     const newVisibleState = !this.state.isVisible;
@@ -57,14 +61,14 @@ class App extends Component {
         isVisible: newVisibleState,
         devData1: {}
       });
-    this.state.isVisible === false ? this.sideStyle=styles.sidenav : this.sideStyle=styles.sidenavActive;
+    this.state.isVisible === false ? this.sideStyle = styles.sidenav : this.sideStyle = styles.sidenavActive;
   }
 
   toggleTopVisible() {
     const newTopVisibleState = !this.state.isTopVisible;
-    this.setState({isTopVisible: newTopVisibleState,});
-    this.state.isTopVisible === false ? this.topStyle=styles.topnav : this.topStyle=styles.topnavActive;
-    this.state.isTopVisible === false ? this.setState({btnArrows: 'arrow_downward'}) : this.setState({btnArrows: 'arrow_upward'});
+    this.setState({ isTopVisible: newTopVisibleState, });
+    this.state.isTopVisible === false ? this.topStyle = styles.topnav : this.topStyle = styles.topnavActive;
+    this.state.isTopVisible === false ? this.setState({ btnArrows: 'arrow_downward' }) : this.setState({ btnArrows: 'arrow_upward' });
   }
 
   handleSubmit(event) {
@@ -72,7 +76,7 @@ class App extends Component {
     var send = {};
 
     var rightIp = isIp(this.refs['device'].value);
-    
+
     if (rightIp) {
 
       send = {
@@ -91,58 +95,58 @@ class App extends Component {
       this.refs['build'].value = '';
       this.refs['office'].value = '';
       this.refs['unit'].value = '';
-      this.setState({devData1: {}});
+      this.setState({ devData1: {} });
       this.toggleVisible();
-    }else{
+    } else {
       swal('Ошибка при вводе IP адреса!');
     }
   }
 
-  handleChange(event){
-    var addr ='';
-    if (event.target.value === '0'){
+  handleChange(event) {
+    var addr = '';
+    if (event.target.value === '0') {
       addr = 'http://127.0.0.1:3333/api/devices';
-    }else{
-      addr = 'http://127.0.0.1:3333/api/devcol/'+event.target.value;
+    } else {
+      addr = 'http://127.0.0.1:3333/api/devcol/' + event.target.value;
     }
     this.dbConn(addr);
   }
 
-  handleChangeBuild(event){
-    var addr ='';
-    if (event.target.value === '0'){
+  handleChangeBuild(event) {
+    var addr = '';
+    if (event.target.value === '0') {
       addr = 'http://127.0.0.1:3333/api/devices';
-    }else{
-      addr = 'http://127.0.0.1:3333/api/buildcol/'+event.target.value;
+    } else {
+      addr = 'http://127.0.0.1:3333/api/buildcol/' + event.target.value;
     }
     this.dbConn(addr);
   }
 
-  handleChangeUnit(event){
-    var addr ='';
-    if (event.target.value === '0'){
+  handleChangeUnit(event) {
+    var addr = '';
+    if (event.target.value === '0') {
       addr = 'http://127.0.0.1:3333/api/devices';
-    }else{
-      addr = 'http://127.0.0.1:3333/api/unitcol/'+event.target.value;
+    } else {
+      addr = 'http://127.0.0.1:3333/api/unitcol/' + event.target.value;
     }
     this.dbConn(addr);
   }
 
-  handleChangeVendor(event){
-    var addr ='';
-    if (event.target.value === '0'){
+  handleChangeVendor(event) {
+    var addr = '';
+    if (event.target.value === '0') {
       addr = 'http://127.0.0.1:3333/api/devices';
-    }else{
-      addr = 'http://127.0.0.1:3333/api/vendorcol/'+event.target.value;
+    } else {
+      addr = 'http://127.0.0.1:3333/api/vendorcol/' + event.target.value;
     }
     this.dbConn(addr);
   }
 
-  handleIP(event){
+  handleIP(event) {
     event.preventDefault()
 
     var rightIp = isIp(event.target.value);
-    if (rightIp) { 
+    if (rightIp) {
       this.readData(event.target.value);
 
     }
@@ -155,29 +159,29 @@ class App extends Component {
     fetch('http://127.0.0.1:3333/api/devices', {
       method: 'POST',
       headers: {
-          'Accept': 'application/json, text/plain, */*',
-          'Content-Type': 'application/json'
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(submitted)
-  })
+    })
       .then(res => {
-          this.dbConn('http://127.0.0.1:3333/api/devices');
+        this.dbConn('http://127.0.0.1:3333/api/devices');
       });
-}
+  }
 
   dbConn(addr) {
-    fetch(addr, {cache: 'no-cache'})
-        .then(res => {
-            return res.json();
-        })
-        .then(devices => {this.setState({ devices });});
+    fetch(addr, { cache: 'no-cache' })
+      .then(res => {
+        return res.json();
+      })
+      .then(devices => { this.setState({ devices }); });
   }
   dbConnInit(addr) {
-    fetch(addr, {cache: 'no-cache'})
-        .then(res => {
-            return res.json();
-        })
-        .then(devices => {this.setState({ devlist: devices });});
+    fetch(addr, { cache: 'no-cache' })
+      .then(res => {
+        return res.json();
+      })
+      .then(devices => { this.setState({ devlist: devices }); });
   }
 
   componentDidMount() {
@@ -188,40 +192,32 @@ class App extends Component {
   render() {
 
     return (
-      <div>
+      <div style={styles.parent}>
 
         <nav className="nav-extended teal lighten-3">
-            <div className="nav-wrapper">
-                <div className="brand-logo">SNMP опрос сетевых МФУ и принтеров</div>
-            </div>
+          <div className="nav-wrapper">
+            <div className="brand-logo">SNMP опрос сетевых МФУ и принтеров</div>
+          </div>
         </nav>
 
-        <div className="row">
-          <table className='highlight centered col s12'>
-            <thead className="grey darken-1 white-text">
-                <tr>
-                    <th>Статус</th>
-                    <th>IP</th>
-                    <th>Описание</th>
-                    <th>Модель</th>
-                    <th>Производитель</th>
-                    <th>S/N</th>
-                    <th>Отпечатки</th>
-                    <th>Опрошен</th>
-                    <th>Записать</th>
-                    <th>График {new Date().getFullYear()}</th>
-                    <th>Удалить</th>
-                </tr>
-              </thead>
-            <tbody>
-                
-                {this.state.devices.map(device=> <Row key={device._id} device={device} dbConn={this.dbConn} />)}
-            </tbody>
-          </table>
+        <div className="row col s12 z-depth-5 grey darken-1 white-text" style={{ position: 'flex', height: '40px' }}>
+          <div className="col s1" style={{ width: '3%', textAlign: 'center' }}>Статус</div>
+          <div className="col s1" style={{ width: '7%', textAlign: 'center' }}>IP</div>
+          <div className="col s1" style={{ width: '15%', textAlign: 'center' }}>Описание</div>
+          <div className="col s1" style={{ width: '11%', textAlign: 'center' }}>Модель</div>
+          <div className="col s1" style={{ width: '7%', textAlign: 'center' }}>Производитель</div>
+          <div className="col s1" style={{ width: '7%', textAlign: 'center' }}>S/N</div>
+          <div className="col s1" style={{ width: '7%', textAlign: 'center' }}>Отпечатки</div>
+          <div className="col s1" style={{ width: '5%', textAlign: 'center' }}>Опрошен</div>
+          <div className="col s1" style={{ width: '5%', textAlign: 'center' }}>Записать</div>
+          <div className="col s2" style={{ width: '28%', textAlign: 'center' }}>График {new Date().getFullYear()}</div>
+          <div className="col s1" style={{ width: '5%', textAlign: 'center' }}>Удалить</div>
         </div>
-
-        {/* <MainTable devices={this.state.devices} devlist={this.state.devlist} dbConn={this.dbConn} toggleVisible={this.toggleVisible} handleChange={this.handleChange} /> */}
-
+        <div className="row col s12" >
+          <div style={{ position: 'flex', overflow: 'auto', height: '720px' }}>
+            {this.state.devices.map(device => <Row key={device._id} device={device} dbConn={this.dbConn} />)}
+          </div>
+        </div>
         <div id="mySidenav" className="z-depth-5" style={this.sideStyle}>
           <button
             className="btn-flat grey lighten-3"
@@ -230,25 +226,33 @@ class App extends Component {
             <i className="material-icons">close</i>
           </button>
           <div className="container">
-            <form onSubmit={this.handleSubmit}>
-            <div className="container grey lighten-3">
-              <table>
-                <tbody>
-                <tr>
-                  <td style={styles.spanLbl}>Вендор: </td><td style={styles.spanSNMP}>{this.state.devData1[1]}</td>
-                </tr>
-                <tr>
-                  <td style={styles.spanLbl}>Модель: </td><td style={styles.spanSNMP}>{this.state.devData1[0]}</td>
-                </tr>
-                <tr>
-                  <td style={styles.spanLbl}>S/N: </td><td style={styles.spanSNMP}>{this.state.devData1[2]}</td>
-                </tr>
-                <tr>
-                  <td style={styles.spanLbl}>Отпечатки: </td><td style={styles.spanSNMP}>{this.state.devData1[3]}</td>
-                </tr>
-                </tbody>
-              </table>
+            <div style={styles.loader}>
+              <FadeLoader color={'#123abc'}
+                loading={this.state.loadSNMP} />
             </div>
+            <form onSubmit={this.handleSubmit}>
+              <div className="container grey lighten-3">
+                <table>
+                  <tbody>
+                    <tr>
+                      <td style={styles.spanLbl}>Вендор: </td>
+                      <td style={styles.spanSNMP}>{this.state.devData1[1]}</td>
+                    </tr>
+                    <tr>
+                      <td style={styles.spanLbl}>Модель: </td>
+                      <td style={styles.spanSNMP}>{this.state.devData1[0]}</td>
+                    </tr>
+                    <tr>
+                      <td style={styles.spanLbl}>S/N: </td>
+                      <td style={styles.spanSNMP}>{this.state.devData1[2]}</td>
+                    </tr>
+                    <tr>
+                      <td style={styles.spanLbl}>Отпечатки: </td>
+                      <td style={styles.spanSNMP}>{this.state.devData1[3]}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
               <div>
                 <h6 className="brown-text"><b>Добавить новое устройство</b></h6>
               </div>
@@ -278,20 +282,29 @@ class App extends Component {
                   <i className="material-icons right">print</i>
                 </button>
               </div>
-            </form > 
+            </form >
           </div>
         </div>
         <TopNav
-          btnArrows={this.state.btnArrows} 
-          topStyle={this.topStyle} 
-          toggleTopVisible={this.toggleTopVisible} 
-          devices={this.state.devlist} 
+          btnArrows={this.state.btnArrows}
+          topStyle={this.topStyle}
+          toggleTopVisible={this.toggleTopVisible}
+          devices={this.state.devlist}
           handleChange={this.handleChange}
           handleChangeBuild={this.handleChangeBuild}
           handleChangeUnit={this.handleChangeUnit}
           handleChangeVendor={this.handleChangeVendor} />
-        
-        <button className="btn-floating btn-large waves-effect waves-light red z-depth-5" style={styles.btnadd} onClick={this.toggleVisible}><i className="material-icons">add</i></button>
+
+        <div className="row">
+          <div className="nav-extended teal lighten-3" style={styles.footer}>
+            <button
+              className="btn-floating btn-large waves-effect waves-light red z-depth-5"
+              style={styles.btnadd}
+              onClick={this.toggleVisible}>
+              <i className="material-icons">add</i></button>
+          </div>
+        </div>
+
       </div>
     );
   }

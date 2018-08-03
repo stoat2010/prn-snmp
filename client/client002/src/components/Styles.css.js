@@ -30,7 +30,7 @@ export default {
         'right': '0px'
     },
     sidenav: {
-        'height': '30%',
+        'height': '35%',
         'width': '2px',
         'position': 'fixed',
         'zIndex': 1,
@@ -116,5 +116,23 @@ export default {
     spanSNMP: {
         'fontSize': 'x-small',
         'color': 'brown'
+    },
+    loader: {
+        'position': 'absolute',
+        'left': '30px',
+        'top': '100px'
+    },
+    footer: {
+        'position': 'absolute',
+        'bottom': '0px',
+        'width': '100%',
+        'height': '70px',
+        'zIndex': '0'
+    },
+    parent: {
+        'position': 'flex',
+        'height': '100%',
+        'min-height': '100% !important',
+        'overflow': 'hidden'
     }
 };

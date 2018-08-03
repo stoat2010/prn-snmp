@@ -1,12 +1,11 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import styles from './Styles.css.js';
-//import {Bar} from 'react-chartjs-2';
 
 import PrintBar from './Bar';
 
 export default class Row extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             classes: 1,
@@ -34,10 +33,10 @@ export default class Row extends Component {
             cache: 'default'
         };
         fetch("http://127.0.0.1:3333/devstatus/" + this.props.device.device, options)
-        .then((res => {
-            return res.json();
-        }))
-        .then(classes => {this.setState({ classes });});
+            .then((res => {
+                return res.json();
+            }))
+            .then(classes => { this.setState({ classes }); });
     }
 
     readData() {
@@ -48,10 +47,10 @@ export default class Row extends Component {
         };
 
         fetch("http://127.0.0.1:3333/devdata/" + this.props.device.device, options)
-        .then((res => {
-            return res.json();
-        }))
-        .then(devData => {this.setState({ devData });});
+            .then((res => {
+                return res.json();
+            }))
+            .then(devData => { this.setState({ devData }); });
     }
 
     readMonthData() {
@@ -62,13 +61,13 @@ export default class Row extends Component {
         };
 
         fetch("http://127.0.0.1:3333/api/data/" + this.props.device.device, options)
-        .then((res => {
-            return res.json();
-        }))
-        .then(dataAllow => {this.setState({ dataAllow });});
+            .then((res => {
+                return res.json();
+            }))
+            .then(dataAllow => { this.setState({ dataAllow }); });
     }
 
-    readGraphData(){
+    readGraphData() {
         var options = {
             method: 'GET',
             mode: 'cors',
@@ -76,10 +75,10 @@ export default class Row extends Component {
         };
 
         fetch("http://127.0.0.1:3333/api/datagraph/" + this.props.device.device, options)
-        .then((res => {
-            return res.json();
-        }))
-        .then(dataGraph => {this.setState({ dataGraph });});
+            .then((res => {
+                return res.json();
+            }))
+            .then(dataGraph => { this.setState({ dataGraph }); });
     }
 
     devInfo() {
@@ -98,7 +97,7 @@ export default class Row extends Component {
             });
     }
 
-    handleSave(event){
+    handleSave(event) {
         event.preventDefault();
 
         var submitted = {
@@ -110,8 +109,8 @@ export default class Row extends Component {
         fetch('http://127.0.0.1:3333/api/data', {
             method: 'POST',
             headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(submitted)
         }).then(res => {
@@ -122,7 +121,7 @@ export default class Row extends Component {
 
     cl = () => this.state.dataAllow === 0 ? <i className="material-icons red-text">block</i> : <i className="material-icons green-text">check_circle</i>;
 
-    componentDidMount(){
+    componentDidMount() {
         this.devInfo();
     }
 
@@ -134,41 +133,37 @@ export default class Row extends Component {
         this.props.device.serial ? this.classIP = "black-text" : this.classIP = "pink-text";
 
         return (
-            <tr>
-                <td><button className={this.classN} onClick={this.devInfo}><i className="material-icons">refresh</i></button></td>
-                <td style={styles.cell}>{this.props.device.device}</td>
-                <td style={styles.cellcap}>
+            <div className="row col s12">
+                <div className="col s1" style={{ width: '3%', textAlign: 'center' }}><button className={this.classN} onClick={this.devInfo}><i className="material-icons">refresh</i></button></div>
+                <div className="col s1" style={{ width: '7%', textAlign: 'center' }}>{this.props.device.device}</div>
+                <div className="col s1" style={{ width: '15%', textAlign: 'left', fontSize: 'x-small' }}>
                     отдел: <b>{this.props.device.unit}</b><br />
                     корпус: <b>{this.props.device.build}</b><br />
-                    кабинет: <b>{this.props.device.office}</b><br />
-                </td>
-                <td style={styles.cell}>{this.state.devData[0]}</td>
-                <td style={styles.cell}>{this.state.devData[1]}</td>
-                <td style={styles.cell} className={this.classIP}>{this.state.devData[2]}</td>
-                <td style={styles.cell}>{this.state.devData[3]}</td>
-                <td 
-                    style={styles.cell}>
-                        {this.cl()}
-                </td>
-                <td 
-                    style={styles.cell}>
-                        <button
-                            className={this.classS}
-                            id={this.props.device._id}
-                            onClick={this.handleSave}>
-                            <i className="material-icons">save</i>
-                        </button>
-                </td>
-                <td style={styles.cellgraph}><PrintBar data={this.state.dataGraph}/></td>
-                <td>
+                    кабинет: <b>{this.props.device.office}</b>
+                </div>
+                <div className="col s1" style={{ width: '11%', textAlign: 'center', fontSize: 'small' }}>{this.props.device.model}</div>
+                <div className="col s1" style={{ width: '7%', textAlign: 'center', fontSize: 'small' }}>{this.props.device.vendor}</div>
+                <div className="col s1" style={{ width: '7%', textAlign: 'center', fontSize: 'small' }}>{this.props.device.serial}</div>
+                <div className="col s1" style={{ width: '7%', textAlign: 'center', fontSize: 'small' }}>{this.state.devData[3]}</div>
+                <div className="col s1" style={{ width: '5%', textAlign: 'center', fontSize: 'small' }}>{this.cl()}</div>
+                <div className="col s1" style={{ width: '5%', textAlign: 'center', fontSize: 'small' }}><button
+                    className={this.classS}
+                    id={this.props.device._id}
+                    onClick={this.handleSave}>
+                    <i className="material-icons">save</i>
+                </button>
+                </div>
+                <div className="col s2" style={{ width: '28%', textAlign: 'center' }}><PrintBar data={this.state.dataGraph} /></div>
+                <div className="col s1" style={{ width: '5%', textAlign: 'center' }}>
                     <button
                         className="waves-effect waves-gray btn-flat"
                         id={this.props.device._id}
                         onClick={this.handleDelButton.bind(this, this.props.device._id)}>
                         <i className="material-icons">delete</i>
                     </button>
-                </td>
-            </tr>
+                </div>
+            </div>
+
         )
     }
 }

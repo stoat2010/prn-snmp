@@ -9,6 +9,8 @@
     "react-chartjs-2": "^2.7.2",
     "react-dom": "^16.4.1",
     "react-scripts": "1.1.4",
+    "react-spinners": "^0.3.3",
+    "react-sticky-table": "^2.0.4",
     "sweetalert": "^2.1.0",
     "underscore": "^1.9.1"
   },
