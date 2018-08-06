@@ -132,7 +132,7 @@ export default {
     parent: {
         'position': 'flex',
         'height': '100%',
-        'min-height': '100% !important',
+        'minHeight': '100% !important',
         'overflow': 'hidden'
     }
 };

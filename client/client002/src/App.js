@@ -87,7 +87,8 @@ class App extends Component {
         balance: this.state.devData1[3],
         serial: this.state.devData1[2],
         vendor: this.state.devData1[1],
-        model: this.state.devData1[0]
+        model: this.state.devData1[0],
+        start_date: new Date()
       };
 
       this.toBase(send);
@@ -201,17 +202,17 @@ class App extends Component {
         </nav>
 
         <div className="row col s12 z-depth-5 grey darken-1 white-text" style={{ position: 'flex', height: '40px' }}>
-          <div className="col s1" style={{ width: '3%', textAlign: 'center' }}>Статус</div>
-          <div className="col s1" style={{ width: '7%', textAlign: 'center' }}>IP</div>
-          <div className="col s1" style={{ width: '15%', textAlign: 'center' }}>Описание</div>
-          <div className="col s1" style={{ width: '11%', textAlign: 'center' }}>Модель</div>
-          <div className="col s1" style={{ width: '7%', textAlign: 'center' }}>Производитель</div>
-          <div className="col s1" style={{ width: '7%', textAlign: 'center' }}>S/N</div>
-          <div className="col s1" style={{ width: '7%', textAlign: 'center' }}>Отпечатки</div>
-          <div className="col s1" style={{ width: '5%', textAlign: 'center' }}>Опрошен</div>
-          <div className="col s1" style={{ width: '5%', textAlign: 'center' }}>Записать</div>
-          <div className="col s2" style={{ width: '28%', textAlign: 'center' }}>График {new Date().getFullYear()}</div>
-          <div className="col s1" style={{ width: '5%', textAlign: 'center' }}>Удалить</div>
+          <div className="col s1" style={{ width: '3%', textAlign: 'center', paddingTop: '0.5%'}}>Статус</div>
+          <div className="col s1" style={{ width: '7%', textAlign: 'center', paddingTop: '0.5%'}}>IP</div>
+          <div className="col s1" style={{ width: '15%', textAlign: 'center', paddingTop: '0.5%'}}>Описание</div>
+          <div className="col s1" style={{ width: '11%', textAlign: 'center', paddingTop: '0.5%'}}>Модель</div>
+          <div className="col s1" style={{ width: '7%', textAlign: 'center', paddingTop: '0.5%'}}>Производитель</div>
+          <div className="col s1" style={{ width: '7%', textAlign: 'center', paddingTop: '0.5%'}}>S/N</div>
+          <div className="col s1" style={{ width: '7%', textAlign: 'center', paddingTop: '0.5%'}}>Отпечатки</div>
+          <div className="col s1" style={{ width: '5%', textAlign: 'center', paddingTop: '0.5%'}}>Опрошен</div>
+          <div className="col s1" style={{ width: '5%', textAlign: 'center', paddingTop: '0.5%'}}>Записать</div>
+          <div className="col s2" style={{ width: '28%', textAlign: 'center', paddingTop: '0.5%'}}>График {new Date().getFullYear()}</div>
+          <div className="col s1" style={{ width: '5%', textAlign: 'center', paddingTop: '0.5%'}}>Удалить</div>
         </div>
         <div className="row col s12" >
           <div style={{ position: 'flex', overflow: 'auto', height: '720px' }}>
@@ -295,7 +296,7 @@ class App extends Component {
           handleChangeUnit={this.handleChangeUnit}
           handleChangeVendor={this.handleChangeVendor} />
 
-        <div className="row">
+        <div className="row z-depth-5">
           <div className="nav-extended teal lighten-3" style={styles.footer}>
             <button
               className="btn-floating btn-large waves-effect waves-light red z-depth-5"

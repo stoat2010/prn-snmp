@@ -134,27 +134,30 @@ export default class Row extends Component {
 
         return (
             <div className="row col s12">
-                <div className="col s1" style={{ width: '3%', textAlign: 'center' }}><button className={this.classN} onClick={this.devInfo}><i className="material-icons">refresh</i></button></div>
-                <div className="col s1" style={{ width: '7%', textAlign: 'center' }}>{this.props.device.device}</div>
+                <div className="col s1" style={{ width: '3%', textAlign: 'center', paddingTop: '0.5%'}}><button className={this.classN} onClick={this.devInfo}><i className="material-icons">refresh</i></button></div>
+                
                 <div className="col s1" style={{ width: '15%', textAlign: 'left', fontSize: 'x-small' }}>
                     отдел: <b>{this.props.device.unit}</b><br />
-                    корпус: <b>{this.props.device.build}</b><br />
-                    кабинет: <b>{this.props.device.office}</b>
+                    корпус: <b>{this.props.device.build}</b><span>&nbsp;</span>
+                    кабинет: <b>{this.props.device.office}</b><br />
+                    принято: <b>{new Date(this.props.device.start_date).toLocaleDateString() }</b><span>&nbsp;</span>
+                    остаток: <b>{this.props.device.balance}</b>
                 </div>
-                <div className="col s1" style={{ width: '11%', textAlign: 'center', fontSize: 'small' }}>{this.props.device.model}</div>
-                <div className="col s1" style={{ width: '7%', textAlign: 'center', fontSize: 'small' }}>{this.props.device.vendor}</div>
-                <div className="col s1" style={{ width: '7%', textAlign: 'center', fontSize: 'small' }}>{this.props.device.serial}</div>
-                <div className="col s1" style={{ width: '7%', textAlign: 'center', fontSize: 'small' }}>{this.state.devData[3]}</div>
-                <div className="col s1" style={{ width: '5%', textAlign: 'center', fontSize: 'small' }}>{this.cl()}</div>
-                <div className="col s1" style={{ width: '5%', textAlign: 'center', fontSize: 'small' }}><button
+                <div className="col s1" style={{ width: '7%', textAlign: 'center', paddingTop: '0.5%'}}>{this.props.device.device}</div>
+                <div className="col s1" style={{ width: '11%', textAlign: 'center', fontSize: 'small', paddingTop: '0.5%' }}>{this.props.device.model}</div>
+                <div className="col s1" style={{ width: '7%', textAlign: 'center', fontSize: 'small', paddingTop: '0.5%' }}>{this.props.device.vendor}</div>
+                <div className="col s1" style={{ width: '7%', textAlign: 'center', fontSize: 'small', paddingTop: '0.5%' }}>{this.props.device.serial}</div>
+                <div className="col s1" style={{ width: '7%', textAlign: 'center', fontSize: 'small', paddingTop: '0.5%' }}>{this.state.devData[3]}</div>
+                <div className="col s1" style={{ width: '5%', textAlign: 'center', fontSize: 'small', paddingTop: '0.5%' }}>{this.cl()}</div>
+                <div className="col s1" style={{ width: '5%', textAlign: 'center', fontSize: 'small',}}><button
                     className={this.classS}
                     id={this.props.device._id}
                     onClick={this.handleSave}>
                     <i className="material-icons">save</i>
                 </button>
                 </div>
-                <div className="col s2" style={{ width: '28%', textAlign: 'center' }}><PrintBar data={this.state.dataGraph} /></div>
-                <div className="col s1" style={{ width: '5%', textAlign: 'center' }}>
+                <div className="col s2" style={{ width: '28%', textAlign: 'center'}}><PrintBar data={this.state.dataGraph} /></div>
+                <div className="col s1" style={{ width: '5%', textAlign: 'center'}}>
                     <button
                         className="waves-effect waves-gray btn-flat"
                         id={this.props.device._id}
