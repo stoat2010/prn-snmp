@@ -19,7 +19,8 @@ class App extends Component {
       isTopVisible: false,
       btnArrows: 'arrow_downward',
       devData1: {},
-      loadSNMP: false
+      loadSNMP: false,
+      devName: ''
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -52,6 +53,23 @@ class App extends Component {
         return res.json();
       }))
       .then(devData1 => { this.setState({ devData1, loadSNMP: false }); });
+  }
+
+  readName(devid) {
+
+    this.setState({ loadSNMP: true });
+
+    var options = {
+      method: 'GET',
+      mode: 'cors',
+      cache: 'default'
+    };
+
+    fetch("http://127.0.0.1:3333/devname/" + devid, options)
+      .then((res => {
+        return res.json();
+      }))
+      .then(devName => { this.setState({ devName }); });
   }
 
   toggleVisible() {
@@ -88,6 +106,7 @@ class App extends Component {
         serial: this.state.devData1[2],
         vendor: this.state.devData1[1],
         model: this.state.devData1[0],
+        name: this.state.devName,
         start_date: new Date()
       };
 
@@ -96,7 +115,7 @@ class App extends Component {
       this.refs['build'].value = '';
       this.refs['office'].value = '';
       this.refs['unit'].value = '';
-      this.setState({ devData1: {} });
+      this.setState({ devData1: {}, devName: ''});
       this.toggleVisible();
     } else {
       swal('Ошибка при вводе IP адреса!');
@@ -148,8 +167,8 @@ class App extends Component {
 
     var rightIp = isIp(event.target.value);
     if (rightIp) {
+      this.readName(event.target.value)
       this.readData(event.target.value);
-
     }
   }
 
@@ -203,8 +222,8 @@ class App extends Component {
 
         <div className="row col s12 z-depth-5 grey darken-1 white-text" style={{ position: 'flex', height: '40px' }}>
           <div className="col s1" style={{ width: '3%', textAlign: 'center', paddingTop: '0.5%'}}>Статус</div>
-          <div className="col s1" style={{ width: '7%', textAlign: 'center', paddingTop: '0.5%'}}>IP</div>
-          <div className="col s1" style={{ width: '15%', textAlign: 'center', paddingTop: '0.5%'}}>Описание</div>
+          <div className="col s1" style={{ width: '14%', textAlign: 'center', paddingTop: '0.5%'}}>Описание</div>
+          <div className="col s1" style={{ width: '8%', textAlign: 'center', paddingTop: '0.5%'}}>IP</div>
           <div className="col s1" style={{ width: '11%', textAlign: 'center', paddingTop: '0.5%'}}>Модель</div>
           <div className="col s1" style={{ width: '7%', textAlign: 'center', paddingTop: '0.5%'}}>Производитель</div>
           <div className="col s1" style={{ width: '7%', textAlign: 'center', paddingTop: '0.5%'}}>S/N</div>
@@ -235,6 +254,10 @@ class App extends Component {
               <div className="container grey lighten-3">
                 <table>
                   <tbody>
+                  <tr>
+                      <td style={styles.spanLbl}>Имя: </td>
+                      <td style={styles.spanSNMP}>{this.state.devName}</td>
+                    </tr>
                     <tr>
                       <td style={styles.spanLbl}>Вендор: </td>
                       <td style={styles.spanSNMP}>{this.state.devData1[1]}</td>
@@ -296,15 +319,18 @@ class App extends Component {
           handleChangeUnit={this.handleChangeUnit}
           handleChangeVendor={this.handleChangeVendor} />
 
-        <div className="row z-depth-5">
+        <nav className="nav-extended teal lighten-3">
           <div className="nav-extended teal lighten-3" style={styles.footer}>
+          <div className="nav-wrapper">
+          <div className="brand-logo">Контроль ОЦО и С-Принт на предмет лажи по МФУ и принтерам</div>
             <button
               className="btn-floating btn-large waves-effect waves-light red z-depth-5"
               style={styles.btnadd}
               onClick={this.toggleVisible}>
               <i className="material-icons">add</i></button>
           </div>
-        </div>
+          </div>
+        </nav>
 
       </div>
     );

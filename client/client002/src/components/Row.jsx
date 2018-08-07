@@ -136,14 +136,17 @@ export default class Row extends Component {
             <div className="row col s12">
                 <div className="col s1" style={{ width: '3%', textAlign: 'center', paddingTop: '0.5%'}}><button className={this.classN} onClick={this.devInfo}><i className="material-icons">refresh</i></button></div>
                 
-                <div className="col s1" style={{ width: '15%', textAlign: 'left', fontSize: 'x-small' }}>
+                <div className="col s1 brown-text" style={{ width: '14%', textAlign: 'left', fontSize: 'x-small' }}>
                     отдел: <b>{this.props.device.unit}</b><br />
                     корпус: <b>{this.props.device.build}</b><span>&nbsp;</span>
                     кабинет: <b>{this.props.device.office}</b><br />
                     принято: <b>{new Date(this.props.device.start_date).toLocaleDateString() }</b><span>&nbsp;</span>
                     остаток: <b>{this.props.device.balance}</b>
                 </div>
-                <div className="col s1" style={{ width: '7%', textAlign: 'center', paddingTop: '0.5%'}}>{this.props.device.device}</div>
+                <div className="col s1" style={{ width: '8%', textAlign: 'center'}}>
+                    <span style={{color: "#880e4f", fontSize: 'x-small'}}><b>{this.props.device.name}</b></span><br />
+                    <span style={{color: "#2962ff", fontSize: 'small'}}><b>{this.props.device.device}</b></span>
+                </div>
                 <div className="col s1" style={{ width: '11%', textAlign: 'center', fontSize: 'small', paddingTop: '0.5%' }}>{this.props.device.model}</div>
                 <div className="col s1" style={{ width: '7%', textAlign: 'center', fontSize: 'small', paddingTop: '0.5%' }}>{this.props.device.vendor}</div>
                 <div className="col s1" style={{ width: '7%', textAlign: 'center', fontSize: 'small', paddingTop: '0.5%' }}>{this.props.device.serial}</div>

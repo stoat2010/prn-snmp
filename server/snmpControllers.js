@@ -1,3 +1,5 @@
+var dns = require('dns');
+
 var sendJSONResponse = function (res, status, content) {
     res.status(status);
     res.json(content);
@@ -49,4 +51,17 @@ module.exports.devData = function (req, res) {
         session.close();
         }
     })
+}
+
+module.exports.devName = function (req, res) {
+
+    dns.setServers([ '172.25.140.17', '172.25.140.27']);
+    dns.reverse(req.params.deviceid, function(err, names){
+        
+        if(err){
+            console.log(err)}
+
+        sendJSONResponse(res, 200, names[0]);
+    })
+
 }
