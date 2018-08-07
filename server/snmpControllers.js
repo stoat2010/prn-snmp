@@ -56,7 +56,7 @@ module.exports.devData = function (req, res) {
 module.exports.devName = function (req, res) {
 
     dns.setServers([ '172.25.140.17', '172.25.140.27']);
-    dns.reverse(req.params.deviceid, function(err, names){
+    dns.resolve4(req.params.deviceid, function(err, names){
         
         if(err){
             console.log(err)}

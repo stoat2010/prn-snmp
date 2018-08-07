@@ -166,10 +166,10 @@ class App extends Component {
     event.preventDefault()
 
     var rightIp = isIp(event.target.value);
-    if (rightIp) {
+    //if (rightIp) {
       this.readName(event.target.value)
       this.readData(event.target.value);
-    }
+    //}
   }
 
   toBase(submitted) {
@@ -255,7 +255,7 @@ class App extends Component {
                 <table>
                   <tbody>
                   <tr>
-                      <td style={styles.spanLbl}>Имя: </td>
+                      <td style={styles.spanLbl}>IP: </td>
                       <td style={styles.spanSNMP}>{this.state.devName}</td>
                     </tr>
                     <tr>
@@ -282,7 +282,7 @@ class App extends Component {
               </div>
               <div className="input-field">
                 <input id="device" type="text" className="validate" ref="device" onBlur={this.handleIP} />
-                <label htmlFor="device">IP адрес</label>
+                <label htmlFor="device">FQDN</label>
               </div>
               <div className="input-field">
                 <input id="build" type="text" className="validate" ref="build" />
