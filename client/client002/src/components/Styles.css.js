@@ -134,5 +134,9 @@ export default {
         'height': '100%',
         'minHeight': '100% !important',
         'overflow': 'hidden'
+    },
+    cellCap: {
+        textAlign: 'center',
+        paddingTop: '0.5%'
     }
 };

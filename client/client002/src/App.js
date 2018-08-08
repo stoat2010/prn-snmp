@@ -165,8 +165,6 @@ class App extends Component {
   handleIP(event) {
     event.preventDefault()
 
-    var rightIp = isIp(event.target.value);
-    //console.log(event.target.value.length>0)
     if (event.target.value.length>0) {
       this.readName(event.target.value)
       this.readData(event.target.value);
@@ -174,8 +172,6 @@ class App extends Component {
   }
 
   toBase(submitted) {
-
-    console.log(submitted);
 
     fetch('http://127.0.0.1:3333/api/devices', {
       method: 'POST',
@@ -222,17 +218,17 @@ class App extends Component {
         </nav>
 
         <div className="row col s12 z-depth-5 grey darken-1 white-text" style={{ position: 'flex', height: '40px' }}>
-          <div className="col s1" style={{ width: '3%', textAlign: 'center', paddingTop: '0.5%'}}>Статус</div>
-          <div className="col s1" style={{ width: '14%', textAlign: 'center', paddingTop: '0.5%'}}>Описание</div>
-          <div className="col s1" style={{ width: '11%', textAlign: 'center', paddingTop: '0.5%'}}>FQDN/IP</div>
-          <div className="col s1" style={{ width: '11%', textAlign: 'center', paddingTop: '0.5%'}}>Модель</div>
-          <div className="col s1" style={{ width: '7%', textAlign: 'center', paddingTop: '0.5%'}}>Производитель</div>
-          <div className="col s1" style={{ width: '6%', textAlign: 'center', paddingTop: '0.5%'}}>S/N</div>
-          <div className="col s1" style={{ width: '6%', textAlign: 'center', paddingTop: '0.5%'}}>Отпечатки</div>
-          <div className="col s1" style={{ width: '5%', textAlign: 'center', paddingTop: '0.5%'}}>Опрошен</div>
-          <div className="col s1" style={{ width: '4%', textAlign: 'center', paddingTop: '0.5%'}}>Записать</div>
-          <div className="col s2" style={{ width: '28%', textAlign: 'center', paddingTop: '0.5%'}}>График {new Date().getFullYear()}</div>
-          <div className="col s1" style={{ width: '5%', textAlign: 'center', paddingTop: '0.5%'}}>Удалить</div>
+          <div className="col s1" style={{ width: '3%', ...styles.cellCap}}>Статус</div>
+          <div className="col s1" style={{ width: '14%', ...styles.cellCap}}>Описание</div>
+          <div className="col s1" style={{ width: '11%', ...styles.cellCap}}>FQDN/IP</div>
+          <div className="col s1" style={{ width: '11%', ...styles.cellCap}}>Модель</div>
+          <div className="col s1" style={{ width: '7%', ...styles.cellCap}}>Производитель</div>
+          <div className="col s1" style={{ width: '6%', ...styles.cellCap}}>S/N</div>
+          <div className="col s1" style={{ width: '6%', ...styles.cellCap}}>Отпечатки</div>
+          <div className="col s1" style={{ width: '5%', ...styles.cellCap}}>Опрошен</div>
+          <div className="col s1" style={{ width: '4%', ...styles.cellCap}}>Записать</div>
+          <div className="col s2" style={{ width: '28%', ...styles.cellCap}}>График {new Date().getFullYear()}</div>
+          <div className="col s1" style={{ width: '5%', ...styles.cellCap}}>Удалить</div>
         </div>
         <div className="row col s12" >
           <div style={{ position: 'flex', overflow: 'auto', height: '720px' }}>
