@@ -5,13 +5,15 @@ var sendJSONResponse = function (res, status, content) {
     res.json(content);
 };
 
-module.exports.devStatus = function (req, res) {
+module.exports.devStatus = async function (req, res) {
     var snmp = require('net-snmp');
 
     //var oids = ['1.3.6.1.2.1.43.5.1.1.16.1', '1.3.6.1.2.1.43.8.2.1.14.1.1', '1.3.6.1.2.1.43.10.2.1.4.1.1'];
     var oids = ['1.3.6.1.2.1.43.5.1.1.16.1'];
-    //console.log('here');
-    var session = snmp.createSession(req.params.deviceid, "public");
+    
+    var deviceIP = await resolveName(req.params.deviceid)
+
+    var session = snmp.createSession(deviceIP[0], "public");
 
     session.get(oids, function (error, varbinds) {
         if (error) {
@@ -24,13 +26,15 @@ module.exports.devStatus = function (req, res) {
     })
 }
 
-module.exports.devData = function (req, res) {
+module.exports.devData = async function (req, res) {
     var snmp = require('net-snmp');
     var values = [];
 
     var oids = ['1.3.6.1.2.1.43.5.1.1.16.1', '1.3.6.1.2.1.43.8.2.1.14.1.1', '1.3.6.1.2.1.43.5.1.1.17.1', '1.3.6.1.2.1.43.10.2.1.4.1.1'];
 
-    var session = snmp.createSession(req.params.deviceid, "public");
+    var deviceIP = await resolveName(req.params.deviceid)
+
+    var session = snmp.createSession(deviceIP[0], "public");
 
     session.get(oids, function (error, varbinds) {
         if (error) {
@@ -64,4 +68,16 @@ module.exports.devName = function (req, res) {
         sendJSONResponse(res, 200, names[0]);
     })
 
+}
+
+function resolveName(devid) {
+    return new Promise( resolve =>{
+    dns.setServers([ '172.25.140.17', '172.25.140.27']);
+    dns.resolve4(devid, function(err, devip){
+        if (err){
+            console.log(err);
+        }else{
+            resolve (devip);
+        }
+    })})
 }

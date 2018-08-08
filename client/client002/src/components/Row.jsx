@@ -32,7 +32,7 @@ export default class Row extends Component {
             mode: 'cors',
             cache: 'default'
         };
-        fetch("http://127.0.0.1:3333/devstatus/" + this.props.device.device, options)
+        fetch("http://127.0.0.1:3333/devstatus/" + this.props.device.name, options)
             .then((res => {
                 return res.json();
             }))
@@ -46,7 +46,7 @@ export default class Row extends Component {
             cache: 'default'
         };
 
-        fetch("http://127.0.0.1:3333/devdata/" + this.props.device.device, options)
+        fetch("http://127.0.0.1:3333/devdata/" + this.props.device.name, options)
             .then((res => {
                 return res.json();
             }))
@@ -143,16 +143,16 @@ export default class Row extends Component {
                     принято: <b>{new Date(this.props.device.start_date).toLocaleDateString() }</b><span>&nbsp;</span>
                     остаток: <b>{this.props.device.balance}</b>
                 </div>
-                <div className="col s1" style={{ width: '8%', textAlign: 'center'}}>
-                    <span style={{color: "#880e4f", fontSize: 'x-small'}}><b>{this.props.device.name}</b></span><br />
+                <div className="col s1" style={{ width: '11%', textAlign: 'center'}}>
+                    <span style={{color: "#880e4f", fontSize: 'x-small', textTransform: 'lowercase'}}><b>{this.props.device.name}</b></span><br />
                     <span style={{color: "#2962ff", fontSize: 'small'}}><b>{this.props.device.device}</b></span>
                 </div>
                 <div className="col s1" style={{ width: '11%', textAlign: 'center', fontSize: 'small', paddingTop: '0.5%' }}>{this.props.device.model}</div>
                 <div className="col s1" style={{ width: '7%', textAlign: 'center', fontSize: 'small', paddingTop: '0.5%' }}>{this.props.device.vendor}</div>
-                <div className="col s1" style={{ width: '7%', textAlign: 'center', fontSize: 'small', paddingTop: '0.5%' }}>{this.props.device.serial}</div>
-                <div className="col s1" style={{ width: '7%', textAlign: 'center', fontSize: 'small', paddingTop: '0.5%' }}>{this.state.devData[3]}</div>
+                <div className="col s1" style={{ width: '6%', textAlign: 'center', fontSize: 'small', paddingTop: '0.5%' }}>{this.props.device.serial}</div>
+                <div className="col s1" style={{ width: '6%', textAlign: 'center', fontSize: 'small', paddingTop: '0.5%' }}>{this.state.devData[3]}</div>
                 <div className="col s1" style={{ width: '5%', textAlign: 'center', fontSize: 'small', paddingTop: '0.5%' }}>{this.cl()}</div>
-                <div className="col s1" style={{ width: '5%', textAlign: 'center', fontSize: 'small',}}><button
+                <div className="col s1" style={{ width: '4%', textAlign: 'center', fontSize: 'small',}}><button
                     className={this.classS}
                     id={this.props.device._id}
                     onClick={this.handleSave}>

@@ -95,10 +95,10 @@ class App extends Component {
 
     var rightIp = isIp(this.refs['device'].value);
 
-    if (rightIp) {
+    if (this.refs['device'].value.length>0) {
 
       send = {
-        device: this.refs['device'].value,
+        device: this.state.devName,
         build: this.refs['build'].value,
         office: this.refs['office'].value,
         unit: this.refs['unit'].value,
@@ -106,7 +106,7 @@ class App extends Component {
         serial: this.state.devData1[2],
         vendor: this.state.devData1[1],
         model: this.state.devData1[0],
-        name: this.state.devName,
+        name: this.refs['device'].value,
         start_date: new Date()
       };
 
@@ -118,7 +118,7 @@ class App extends Component {
       this.setState({ devData1: {}, devName: ''});
       this.toggleVisible();
     } else {
-      swal('Ошибка при вводе IP адреса!');
+      swal('Ошибка при вводе имени!');
     }
   }
 
@@ -166,10 +166,11 @@ class App extends Component {
     event.preventDefault()
 
     var rightIp = isIp(event.target.value);
-    //if (rightIp) {
+    //console.log(event.target.value.length>0)
+    if (event.target.value.length>0) {
       this.readName(event.target.value)
       this.readData(event.target.value);
-    //}
+    }
   }
 
   toBase(submitted) {
@@ -223,13 +224,13 @@ class App extends Component {
         <div className="row col s12 z-depth-5 grey darken-1 white-text" style={{ position: 'flex', height: '40px' }}>
           <div className="col s1" style={{ width: '3%', textAlign: 'center', paddingTop: '0.5%'}}>Статус</div>
           <div className="col s1" style={{ width: '14%', textAlign: 'center', paddingTop: '0.5%'}}>Описание</div>
-          <div className="col s1" style={{ width: '8%', textAlign: 'center', paddingTop: '0.5%'}}>IP</div>
+          <div className="col s1" style={{ width: '11%', textAlign: 'center', paddingTop: '0.5%'}}>FQDN/IP</div>
           <div className="col s1" style={{ width: '11%', textAlign: 'center', paddingTop: '0.5%'}}>Модель</div>
           <div className="col s1" style={{ width: '7%', textAlign: 'center', paddingTop: '0.5%'}}>Производитель</div>
-          <div className="col s1" style={{ width: '7%', textAlign: 'center', paddingTop: '0.5%'}}>S/N</div>
-          <div className="col s1" style={{ width: '7%', textAlign: 'center', paddingTop: '0.5%'}}>Отпечатки</div>
+          <div className="col s1" style={{ width: '6%', textAlign: 'center', paddingTop: '0.5%'}}>S/N</div>
+          <div className="col s1" style={{ width: '6%', textAlign: 'center', paddingTop: '0.5%'}}>Отпечатки</div>
           <div className="col s1" style={{ width: '5%', textAlign: 'center', paddingTop: '0.5%'}}>Опрошен</div>
-          <div className="col s1" style={{ width: '5%', textAlign: 'center', paddingTop: '0.5%'}}>Записать</div>
+          <div className="col s1" style={{ width: '4%', textAlign: 'center', paddingTop: '0.5%'}}>Записать</div>
           <div className="col s2" style={{ width: '28%', textAlign: 'center', paddingTop: '0.5%'}}>График {new Date().getFullYear()}</div>
           <div className="col s1" style={{ width: '5%', textAlign: 'center', paddingTop: '0.5%'}}>Удалить</div>
         </div>
