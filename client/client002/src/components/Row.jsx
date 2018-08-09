@@ -14,7 +14,7 @@ export default class Row extends Component {
             dataGraph: []
         };
         this.classN = "btn-floating btn-small waves-effect waves-light yellow lighten-3";
-        this.classS = "disabled btn-flat white";
+        this.classS = "btn-flat white";
         this.classG = "btn-floating btn-small waves-effect waves-light blue darken-3";
         this.classIP = "black-text";
         this.readStatus = this.readStatus.bind(this);
@@ -128,8 +128,8 @@ export default class Row extends Component {
     render() {
 
         this.state.classes === 1 ? this.classN = "btn-floating btn-small waves-effect waves-light red lighten-3" : this.classN = "btn-floating btn-small waves-effect waves-light teal lighten-3";
-        this.state.classes === 1 ? this.classS = "disabled btn-flat" : this.classS = "btn-flat";
-        this.state.dataAllow === 1 ? this.classS = "disabled btn-flat" : this.classS = "btn-flat";
+        //this.state.classes === 1 ? this.classS = "disabled btn-flat" : this.classS = "btn-flat";
+        //this.state.dataAllow === 1 ? this.classS = "disabled btn-flat" : this.classS = "btn-flat";
         this.props.device.serial ? this.classIP = "black-text" : this.classIP = "pink-text";
 
         return (

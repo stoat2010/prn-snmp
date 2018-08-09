@@ -95,7 +95,7 @@ class App extends Component {
 
     var rightIp = isIp(this.refs['device'].value);
 
-    if (this.refs['device'].value.length>0) {
+    if (this.refs['device'].value.length > 0) {
 
       send = {
         device: this.state.devName,
@@ -115,7 +115,7 @@ class App extends Component {
       this.refs['build'].value = '';
       this.refs['office'].value = '';
       this.refs['unit'].value = '';
-      this.setState({ devData1: {}, devName: ''});
+      this.setState({ devData1: {}, devName: '' });
       this.toggleVisible();
     } else {
       swal('Ошибка при вводе имени!');
@@ -165,7 +165,7 @@ class App extends Component {
   handleIP(event) {
     event.preventDefault()
 
-    if (event.target.value.length>0) {
+    if (event.target.value.length > 0) {
       this.readName(event.target.value)
       this.readData(event.target.value);
     }
@@ -217,18 +217,18 @@ class App extends Component {
           </div>
         </nav>
 
-        <div className="row col s12 z-depth-5 grey darken-1 white-text" style={{ position: 'flex', height: '40px' }}>
-          <div className="col s1" style={{ width: '3%', ...styles.cellCap}}>Статус</div>
-          <div className="col s1" style={{ width: '14%', ...styles.cellCap}}>Описание</div>
-          <div className="col s1" style={{ width: '11%', ...styles.cellCap}}>FQDN/IP</div>
-          <div className="col s1" style={{ width: '11%', ...styles.cellCap}}>Модель</div>
-          <div className="col s1" style={{ width: '7%', ...styles.cellCap}}>Производитель</div>
-          <div className="col s1" style={{ width: '6%', ...styles.cellCap}}>S/N</div>
-          <div className="col s1" style={{ width: '6%', ...styles.cellCap}}>Отпечатки</div>
-          <div className="col s1" style={{ width: '5%', ...styles.cellCap}}>Опрошен</div>
-          <div className="col s1" style={{ width: '4%', ...styles.cellCap}}>Записать</div>
-          <div className="col s2" style={{ width: '28%', ...styles.cellCap}}>График {new Date().getFullYear()}</div>
-          <div className="col s1" style={{ width: '5%', ...styles.cellCap}}>Удалить</div>
+        <div className="row col s12 grey darken-1 white-text" style={{ position: 'flex', height: '40px' }}>
+          <div className="col s1" style={{ width: '3%', ...styles.cellCap }}>Статус</div>
+          <div className="col s1" style={{ width: '14%', ...styles.cellCap }}>Описание</div>
+          <div className="col s1" style={{ width: '11%', ...styles.cellCap }}>FQDN/IP</div>
+          <div className="col s1" style={{ width: '11%', ...styles.cellCap }}>Модель</div>
+          <div className="col s1" style={{ width: '7%', ...styles.cellCap }}>Производитель</div>
+          <div className="col s1" style={{ width: '6%', ...styles.cellCap }}>S/N</div>
+          <div className="col s1" style={{ width: '6%', ...styles.cellCap }}>Отпечатки</div>
+          <div className="col s1" style={{ width: '5%', ...styles.cellCap }}>Опрошен</div>
+          <div className="col s1" style={{ width: '4%', ...styles.cellCap }}>Записать</div>
+          <div className="col s2" style={{ width: '28%', ...styles.cellCap }}>График {new Date().getFullYear()}</div>
+          <div className="col s1" style={{ width: '5%', ...styles.cellCap }}>Удалить</div>
         </div>
         <div className="row col s12" >
           <div style={{ position: 'flex', overflow: 'auto', height: '720px' }}>
@@ -251,7 +251,7 @@ class App extends Component {
               <div className="container grey lighten-3">
                 <table>
                   <tbody>
-                  <tr>
+                    <tr>
                       <td style={styles.spanLbl}>IP: </td>
                       <td style={styles.spanSNMP}>{this.state.devName}</td>
                     </tr>
@@ -293,10 +293,6 @@ class App extends Component {
                 <input id="unit" type="text" className="validate" ref="unit" />
                 <label htmlFor="unit">Подразделение/служба</label>
               </div>
-              {/* <div className="input-field ">
-                <input id="balance" type="text" className="validate" ref="balance" />
-                <label htmlFor="balance">Начальный остаток</label>
-              </div> */}
 
               <div className="center-align">
                 <button className="btn waves-effect waves-light" type="submit" name="action">Добавить
@@ -318,14 +314,14 @@ class App extends Component {
 
         <nav className="nav-extended teal lighten-3">
           <div className="nav-extended teal lighten-3" style={styles.footer}>
-          <div className="nav-wrapper">
-          <div className="brand-logo">Контроль ОЦО и С-Принт на предмет лажи по МФУ и принтерам</div>
-            <button
-              className="btn-floating btn-large waves-effect waves-light red z-depth-5"
-              style={styles.btnadd}
-              onClick={this.toggleVisible}>
-              <i className="material-icons">add</i></button>
-          </div>
+            <div className="nav-wrapper">
+              <div className="brand-logo">Контроль ОЦО и С-Принт на предмет лажи по МФУ и принтерам</div>
+              <button
+                className="btn-floating btn-large waves-effect waves-light red z-depth-5"
+                style={styles.btnadd}
+                onClick={this.toggleVisible}>
+                <i className="material-icons">add</i></button>
+            </div>
           </div>
         </nav>
 
