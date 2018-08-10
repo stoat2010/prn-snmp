@@ -1,18 +1,14 @@
 export default {
-    cell: {
-        'fontSize': 'small'
-    },
-    cellgraph: {
-        'width': "40%"
-    },
-    cellcap: {
-        'fontSize': 'x-small',
-        'textAlign': 'left'
-    },
+
     btnadd: {
         'position': 'absolute',
         'bottom': '5px',
         'right': '1%'
+    },
+    btnrefresh: {
+        'position': 'absolute',
+        'bottom': '5px',
+        'right': '4%'
     },
     btnExpand: {
         'width': '100%'

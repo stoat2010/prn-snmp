@@ -256,7 +256,7 @@ class App extends Component {
                       <td style={styles.spanSNMP}>{this.state.devName}</td>
                     </tr>
                     <tr>
-                      <td style={styles.spanLbl}>Вендор: </td>
+                      <td style={styles.spanLbl}>Производитель: </td>
                       <td style={styles.spanSNMP}>{this.state.devData1[1]}</td>
                     </tr>
                     <tr>
@@ -320,7 +320,8 @@ class App extends Component {
                 className="btn-floating btn-large waves-effect waves-light red z-depth-5"
                 style={styles.btnadd}
                 onClick={this.toggleVisible}>
-                <i className="material-icons">add</i></button>
+                <i className="material-icons">add</i>
+              </button>
             </div>
           </div>
         </nav>
