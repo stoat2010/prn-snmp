@@ -29,7 +29,7 @@ module.exports.dataCreate = async function (req, res) {
     }else{
         Loc.findOneAndUpdate(
             {device: req.body.device},
-            {$set: {printouts: req.body.printouts}},
+            {$set: {printouts: req.body.printouts, date: req.body.date}},
             function (err, data) {
                 if (err) {
                     sendJSONResponse(res, 440, err);
@@ -37,7 +37,6 @@ module.exports.dataCreate = async function (req, res) {
                     sendJSONResponse(res, 201, 'device');
                 }
             })
-        console.log('update');
     }
 
 };
@@ -50,6 +49,20 @@ module.exports.dataDevice = function (req, res) {
                 sendJSONResponse(res, 440, err);
             } else {
                 sendJSONResponse(res, 200, device);
+            }
+        });
+};
+
+module.exports.dataDate = function (req, res) {
+    Loc
+        .find({ device: req.params.deviceid, month: new Date().getMonth() + 1, year: new Date().getFullYear() }, { date: 1, _id: 0 })
+        .exec(function (err, device) {
+            if (err) {
+                sendJSONResponse(res, 440, err);
+            } else {
+                if (device.length > 0)    
+                    {sendJSONResponse(res, 200, device[0].date);}
+                else{sendJSONResponse(res, 200, '');}
             }
         });
 };

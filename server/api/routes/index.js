@@ -11,6 +11,7 @@ router.post('/devices', ctrlDevices.deviceCreate);
 router.delete('/devices/:deviceid', cors(), ctrlDevices.deviceDeleteOne);
 
 router.get('/data/:deviceid', ctrlData.dataDevice);
+router.get('/datadate/:deviceid', ctrlData.dataDate);
 router.get('/datagraph/:deviceid', ctrlData.dataGraph);
 router.post('/data', ctrlData.dataCreate);
 

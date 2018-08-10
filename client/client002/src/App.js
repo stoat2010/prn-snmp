@@ -219,7 +219,7 @@ class App extends Component {
 
         <div className="row col s12 grey darken-1 white-text" style={{ position: 'flex', height: '40px' }}>
           <div className="col s1" style={{ width: '3%', ...styles.cellCap }}>Статус</div>
-          <div className="col s1" style={{ width: '14%', ...styles.cellCap }}>Описание</div>
+          <div className="col s1" style={{ width: '15%', ...styles.cellCap }}>Описание</div>
           <div className="col s1" style={{ width: '11%', ...styles.cellCap }}>FQDN/IP</div>
           <div className="col s1" style={{ width: '11%', ...styles.cellCap }}>Модель</div>
           <div className="col s1" style={{ width: '7%', ...styles.cellCap }}>Производитель</div>
@@ -228,7 +228,7 @@ class App extends Component {
           <div className="col s1" style={{ width: '5%', ...styles.cellCap }}>Опрошен</div>
           <div className="col s1" style={{ width: '4%', ...styles.cellCap }}>Записать</div>
           <div className="col s2" style={{ width: '28%', ...styles.cellCap }}>График {new Date().getFullYear()}</div>
-          <div className="col s1" style={{ width: '5%', ...styles.cellCap }}>Удалить</div>
+          <div className="col s1" style={{ width: '4%', ...styles.cellCap }}>Удалить</div>
         </div>
         <div className="row col s12" >
           <div style={{ position: 'flex', overflow: 'auto', height: '720px' }}>
