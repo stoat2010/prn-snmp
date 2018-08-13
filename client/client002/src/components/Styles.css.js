@@ -3,12 +3,12 @@ export default {
     btnadd: {
         'position': 'absolute',
         'bottom': '5px',
-        'right': '1%'
+        'right': '5%'
     },
-    btnrefresh: {
+    btnpdf: {
         'position': 'absolute',
         'bottom': '5px',
-        'right': '4%'
+        'right': '1%'
     },
     btnExpand: {
         'width': '100%'

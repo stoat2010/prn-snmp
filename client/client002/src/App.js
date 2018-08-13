@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
+
 import swal from 'sweetalert';
 import { FadeLoader } from 'react-spinners';
 
 import Row from './components/Row';
+import MyDocument from './Pdf';
 import TopNav from './components/TopNav';
 import styles from './components/Styles.css.js';
+
+
 const isIp = require('is-ip');
 
 class App extends Component {
@@ -34,6 +38,7 @@ class App extends Component {
     this.handleChangeUnit = this.handleChangeUnit.bind(this);
     this.handleChangeVendor = this.handleChangeVendor.bind(this);
     this.handleIP = this.handleIP.bind(this);
+    this.clickParam = this.clickParam.bind(this);
     this.sideStyle = styles.sidenav;
     this.topStyle = styles.topnav;
   }
@@ -206,6 +211,8 @@ class App extends Component {
     this.dbConnInit('http://127.0.0.1:3333/api/devices');
   }
 
+  clickParam = () => MyDocument (this.state.devices);
+
   render() {
 
     return (
@@ -321,6 +328,12 @@ class App extends Component {
                 style={styles.btnadd}
                 onClick={this.toggleVisible}>
                 <i className="material-icons">add</i>
+              </button>
+              <button
+                className="btn-floating btn-large waves-effect waves-light blue z-depth-5"
+                style={styles.btnpdf}>
+                {/* onClick={ this.clickParam }> */}
+                <i className="material-icons">assignment</i>
               </button>
             </div>
           </div>
