@@ -6,10 +6,10 @@ import styles from './Styles.css.js';
 
 export default function TopNav(props) {
 
-    var devices = [... new Set(props.devices.map(item => item.device))];
-    var builds = [... new Set(props.devices.map(item => item.build))];
-    var units = [... new Set(props.devices.map(item => item.unit))];
-    var vendors = [... new Set(props.devices.map(item => item.vendor))];
+    var devices = [...new Set(props.devices.map(item => item.device))];
+    var builds = [...new Set(props.devices.map(item => item.build))];
+    var units = [...new Set(props.devices.map(item => item.unit))];
+    var vendors = [...new Set(props.devices.map(item => item.vendor))];
 
     return (
         <div className="z-depth-5 center-align" style={props.topStyle}>

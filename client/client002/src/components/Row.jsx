@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styles from './Styles.css.js';
+//import styles from './Styles.css.js';
 
 import PrintBar from './Bar';
 

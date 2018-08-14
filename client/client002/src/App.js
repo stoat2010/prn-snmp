@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 
-import swal from 'sweetalert';
-import { FadeLoader } from 'react-spinners';
-
 import Row from './components/Row';
-import MyDocument from './Pdf';
 import TopNav from './components/TopNav';
+import TableHeader from './components/TableHeader';
+import PageHeader from './components/PageHeader';
+import Footer from './components/Footer';
+import Sidenav from './components/Sidenav';
+
 import styles from './components/Styles.css.js';
-
-
-const isIp = require('is-ip');
 
 class App extends Component {
 
@@ -27,7 +25,7 @@ class App extends Component {
       devName: ''
     };
 
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.resetForm = this.resetForm.bind(this);
     this.toBase = this.toBase.bind(this);
     this.readData = this.readData.bind(this);
     this.dbConn = this.dbConn.bind(this);
@@ -38,7 +36,6 @@ class App extends Component {
     this.handleChangeUnit = this.handleChangeUnit.bind(this);
     this.handleChangeVendor = this.handleChangeVendor.bind(this);
     this.handleIP = this.handleIP.bind(this);
-    this.clickParam = this.clickParam.bind(this);
     this.sideStyle = styles.sidenav;
     this.topStyle = styles.topnav;
   }
@@ -94,38 +91,12 @@ class App extends Component {
     this.state.isTopVisible === false ? this.setState({ btnArrows: 'arrow_downward' }) : this.setState({ btnArrows: 'arrow_upward' });
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
-    var send = {};
-
-    var rightIp = isIp(this.refs['device'].value);
-
-    if (this.refs['device'].value.length > 0) {
-
-      send = {
-        device: this.state.devName,
-        build: this.refs['build'].value,
-        office: this.refs['office'].value,
-        unit: this.refs['unit'].value,
-        balance: this.state.devData1[3],
-        serial: this.state.devData1[2],
-        vendor: this.state.devData1[1],
-        model: this.state.devData1[0],
-        name: this.refs['device'].value,
-        start_date: new Date()
-      };
-
-      this.toBase(send);
-      this.refs['device'].value = '';
-      this.refs['build'].value = '';
-      this.refs['office'].value = '';
-      this.refs['unit'].value = '';
+  resetForm() {
+      
       this.setState({ devData1: {}, devName: '' });
       this.toggleVisible();
-    } else {
-      swal('Ошибка при вводе имени!');
-    }
   }
+
 
   handleChange(event) {
     var addr = '';
@@ -211,134 +182,46 @@ class App extends Component {
     this.dbConnInit('http://127.0.0.1:3333/api/devices');
   }
 
-  clickParam = () => MyDocument (this.state.devices);
-
   render() {
 
     return (
       <div style={styles.parent}>
-
-        <nav className="nav-extended teal lighten-3">
-          <div className="nav-wrapper">
-            <div className="brand-logo">SNMP опрос сетевых МФУ и принтеров</div>
-          </div>
-        </nav>
-
-        <div className="row col s12 grey darken-1 white-text" style={{ position: 'flex', height: '40px' }}>
-          <div className="col s1" style={{ width: '3%', ...styles.cellCap }}>Статус</div>
-          <div className="col s1" style={{ width: '15%', ...styles.cellCap }}>Описание</div>
-          <div className="col s1" style={{ width: '11%', ...styles.cellCap }}>FQDN/IP</div>
-          <div className="col s1" style={{ width: '11%', ...styles.cellCap }}>Модель</div>
-          <div className="col s1" style={{ width: '7%', ...styles.cellCap }}>Производитель</div>
-          <div className="col s1" style={{ width: '6%', ...styles.cellCap }}>S/N</div>
-          <div className="col s1" style={{ width: '6%', ...styles.cellCap }}>Отпечатки</div>
-          <div className="col s1" style={{ width: '5%', ...styles.cellCap }}>Опрошен</div>
-          <div className="col s1" style={{ width: '4%', ...styles.cellCap }}>Записать</div>
-          <div className="col s2" style={{ width: '28%', ...styles.cellCap }}>График {new Date().getFullYear()}</div>
-          <div className="col s1" style={{ width: '4%', ...styles.cellCap }}>Удалить</div>
-        </div>
+        <PageHeader />
+        <TableHeader />
+        
         <div className="row col s12" >
           <div style={{ position: 'flex', overflow: 'auto', height: '720px' }}>
-            {this.state.devices.map(device => <Row key={device._id} device={device} dbConn={this.dbConn} />)}
+            {this.state.devices.map(device => 
+              <Row 
+                key={device._id} 
+                device={device} 
+                dbConn={this.dbConn} 
+              />
+            )}
           </div>
         </div>
-        <div id="mySidenav" className="z-depth-5" style={this.sideStyle}>
-          <button
-            className="btn-flat grey lighten-3"
-            style={styles.btclose}
-            onClick={this.toggleVisible}>
-            <i className="material-icons">close</i>
-          </button>
-          <div className="container">
-            <div style={styles.loader}>
-              <FadeLoader color={'#123abc'}
-                loading={this.state.loadSNMP} />
-            </div>
-            <form onSubmit={this.handleSubmit}>
-              <div className="container grey lighten-3">
-                <table>
-                  <tbody>
-                    <tr>
-                      <td style={styles.spanLbl}>IP: </td>
-                      <td style={styles.spanSNMP}>{this.state.devName}</td>
-                    </tr>
-                    <tr>
-                      <td style={styles.spanLbl}>Производитель: </td>
-                      <td style={styles.spanSNMP}>{this.state.devData1[1]}</td>
-                    </tr>
-                    <tr>
-                      <td style={styles.spanLbl}>Модель: </td>
-                      <td style={styles.spanSNMP}>{this.state.devData1[0]}</td>
-                    </tr>
-                    <tr>
-                      <td style={styles.spanLbl}>S/N: </td>
-                      <td style={styles.spanSNMP}>{this.state.devData1[2]}</td>
-                    </tr>
-                    <tr>
-                      <td style={styles.spanLbl}>Отпечатки: </td>
-                      <td style={styles.spanSNMP}>{this.state.devData1[3]}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div>
-                <h6 className="brown-text"><b>Добавить новое устройство</b></h6>
-              </div>
-              <div className="input-field">
-                <input id="device" type="text" className="validate" ref="device" onBlur={this.handleIP} />
-                <label htmlFor="device">FQDN</label>
-              </div>
-              <div className="input-field">
-                <input id="build" type="text" className="validate" ref="build" />
-                <label htmlFor="build">Корпус</label>
-              </div>
-              <div className="input-field">
-                <input id="office" type="text" className="validate" ref="office" />
-                <label htmlFor="office">Кабинет</label>
-              </div>
-              <div className="input-field ">
-                <input id="unit" type="text" className="validate" ref="unit" />
-                <label htmlFor="unit">Подразделение/служба</label>
-              </div>
 
-              <div className="center-align">
-                <button className="btn waves-effect waves-light" type="submit" name="action">Добавить
-                  <i className="material-icons right">print</i>
-                </button>
-              </div>
-            </form >
-          </div>
-        </div>
+        <Sidenav
+          toggleVisible = {this.toggleVisible}
+          toBase = {this.toBase}
+          resetForm = {this.resetForm}
+          handleIP = {this.handleIP}
+          loadSNMP = {this.state.loadSNMP}
+          devName = {this.state.devName}
+          devData1 = {this.state.devData1}
+          sideStyle = {this.sideStyle}
+        />
         <TopNav
-          btnArrows={this.state.btnArrows}
-          topStyle={this.topStyle}
-          toggleTopVisible={this.toggleTopVisible}
-          devices={this.state.devlist}
-          handleChange={this.handleChange}
-          handleChangeBuild={this.handleChangeBuild}
-          handleChangeUnit={this.handleChangeUnit}
-          handleChangeVendor={this.handleChangeVendor} />
-
-        <nav className="nav-extended teal lighten-3">
-          <div className="nav-extended teal lighten-3" style={styles.footer}>
-            <div className="nav-wrapper">
-              <div className="brand-logo">Контроль ОЦО и С-Принт на предмет лажи по МФУ и принтерам</div>
-              <button
-                className="btn-floating btn-large waves-effect waves-light red z-depth-5"
-                style={styles.btnadd}
-                onClick={this.toggleVisible}>
-                <i className="material-icons">add</i>
-              </button>
-              <button
-                className="btn-floating btn-large waves-effect waves-light blue z-depth-5"
-                style={styles.btnpdf}>
-                {/* onClick={ this.clickParam }> */}
-                <i className="material-icons">assignment</i>
-              </button>
-            </div>
-          </div>
-        </nav>
-
+          btnArrows = {this.state.btnArrows}
+          topStyle = {this.topStyle}
+          toggleTopVisible = {this.toggleTopVisible}
+          devices = {this.state.devlist}
+          handleChange = {this.handleChange}
+          handleChangeBuild = {this.handleChangeBuild}
+          handleChangeUnit = {this.handleChangeUnit}
+          handleChangeVendor = {this.handleChangeVendor} 
+        />
+        <Footer toggleVisible={this.toggleVisible} />
       </div>
     );
   }
