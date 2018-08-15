@@ -5,10 +5,9 @@ import styles from './Styles.css.js';
 export default function Footer(props) {
 
     return (
-        <nav className="nav-extended teal lighten-3">
-            <div className="nav-extended teal lighten-3" style={styles.footer}>
-                <div className="nav-wrapper">
-                    <div className="brand-logo">Контроль ОЦО и С-Принт на предмет лажи по МФУ и принтерам</div>
+        <nav className="nav-extended blue darken-4" style={styles.footer}>
+                 <div className="nav-wrapper">
+                    <div className="brand-logo center">Контроль ОЦО и С-Принт на предмет лажи по МФУ и принтерам</div>
                     <button
                         className="btn-floating btn-large waves-effect waves-light red z-depth-5"
                         style={styles.btnadd}
@@ -21,7 +20,6 @@ export default function Footer(props) {
                 <i className="material-icons">assignment</i>
               </a> */}
                 </div>
-            </div>
         </nav>)
 
 }

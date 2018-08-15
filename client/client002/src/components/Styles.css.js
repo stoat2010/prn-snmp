@@ -2,7 +2,7 @@ export default {
 
     btnadd: {
         'position': 'absolute',
-        'bottom': '2px',
+        'bottom': '6px',
         'right': '5%'
     },
     btnpdf: {
@@ -122,7 +122,7 @@ export default {
         'position': 'absolute',
         'bottom': '0px',
         'width': '100%',
-        'height': '70px',
+        'height': '40px',
         'zIndex': '0'
     },
     parent: {
