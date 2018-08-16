@@ -4,6 +4,7 @@ var cors = require('cors');
 
 import ctrlDevices from '../controllers/devices';
 import ctrlData from '../controllers/printouts';
+import xlsCreate from '../controllers/excelCreate';
 
 router.get('/devices', ctrlDevices.deviceList);
 router.post('/devices', ctrlDevices.deviceCreate);
@@ -19,5 +20,7 @@ router.get('/devcol/:deviceid', ctrlDevices.deviceOne);
 router.get('/buildcol/:buildid', ctrlDevices.buildOne);
 router.get('/unitcol/:unitid', ctrlDevices.unitOne);
 router.get('/vendorcol/:vendorid', ctrlDevices.vendorOne);
+
+router.get('/xls', xlsCreate.xlsCreate);
 
 module.exports = router;

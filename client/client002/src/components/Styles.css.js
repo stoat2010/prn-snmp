@@ -7,7 +7,7 @@ export default {
     },
     btnpdf: {
         'position': 'absolute',
-        'bottom': '2px',
+        'bottom': '6px',
         'right': '1%'
     },
     btnExpand: {
