@@ -5,6 +5,7 @@ var cors = require('cors');
 import ctrlDevices from '../controllers/devices';
 import ctrlData from '../controllers/printouts';
 import xlsCreate from '../controllers/excelCreate';
+import pdfCreate from '../controllers/pdfCreate';
 
 router.get('/devices', ctrlDevices.deviceList);
 router.post('/devices', ctrlDevices.deviceCreate);
@@ -22,5 +23,6 @@ router.get('/unitcol/:unitid', ctrlDevices.unitOne);
 router.get('/vendorcol/:vendorid', ctrlDevices.vendorOne);
 
 router.get('/xls', xlsCreate.xlsCreate);
+router.get('/pdf', pdfCreate.pdfCreate);
 
 module.exports = router;
