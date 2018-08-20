@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
 
 import Row from './Row';
 import TopNav from './TopNav';
 import TableHeader from './TableHeader';
-import Footer from './Footer';
 import Sidenav from './Sidenav';
 
 import styles from './Styles.css';

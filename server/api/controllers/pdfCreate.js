@@ -27,11 +27,32 @@ module.exports.pdfCreate = async function (req, res) {
 
     doc.text(headerText, x , y + 0.5*(h-doc.heightOfString(headerText,optionsHeader)), optionsHeader);
 
-    devices.map(device => {
+    const results = devices.map( async (device)  => {
+
+        var balance = await balanceLoad(device.device);
+        var dtGraph = await dataGraph(device.device, balance);
+        //var n = dtGraph.pop();
+
+        var dev1 = JSON.parse(JSON.stringify(device));
+        //var dev1 = Object.assign({},(device));
+        dev1.dtgraph = dtGraph;
+        
+        return await dev1;
+
+    });
+
+    await Promise.all(results).then(dev => {
+
+        dev.map( dev  => {
+
+        var xxx = 60;
+        
 
         doc.addPage()
             .font('Header Font').fontSize(25)
-            .text(device.model, 100, 100)
+            .text(dev.model, 100, 100)
+            .fontSize(16)
+            .text("Отпечатки помесячно", 230, 340)
             .moveTo(10,130).lineTo(600,130).lineWidth(5).stroke()
             .font('Device Font')
             .fontSize(12)
@@ -41,22 +62,56 @@ module.exports.pdfCreate = async function (req, res) {
             .text("Подразделение: ",40,155)
             .text("Корпус: ",40,170)
             .text("Кабинет: ",40,185)
-            .text(device.unit,300,155)
-            .text(device.build,300,170)
-            .text(device.office,300,185)
+            .text(dev.unit,300,155)
+            .text(dev.build,300,170)
+            .text(dev.office,300,185)
             .moveTo(10,200).lineTo(600,200).lineWidth(1).stroke()
             .text("Производитель:",40,240)
             .text("Серийный номер:",40,255)
             .text("Сетевое имя:",40,270)
             .text("IP:",40,285)
             .text("Принят на обслуживание:",40,300)
-            .text(device.vendor,300,240)
-            .text(device.serial,300,255)
-            .text(device.name,300,270)
-            .text(device.device,300,285)
-            .text(new Date(device.start_date).toLocaleDateString(),300,300)
+            .text(dev.vendor,300,240)
+            .text(dev.serial,300,255)
+            .text(dev.name,300,270)
+            .text(dev.device,300,285)
+            .text(new Date(dev.start_date).toLocaleDateString(),300,300)
             .moveTo(10,315).lineTo(600,315).lineWidth(1).stroke()
-    })
+            .moveTo(55,385).lineTo(550,385).lineWidth(1).stroke()
+            .fontSize(10)
+            .text("  Янв",60, 370)
+            .text("  Фев",100, 370)
+            .text("  Мар",140, 370)
+            .text("  Апр",180, 370)
+            .text("  Май",220, 370)
+            .text("  Июн",260, 370)
+            .text("  Июл",300, 370)
+            .text("  Авг",340, 370)
+            .text("  Сен",380, 370)
+            .text("  Окт",420, 370)
+            .text("  Ноя",460, 370)
+            .text("  Дек",500, 370)
+            
+            dev.dtgraph.map(dtgr =>{
+                if (dtgr === 0){dtgr=""};
+                if (isNaN(dtgr)){dtgr=""};
+                
+                if (dtgr <10){
+                    doc
+                        .text(dtgr, xxx+10, 390)
+                }else if(dtgr>10 & dtgr <= 999){
+                    doc
+                        .text(dtgr, xxx+8, 390)
+                }else{
+                    doc
+                        .text(dtgr, xxx+5, 390)
+                }
+                xxx = xxx+ 40;
+                doc
+                    .moveTo(xxx-5,375).lineTo(xxx-5,395).lineWidth(1).stroke()
+            }) 
+        });
+    });
 
     doc.pipe(res);
     doc.end();
