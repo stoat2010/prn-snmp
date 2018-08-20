@@ -35,7 +35,7 @@ module.exports.pdfCreate = async function (req, res) {
         var dev1 = JSON.parse(JSON.stringify(device));
         dev1.dtgraph = dtGraph;
         
-        return await dev1;
+        return dev1;
     });
 
     await Promise.all(results).then(dev => {
