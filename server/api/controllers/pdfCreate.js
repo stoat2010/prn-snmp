@@ -188,10 +188,8 @@ function dataGraph(devparam, balance) {
                     var months = device.map(item => item.month);
                     var maxMonth = Math.max.apply(null, months);
                     var firstMonth = Math.min.apply(null, months);
-
                     var arr01 = device.map(item => item.printouts);
                     var k = maxMonth - arr01.length;
-
                     var bal1 = balance.map(item => item.balance);
 
                     for (var j = 0; j < k; j++) {
