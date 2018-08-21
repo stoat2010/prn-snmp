@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Loc = mongoose.model('device');
 var LocPrint = mongoose.model('printout');
+var Chart = require('chart.js');
 
 module.exports.pdfCreate = async function (req, res) {
 
@@ -31,19 +32,29 @@ module.exports.pdfCreate = async function (req, res) {
 
         var balance = await balanceLoad(device.device);
         var dtGraph = await dataGraph(device.device, balance);
+        var dayGraph = await dateGraph(device.device, balance);
 
         var dev1 = JSON.parse(JSON.stringify(device));
         dev1.dtgraph = dtGraph;
+        dev1.daygraph = dayGraph;
         
         return dev1;
     });
 
     await Promise.all(results).then(dev => {
 
+
+
         dev.map( dev  => {
 
         var xxx = 60;
-        
+        var grData = dev.dtgraph;
+        var nans = grData.pop()
+        var dtgraphMax = Math.max(...grData);
+
+        var grDay = dev.daygraph;
+        var nans1 = grDay.pop()
+        var daygraphMax = Math.max(...grData);
 
         doc.addPage()
             .font('Header Font').fontSize(25)
@@ -51,6 +62,7 @@ module.exports.pdfCreate = async function (req, res) {
             .fontSize(16)
             .text("Отпечатки помесячно", 230, 340)
             .moveTo(10,130).lineTo(600,130).lineWidth(5).stroke()
+            .moveTo(10,730).lineTo(600,730).lineWidth(5).stroke()
             .font('Device Font')
             .fontSize(12)
             .text("Данные устройства:",20,215)
@@ -75,6 +87,8 @@ module.exports.pdfCreate = async function (req, res) {
             .text(new Date(dev.start_date).toLocaleDateString(),300,300)
             .moveTo(10,315).lineTo(600,315).lineWidth(1).stroke()
             .moveTo(55,385).lineTo(550,385).lineWidth(1).stroke()
+            .moveTo(45,652).lineTo(550,652).lineWidth(1).stroke()
+            .moveTo(50,657).lineTo(50,420).lineWidth(1).stroke()
             .fontSize(10)
             .text("  Янв",60, 370)
             .text("  Фев",100, 370)
@@ -89,23 +103,48 @@ module.exports.pdfCreate = async function (req, res) {
             .text("  Ноя",460, 370)
             .text("  Дек",500, 370)
             
-            dev.dtgraph.map(dtgr =>{
-                if (dtgr === 0){dtgr=""};
-                if (isNaN(dtgr)){dtgr=""};
+            grData.map(dtgr =>{
+                
+                if (isNaN(dtgr)){dtgr=0};
+                if (dtgr === 0){var dtgrprint=""}else{var dtgrprint=dtgr};
                 
                 if (dtgr <10){
                     doc
-                        .text(dtgr, xxx+10, 390)
+                        .fillColor("black")
+                        .text(dtgrprint, xxx+10, 390)
                 }else if(dtgr>10 & dtgr <= 999){
                     doc
-                        .text(dtgr, xxx+8, 390)
+                        .fillColor("black")
+                        .text(dtgrprint, xxx+8, 390)
                 }else{
                     doc
-                        .text(dtgr, xxx+5, 390)
+                        .fillColor("black")
+                        .text(dtgrprint, xxx+5, 390)
                 }
+
+                if (dtgr > 0){
+                    doc
+                        .rect(xxx+10, 450, 20, dtgr*200/dtgraphMax).fillAndStroke("#e3f2fd","#bbdefb")
+                }else{
+                    doc
+                        .rect(xxx+10, 650, 20, 0).fillAndStroke("#e3f2fd","#bbdefb")
+                }
+
                 xxx = xxx+ 40;
                 doc
-                    .moveTo(xxx-5,375).lineTo(xxx-5,395).lineWidth(1).stroke()
+                    .moveTo(xxx-5,375).lineTo(xxx-5,395).lineWidth(1).stroke("black")
+                    .moveTo(xxx-20,652).lineTo(xxx-20,657).lineWidth(1).stroke("black")
+                    
+            }) 
+            var xxx = 60;
+            grDay.map(dtgr =>{
+                
+                if (dtgr === 0){var dtgrprint=""}else{var dtgrprint= new Date(dtgr).toLocaleDateString()};
+                    doc
+                        .fontSize(8)
+                        .fillColor("black")
+                        .text(dtgrprint, xxx+5, 660)
+                xxx = xxx+ 40;
             }) 
         });
     });
@@ -170,6 +209,44 @@ function dataGraph (devparam, balance) {
                     } else {
                         var val = arr01[i] - arr01[i - 1];
                     }
+                    prouts.push(val);
+                }
+                resolve(prouts);
+            }
+        });
+})};
+
+function dateGraph (devparam, balance) {
+
+    return new Promise(resolve => {
+    var prouts = [0];
+
+    LocPrint
+        .find({ device: devparam, year: new Date().getFullYear() }, { date: 1, month: 1, _id: 0 }).sort({ date: 1 }).limit(12)
+        .exec(function (err, device) {
+            if (err) {
+                console.log(err)
+            } else {
+
+                var months = device.map(item => item.month);
+                var maxMonth = Math.max.apply(null, months);
+                var firstMonth = Math.min.apply(null, months);
+
+                var arr01 = device.map(item => item.date);
+                var k = maxMonth - arr01.length;
+
+                //var bal1 = balance.map(item => item.balance);
+
+                for (var j = 0; j < k; j++) {
+                    var t = arr01.unshift(0);
+                };
+
+                for (var i = 1; i <= maxMonth; i++) {
+                   // if (i === firstMonth - 1 && firstMonth > 0) {
+                        var val = arr01[i];
+                    //} else {
+                        //var val = arr01[i] - arr01[i - 1];
+                    //}
                     prouts.push(val);
                 }
                 resolve(prouts);
