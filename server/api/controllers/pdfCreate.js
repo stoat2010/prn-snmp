@@ -21,7 +21,7 @@ module.exports.pdfCreate = async function (req, res) {
     doc.font('Header Font').fontSize(25)
 
     var headerText = "Отчет по состоянию сетевой печатающей техники на: " + new Date().toLocaleDateString();
-    var x = doc.x + 40, y = doc.y, h = 300, w = 400;
+    var x = doc.x + 40, y = doc.y, h = 600, w = 400;
     var optionsHeader = { width: w, align: 'center' };
     doc.rect(x, y, w, h).stroke();
 
