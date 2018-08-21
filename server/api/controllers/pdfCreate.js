@@ -31,7 +31,7 @@ module.exports.pdfCreate = async function (req, res) {
 
         var balance = await balanceLoad(device.device);
         var dtGraph = await dataGraph(device.device, balance);
-        var dayGraph = await dateGraph(device.device, balance);
+        var dayGraph = await dateGraph(device.device);
 
         var dev1 = JSON.parse(JSON.stringify(device));
         dev1.dtgraph = dtGraph;
@@ -211,7 +211,7 @@ function dataGraph(devparam, balance) {
     })
 };
 
-function dateGraph(devparam, balance) {
+function dateGraph(devparam) {
 
     return new Promise(resolve => {
         var prouts = [0];
