@@ -124,10 +124,10 @@ module.exports.pdfCreate = async function (req, res) {
 
                 if (dtgr > 0){
                     doc
-                        .rect(xxx+10, 450, 20, dtgr*200/dtgraphMax).fillAndStroke("#e3f2fd","#bbdefb")
+                        .rect(xxx+10, 450, 20, dtgr*200/dtgraphMax).fillAndStroke("#efebe9","#d7ccc8")
                 }else{
                     doc
-                        .rect(xxx+10, 650, 20, 0).fillAndStroke("#e3f2fd","#bbdefb")
+                        .rect(xxx+10, 650, 20, 0).fillAndStroke("#efebe9","#d7ccc8")
                 }
 
                 xxx = xxx+ 40;
