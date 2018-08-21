@@ -50,6 +50,7 @@ module.exports.pdfCreate = async function (req, res) {
             var dtgraphMax = Math.max(...grData);
             var grDay = dev.daygraph;
             var nans1 = grDay.pop()
+            var pageNum = 2;
 
             doc.addPage()
                 .font('Header Font').fontSize(25)
