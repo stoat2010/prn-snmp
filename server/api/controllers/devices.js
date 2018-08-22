@@ -83,3 +83,19 @@ module.exports.deviceDeleteOne = function (req, res) {
     } else {
         sendJSONResponse(res, 404, { "message": "No device" });
     }};
+
+module.exports.deviceToReport = function (req, res) {
+    var deviceid = req.params.deviceid;
+    var state = req.body.state;
+    if (deviceid){
+        Loc
+            .updateOne({device: deviceid}, { $set: {"inreport": state}})
+            .exec(function(err, result){
+                if (err) {
+                    sendJSONResponse(res, 404, err);
+                    return;
+                }
+                sendJSONResponse(res, 201, 0);
+                })
+            }
+}

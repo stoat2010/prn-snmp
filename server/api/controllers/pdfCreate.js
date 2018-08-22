@@ -2,6 +2,10 @@ var mongoose = require('mongoose');
 var Loc = mongoose.model('device');
 var LocPrint = mongoose.model('printout');
 
+var moment = require('moment');
+require('moment/locale/ru');
+moment.locale('ru');
+
 module.exports.pdfCreate = async function (req, res) {
 
     const PDFDocument = require('pdfkit');
@@ -20,7 +24,8 @@ module.exports.pdfCreate = async function (req, res) {
 
     doc.font('Header Font').fontSize(25)
 
-    var headerText = "Отчет по состоянию сетевой печатающей техники на: " + new Date().toLocaleDateString();
+    //var headerText = "Отчет по состоянию сетевой печатающей техники на: " + new Date().toLocaleDateString();
+    var headerText = "Отчет по состоянию сетевой печатающей техники на: " + moment().format("DD MMMM YYYY");
     var x = doc.x + 40, y = doc.y, h = 600, w = 400;
     var optionsHeader = { width: w, align: 'center' };
     doc.rect(x, y, w, h).stroke();
@@ -80,7 +85,7 @@ module.exports.pdfCreate = async function (req, res) {
                 .text(dev.serial, 300, 255)
                 .text(dev.name, 300, 270)
                 .text(dev.device, 300, 285)
-                .text(new Date(dev.start_date).toLocaleDateString(), 300, 300)
+                .text(moment(dev.start_date).format("DD MMMM YYYY"), 300, 300)
                 .moveTo(10, 315).lineTo(600, 315).lineWidth(1).stroke()
                 .moveTo(55, 385).lineTo(550, 385).lineWidth(1).stroke()
                 .moveTo(45, 652).lineTo(550, 652).lineWidth(1).stroke()
@@ -135,7 +140,7 @@ module.exports.pdfCreate = async function (req, res) {
             var xxx = 60;
             grDay.map(dtgr => {
 
-                if (dtgr === 0) { var dtgrprint = "" } else { var dtgrprint = new Date(dtgr).toLocaleDateString() };
+                if (dtgr === 0) { var dtgrprint = "" } else { var dtgrprint = moment(dtgr).format("DD.MM.YYYY") };
                 doc
                     .fontSize(8)
                     .fillColor("black")
@@ -152,7 +157,7 @@ module.exports.pdfCreate = async function (req, res) {
 async function getDev() {
     return new Promise(resolve => {
         Loc
-            .find({}, function (err, document) {
+            .find({"inreport": true}, function (err, document) {
                 if (err) {
                     console.log(err);
                 } else {

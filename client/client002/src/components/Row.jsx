@@ -12,7 +12,8 @@ export default class Row extends Component {
             devData: {},
             dataAllow: 0,
             dataGraph: [],
-            dataDate: ''
+            dataDate: '',
+            reportStatus: this.props.device.inreport
         };
         this.classN = "btn-floating btn-small waves-effect waves-light yellow lighten-3";
         this.classS = "btn-flat white";
@@ -23,6 +24,7 @@ export default class Row extends Component {
         this.readData = this.readData.bind(this);
         this.devInfo = this.devInfo.bind(this);
         this.handleSave = this.handleSave.bind(this);
+        this.handleReport = this.handleReport.bind(this);
         this.readMonthData = this.readMonthData.bind(this);
         this.readGraphData = this.readGraphData.bind(this);
         this.readDataDate = this.readDataDate.bind(this);
@@ -137,7 +139,32 @@ export default class Row extends Component {
         });
     }
 
+    handleReport(event){
+
+        event.preventDefault();
+
+        var submitted = {
+            state: !this.state.reportStatus
+        };
+
+        fetch('http://127.0.0.1:3333/api/devices/' + this.props.device.device, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(submitted)
+        }).then(res => {
+            this.setState({reportStatus: submitted.state})
+            //this.readMonthData();
+            //this.readGraphData();
+            //this.readDataDate();
+        });
+
+    }
+
     cl = () => this.state.dataAllow === 0 ? <i className="material-icons red-text">block</i> : <i className="material-icons green-text">check_circle</i>;
+    rep = () => this.state.reportStatus === false ? <span className="red-text grey lighten-5"><b>Нет</b></span> : <span className="green-text grey lighten-5"><b>Да</b></span>;
 
     componentDidMount() {
         this.devInfo();
@@ -174,15 +201,24 @@ export default class Row extends Component {
                     {this.cl()}<br />
                         {this.state.dataDate === '' ? <span style={{fontSize: 'xx-small'}}></span> : <span className={this.classDate} style={{fontSize: 'xx-small'}}>{new Date(this.state.dataDate).toLocaleDateString()}</span> }
                 </div>
-                <div className="col s1" style={{ width: '4%', textAlign: 'center', fontSize: 'small',}}><button
+                <div className="col s1" style={{ width: '4%', textAlign: 'center', fontSize: 'small',}}>
+                <button
                     className={this.classS}
                     id={this.props.device._id}
                     onClick={this.handleSave}>
                     <i className="material-icons">save</i>
                 </button>
                 </div>
-                <div className="col s2" style={{ width: '28%', textAlign: 'center'}}><PrintBar data={this.state.dataGraph} /></div>
-                <div className="col s1" style={{ width: '4%', textAlign: 'center'}}>
+                <div className="col s1" style={{ width: '4%', textAlign: 'center', fontSize: 'small',}}>
+                <button
+                    className="btn-flat white grey lighten-5"
+                    id={this.props.device._id}
+                    onClick={this.handleReport}>
+                    {this.rep()}
+                </button>
+                </div>
+                <div className="col s1" style={{ width: '25%', textAlign: 'center'}}><PrintBar data={this.state.dataGraph} /></div>
+                <div className="col s1" style={{ width: '3%', textAlign: 'center'}}>
                     <button
                         className="waves-effect waves-gray btn-flat"
                         id={this.props.device._id}

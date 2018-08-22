@@ -4,6 +4,7 @@ import Row from './Row';
 import TopNav from './TopNav';
 import TableHeader from './TableHeader';
 import Sidenav from './Sidenav';
+import ReportFAB from './ReportFAB';
 
 import styles from './Styles.css';
 
@@ -226,11 +227,12 @@ class MainTable extends Component {
           onClick={this.toggleVisible}>
           <i className="material-icons">add</i>
         </button>
-        <a href="http://127.0.0.1:3333/api/pdf"
+        {/* <a href="http://127.0.0.1:3333/api/pdf"
                 className="btn-floating btn-large waves-effect waves-light blue z-depth-5"
                 style={styles.btnpdf}>
                 <i className="material-icons">assignment</i>
-        </a>
+        </a> */}
+        <ReportFAB />
       </div>
     );
   }
