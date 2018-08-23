@@ -12,6 +12,7 @@ module.exports.pdfCreate = async function (req, res) {
     var devices = await getDev();
 
     let filename = 'report.pdf'
+    var pageNum = 1;
 
     res.setHeader('Content-disposition', 'attachment; filename="' + filename + '"')
     res.setHeader('Content-type', 'application/pdf')
@@ -50,12 +51,12 @@ module.exports.pdfCreate = async function (req, res) {
         dev.map(dev => {
 
             var xxx = 60;
+            pageNum = pageNum++;
             var grData = dev.dtgraph;
             var nans = grData.pop()
             var dtgraphMax = Math.max(...grData);
             var grDay = dev.daygraph;
             var nans1 = grDay.pop()
-            var pageNum = 2;
 
             doc.addPage()
                 .font('Header Font').fontSize(25)
@@ -67,8 +68,7 @@ module.exports.pdfCreate = async function (req, res) {
                 .font('Device Font')
                 .fontSize(12)
                 .text("Данные устройства:", 20, 215)
-                .font('Device Font')
-                .fontSize(12)
+                //.text(pageNum, 550, 725)
                 .text("Подразделение: ", 40, 155)
                 .text("Корпус: ", 40, 170)
                 .text("Кабинет: ", 40, 185)

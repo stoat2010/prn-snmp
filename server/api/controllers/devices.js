@@ -16,6 +16,7 @@ module.exports.deviceCreate = function(req, res) {
         serial: req.body.serial,
         vendor: req.body.vendor,
         start_date: req.body.start_date,
+        monthlimit: req.body.monthlimit,
         name: req.body.name
     }, function(err, device){
         if(err){

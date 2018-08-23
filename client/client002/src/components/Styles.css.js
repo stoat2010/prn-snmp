@@ -41,7 +41,7 @@ export default {
         'transition': '0.5s'
     },
     sidenavActive: {
-        'height': '67%',
+        'height': '73%',
         'width': '27%',
         'position': 'fixed',
         'zIndex': 1,

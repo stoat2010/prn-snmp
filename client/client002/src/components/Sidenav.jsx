@@ -29,6 +29,7 @@ export default class Sidenav extends Component {
                 vendor: this.props.devData1[1],
                 model: this.props.devData1[0],
                 name: this.refs['device'].value,
+                monthlimit: this.refs['monthlimit'].value,
                 start_date: new Date()
             };
 
@@ -37,6 +38,7 @@ export default class Sidenav extends Component {
             this.refs['build'].value = '';
             this.refs['office'].value = '';
             this.refs['unit'].value = '';
+            this.refs['monthlimit'].value = '';
             this.props.resetForm();
             this.props.toggleVisible();
         } else {
@@ -104,9 +106,13 @@ export default class Sidenav extends Component {
                             <input id="unit" type="text" className="validate" ref="unit" />
                             <label htmlFor="unit">Подразделение/служба</label>
                         </div>
+                        <div className="input-field ">
+                            <input id="monthlimit" type="text" className="validate" ref="monthlimit" />
+                            <label htmlFor="monthlimit">Отпечатков в месяц</label>
+                        </div>
                         <div className="center-align">
                             <button className="btn waves-effect waves-light" type="submit" name="action">Добавить
-                  <i className="material-icons right">print</i>
+                                 <i className="material-icons right">print</i>
                             </button>
                         </div>
                     </form >

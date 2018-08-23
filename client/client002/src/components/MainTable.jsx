@@ -227,11 +227,6 @@ class MainTable extends Component {
           onClick={this.toggleVisible}>
           <i className="material-icons">add</i>
         </button>
-        {/* <a href="http://127.0.0.1:3333/api/pdf"
-                className="btn-floating btn-large waves-effect waves-light blue z-depth-5"
-                style={styles.btnpdf}>
-                <i className="material-icons">assignment</i>
-        </a> */}
         <ReportFAB />
       </div>
     );

@@ -13,7 +13,7 @@ export default function ReportFAB(props) {
                 <i className="material-icons" style={{verticalAlign: 'middle'}}>description</i>
             </Fab>
             <SpeedDialItem className="green">
-                <a href="http://127.0.0.1:3333/api/pdf">
+                <a href="http://127.0.0.1:3333/api/pdf1">
                     <i className="material-icons white-text" style={{verticalAlign: 'middle'}}>show_chart</i>
                 </a> 
             </SpeedDialItem>
@@ -23,7 +23,7 @@ export default function ReportFAB(props) {
                 </a>
             </SpeedDialItem>
             <SpeedDialItem  className="pink" onClick={() => console.log('speed B')}>
-                <a href="http://127.0.0.1:3333/api/pdf2">
+                <a href="http://127.0.0.1:3333/api/pdf3">
                     <i className="material-icons white-text" style={{verticalAlign: 'middle'}}>reorder</i>
                 </a>
             </SpeedDialItem>
