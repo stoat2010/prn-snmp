@@ -6,6 +6,7 @@ import ctrlDevices from '../controllers/devices';
 import ctrlData from '../controllers/printouts';
 import xlsCreate from '../controllers/excelCreate';
 import pdfCreate from '../controllers/pdfCreate';
+import pdfCreate2 from '../controllers/pdfCreate2';
 
 router.get('/devices', ctrlDevices.deviceList);
 router.post('/devices', ctrlDevices.deviceCreate);
@@ -25,5 +26,6 @@ router.get('/vendorcol/:vendorid', ctrlDevices.vendorOne);
 
 router.get('/xls', xlsCreate.xlsCreate);
 router.get('/pdf', pdfCreate.pdfCreate);
+router.get('/pdf2', pdfCreate2.pdfCreate2);
 
 module.exports = router;
