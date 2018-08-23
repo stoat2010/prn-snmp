@@ -8,7 +8,7 @@ import styles from './Styles.css';
 export default function ReportFAB() {
 
     return (
-        <SpeedDial disabled={false} direction='up' onClick={() => console.log('test1')} style={styles.btnpdf}>
+        <SpeedDial disabled={false} direction='up'style={styles.btnpdf}>
             <Fab className="btn-floating btn-large waves-effect waves-light z-depth-5 blue">
                 <i className="material-icons" style={{verticalAlign: 'middle'}}>description</i>
             </Fab>
@@ -17,12 +17,12 @@ export default function ReportFAB() {
                     <i className="material-icons white-text" style={{verticalAlign: 'middle'}}>show_chart</i>
                 </a> 
             </SpeedDialItem>
-            <SpeedDialItem  className="orange" onClick={() => console.log('speed B')}>
+            <SpeedDialItem  className="orange">
                 <a href="http://127.0.0.1:3333/api/pdf2">
                     <i className="material-icons white-text" style={{verticalAlign: 'middle'}}>insert_chart</i>
                 </a>
             </SpeedDialItem>
-            <SpeedDialItem  className="pink" onClick={() => console.log('speed B')}>
+            <SpeedDialItem  className="pink">
                 <a href="http://127.0.0.1:3333/api/pdf3">
                     <i className="material-icons white-text" style={{verticalAlign: 'middle'}}>reorder</i>
                 </a>
