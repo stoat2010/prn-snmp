@@ -5,7 +5,7 @@ import 'onsenui/css/onsen-css-components.css';
 
 import styles from './Styles.css';
 
-export default function ReportFAB(props) {
+export default function ReportFAB() {
 
     return (
         <SpeedDial disabled={false} direction='up' onClick={() => console.log('test1')} style={styles.btnpdf}>
