@@ -2,12 +2,12 @@ export default {
 
     btnadd: {
         'position': 'absolute',
-        'bottom': '6px',
+        'bottom': '15px',
         'right': '1%'
     },
     btnpdf: {
         'position': 'absolute',
-        'bottom': '6px',
+        'bottom': '15px',
         'right': '5%'
     },
     btnExpand: {
@@ -37,7 +37,7 @@ export default {
         'paddingTop': '30px',
         'borderStyle': 'solid',
         'borderRadius': '0px 5px 5px 0px',
-        'borderColor': '#8d6e63',
+        'borderColor': '#bdbdbd',
         'transition': '0.5s',
         'overflow': 'hidden'
     },
@@ -53,7 +53,7 @@ export default {
         'paddingTop': '30px',
         'borderStyle': 'solid',
         'borderRadius': '10px 10px 10px 0px',
-        'borderColor': '#8d6e63',
+        'borderColor': '#bdbdbd',
         'transition': '0.5s',
         'overflow': 'hidden'
     },
@@ -63,7 +63,7 @@ export default {
         'position': 'fixed',
         'zIndex': 1,
         'top': '0px',
-        'right': '13%',
+        'right': '5%',
         'backgroundColor': '#eeeeee',
         'overflowX': 'hidden',
         'borderStyle': 'solid',
@@ -78,7 +78,7 @@ export default {
         'position': 'fixed',
         'zIndex': 1,
         'top': '0px',
-        'right': '13%',
+        'right': '5%',
         'backgroundColor': '#eeeeee',
         'overflowX': 'hidden',
         'paddingTop': '20px',

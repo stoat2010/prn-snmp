@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import swal from 'sweetalert';
-//import styles from './Styles.css.js';
 
 import PrintBar from './Bar';
 
@@ -111,13 +110,12 @@ export default class Row extends Component {
     handleDelButton(i, e) {
         e.preventDefault();
 
-        swal({
-            title: "Вы уверены?",
+        swal({title: "Вы уверены?",
             text: "Устройство будет удалено из базы данных",
             icon: "warning",
             buttons: true,
             dangerMode: true
-        }). then((willDelete) => {
+        }).then((willDelete) => {
             if (willDelete) {
                 fetch('http://192.168.1.102:3333/api/devices/' + i, { method: 'delete', mode: 'cors' })
                 .then(res => {
@@ -127,9 +125,7 @@ export default class Row extends Component {
             }else{
                 swal("Отменено")
             }
-        }
-    
-    )
+        })
     }
 
     handleSave(event) {
@@ -172,9 +168,6 @@ export default class Row extends Component {
             body: JSON.stringify(submitted)
         }).then(res => {
             this.setState({reportStatus: submitted.state})
-            //this.readMonthData();
-            //this.readGraphData();
-            //this.readDataDate();
         });
 
     }
@@ -243,7 +236,6 @@ export default class Row extends Component {
                     </button>
                 </div>
             </div>
-
         )
     }
 }

@@ -97,7 +97,6 @@ class MainTable extends Component {
     this.toggleVisible();
   }
 
-
   handleChange(event) {
     var addr = '';
     if (event.target.value === '0') {
@@ -111,9 +110,9 @@ class MainTable extends Component {
   handleChangeBuild(event) {
     var addr = '';
     if (event.target.value === '0') {
-      addr = 'http://127.0.0.1:3333/api/devices';
+      addr = 'http://192.168.1.102:3333/api/devices';
     } else {
-      addr = 'http://127.0.0.1:3333/api/buildcol/' + event.target.value;
+      addr = 'http://192.168.1.102:3333/api/buildcol/' + event.target.value;
     }
     this.dbConn(addr);
   }
@@ -148,7 +147,6 @@ class MainTable extends Component {
   }
 
   toBase(submitted) {
-
     fetch('http://192.168.1.102:3333/api/devices', {
       method: 'POST',
       headers: {
@@ -189,8 +187,8 @@ class MainTable extends Component {
 
         <TableHeader />
 
-        <div className="row col s12" >
-          <div style={{ position: 'flex', overflow: 'auto', height: '750px' }}>
+        <div style={{ position: 'flex', overflow: 'auto', height: '760px' }}>
+          <div className="row col s12" >
             {this.state.devices.map(device =>
               <Row
                 key={device._id}
@@ -200,6 +198,15 @@ class MainTable extends Component {
             )}
           </div>
         </div>
+
+        <button
+          className="btn-floating btn-large waves-effect waves-light green z-depth-5"
+          style={styles.btnadd}
+          onClick={this.toggleVisible}>
+          <i className="material-icons">add</i>
+        </button>
+        
+        <ReportFAB />
 
         <Sidenav
           toggleVisible={this.toggleVisible}
@@ -211,6 +218,7 @@ class MainTable extends Component {
           devData1={this.state.devData1}
           sideStyle={this.sideStyle}
         />
+
         <TopNav
           btnArrows={this.state.btnArrows}
           topStyle={this.topStyle}
@@ -221,14 +229,6 @@ class MainTable extends Component {
           handleChangeUnit={this.handleChangeUnit}
           handleChangeVendor={this.handleChangeVendor}
         />
-        {/* <Footer toggleVisible={this.toggleVisible} /> */}
-        <button
-          className="btn-floating btn-large waves-effect waves-light green z-depth-5"
-          style={styles.btnadd}
-          onClick={this.toggleVisible}>
-          <i className="material-icons">add</i>
-        </button>
-        <ReportFAB />
       </div>
     );
   }

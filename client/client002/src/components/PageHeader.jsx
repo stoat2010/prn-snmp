@@ -7,7 +7,7 @@ export default function PageHeader() {
 
         <nav className="nav-extended white">
             <div className="nav-wrapper">
-                {/* <NavLink exact to="/" className="brand-logo right"><ReactSVG path="logo-icon.svg" svgStyle={{ width: 20, margin: "10"}} /></NavLink> */}
+                {/* <NavLink exact to="/" className="brand-logo right"><ReactSVG path="logo-text.svg" svgStyle={{ height: 20, margin: "10"}} /></NavLink> */}
                 <NavLink exact to="/" className="brand-logo left"><ReactSVG path="logo-text.svg" svgStyle={{ height: 20, margin: "10"}} /></NavLink>
                 <NavLink exact to="/" className="brand-logo center" style={{color: "#01579b"}}>SNMP опрос сетевых МФУ и принтеров</NavLink>
             </div>
