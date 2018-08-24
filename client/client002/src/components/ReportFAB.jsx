@@ -13,17 +13,17 @@ export default function ReportFAB() {
                 <i className="material-icons" style={{verticalAlign: 'middle'}}>description</i>
             </Fab>
             <SpeedDialItem className="green">
-                <a href="http://127.0.0.1:3333/api/pdf1">
+                <a href="http://192.168.1.102:3333/api/pdf1">
                     <i className="material-icons white-text" style={{verticalAlign: 'middle'}}>show_chart</i>
                 </a> 
             </SpeedDialItem>
             <SpeedDialItem  className="orange">
-                <a href="http://127.0.0.1:3333/api/pdf2">
+                <a href="http://192.168.1.102:3333/api/pdf2">
                     <i className="material-icons white-text" style={{verticalAlign: 'middle'}}>insert_chart</i>
                 </a>
             </SpeedDialItem>
             <SpeedDialItem  className="pink">
-                <a href="http://127.0.0.1:3333/api/pdf3">
+                <a href="http://192.168.1.102:3333/api/pdf3">
                     <i className="material-icons white-text" style={{verticalAlign: 'middle'}}>reorder</i>
                 </a>
             </SpeedDialItem>

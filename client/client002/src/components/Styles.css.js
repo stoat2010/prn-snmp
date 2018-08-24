@@ -38,7 +38,8 @@ export default {
         'borderStyle': 'solid',
         'borderRadius': '0px 5px 5px 0px',
         'borderColor': '#8d6e63',
-        'transition': '0.5s'
+        'transition': '0.5s',
+        'overflow': 'hidden'
     },
     sidenavActive: {
         'height': '73%',
@@ -53,7 +54,8 @@ export default {
         'borderStyle': 'solid',
         'borderRadius': '10px 10px 10px 0px',
         'borderColor': '#8d6e63',
-        'transition': '0.5s'
+        'transition': '0.5s',
+        'overflow': 'hidden'
     },
     topnav: {
         'height': '40px',
@@ -61,12 +63,12 @@ export default {
         'position': 'fixed',
         'zIndex': 1,
         'top': '0px',
-        'right': '100px',
+        'right': '13%',
         'backgroundColor': '#eeeeee',
         'overflowX': 'hidden',
         'borderStyle': 'solid',
         'borderRadius': '0px 0px 10px 10px',
-        'borderColor': '#8d6e63',
+        'borderColor': '#757575',
         'transition': '0.5s',
         'overflow': 'hidden'
     },
@@ -76,34 +78,32 @@ export default {
         'position': 'fixed',
         'zIndex': 1,
         'top': '0px',
-        'right': '100px',
+        'right': '13%',
         'backgroundColor': '#eeeeee',
         'overflowX': 'hidden',
         'paddingTop': '20px',
         'borderStyle': 'solid',
         'borderRadius': '0px 0px 10px 10px',
-        'borderColor': '#8d6e63',
-        'transition': '0.5s'
+        'borderColor': '#757575',
+        'transition': '0.5s',
+        'overflow': 'hidden'
     },
     topnavLabel: {
         'position': 'absolute',
         'bottom': '0px',
         'width': '100%',
         'height': '40px',
-        'backgroundColor': '#8d6e63'
+        'backgroundColor': '#757575'
     },
     slcDev: {
         'fontSize': 'x-small',
         'height': '25px',
         'width': '100%',
-        'backgroundColor': '#8d6e63',
+        'backgroundColor': '#757575',
         'color': 'white',
         'fontWeight': 'bold',
         'borderStyle': 'none',
         'borderRadius': '5px'
-    },
-    commandRow: {
-        'paddingTop': '0px'
     },
     spanLbl: {
         'fontSize': 'x-small',

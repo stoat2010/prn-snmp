@@ -91,13 +91,16 @@ module.exports.pdfCreate3 = async function (req, res) {
                     .moveTo(44, 745).lineTo(550, 745).lineWidth(1).stroke()
                 yPos = 700
             }
-
+            var grad = doc.linearGradient(50, yPos, 50+(dev.printouts * 450 / dev.monthlimit), yPos+10)
+            grad.stop(0, "#4fc3f7")
+                .stop(1, "#4dd0e1")
             doc
                 .font('Header Font')
                 .fillColor("#616161")
                 .fontSize(8)
                 .text(dev.unit + " " + "корпус: " + dev.build + " " + "кабинет: " + dev.office, 55, yPos - 22)
-                .rect(50, yPos, dev.printouts * 450 / dev.monthlimit, 10).fillAndStroke("#4fc3f7", "#4fc3f7")
+        
+                .rect(50, yPos, dev.printouts * 450 / dev.monthlimit, 10).fillAndStroke(grad)  //.fillAndStroke("#4fc3f7", "#4fc3f7")
                 .rect(50, yPos-10, 450, 10).fillAndStroke("#01579b", "#01579b")
                 .text(dev.monthlimit , 510, yPos - 10)
                 .fillColor("black")

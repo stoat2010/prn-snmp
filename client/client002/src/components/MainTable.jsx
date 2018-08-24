@@ -49,7 +49,7 @@ class MainTable extends Component {
       cache: 'default'
     };
 
-    fetch("http://127.0.0.1:3333/devdata/" + devid, options)
+    fetch("http://192.168.1.102:3333/devdata/" + devid, options)
       .then((res => {
         return res.json();
       }))
@@ -66,7 +66,7 @@ class MainTable extends Component {
       cache: 'default'
     };
 
-    fetch("http://127.0.0.1:3333/devname/" + devid, options)
+    fetch("http://192.168.1.102:3333/devname/" + devid, options)
       .then((res => {
         return res.json();
       }))
@@ -74,20 +74,21 @@ class MainTable extends Component {
   }
 
   toggleVisible() {
+    console.log(this.state.isVisible);
     const newVisibleState = !this.state.isVisible;
     this.setState(
       {
         isVisible: newVisibleState,
         devData1: {}
       });
-    this.state.isVisible === false ? this.sideStyle = styles.sidenav : this.sideStyle = styles.sidenavActive;
+    this.state.isVisible === true ? this.sideStyle = styles.sidenav : this.sideStyle = styles.sidenavActive;
   }
 
   toggleTopVisible() {
     const newTopVisibleState = !this.state.isTopVisible;
     this.setState({ isTopVisible: newTopVisibleState, });
-    this.state.isTopVisible === false ? this.topStyle = styles.topnav : this.topStyle = styles.topnavActive;
-    this.state.isTopVisible === false ? this.setState({ btnArrows: 'arrow_downward' }) : this.setState({ btnArrows: 'arrow_upward' });
+    this.state.isTopVisible === true ? this.topStyle = styles.topnav : this.topStyle = styles.topnavActive;
+    this.state.isTopVisible === true ? this.setState({ btnArrows: 'arrow_downward' }) : this.setState({ btnArrows: 'arrow_upward' });
   }
 
   resetForm() {
@@ -100,9 +101,9 @@ class MainTable extends Component {
   handleChange(event) {
     var addr = '';
     if (event.target.value === '0') {
-      addr = 'http://127.0.0.1:3333/api/devices';
+      addr = 'http://192.168.1.102:3333/api/devices';
     } else {
-      addr = 'http://127.0.0.1:3333/api/devcol/' + event.target.value;
+      addr = 'http://192.168.1.102:3333/api/devcol/' + event.target.value;
     }
     this.dbConn(addr);
   }
@@ -120,9 +121,9 @@ class MainTable extends Component {
   handleChangeUnit(event) {
     var addr = '';
     if (event.target.value === '0') {
-      addr = 'http://127.0.0.1:3333/api/devices';
+      addr = 'http://192.168.1.102:3333/api/devices';
     } else {
-      addr = 'http://127.0.0.1:3333/api/unitcol/' + event.target.value;
+      addr = 'http://192.168.1.102:3333/api/unitcol/' + event.target.value;
     }
     this.dbConn(addr);
   }
@@ -130,9 +131,9 @@ class MainTable extends Component {
   handleChangeVendor(event) {
     var addr = '';
     if (event.target.value === '0') {
-      addr = 'http://127.0.0.1:3333/api/devices';
+      addr = 'http://192.168.1.102:3333/api/devices';
     } else {
-      addr = 'http://127.0.0.1:3333/api/vendorcol/' + event.target.value;
+      addr = 'http://192.168.1.102:3333/api/vendorcol/' + event.target.value;
     }
     this.dbConn(addr);
   }
@@ -148,7 +149,7 @@ class MainTable extends Component {
 
   toBase(submitted) {
 
-    fetch('http://127.0.0.1:3333/api/devices', {
+    fetch('http://192.168.1.102:3333/api/devices', {
       method: 'POST',
       headers: {
         'Accept': 'application/json, text/plain, */*',
@@ -157,7 +158,7 @@ class MainTable extends Component {
       body: JSON.stringify(submitted)
     })
       .then(res => {
-        this.dbConn('http://127.0.0.1:3333/api/devices');
+        this.dbConn('http://192.168.1.102:3333/api/devices');
       });
   }
 
@@ -177,14 +178,14 @@ class MainTable extends Component {
   }
 
   componentDidMount() {
-    this.dbConn('http://127.0.0.1:3333/api/devices');
-    this.dbConnInit('http://127.0.0.1:3333/api/devices');
+    this.dbConn('http://192.168.1.102:3333/api/devices');
+    this.dbConnInit('http://192.168.1.102:3333/api/devices');
   }
 
   render() {
 
     return (
-      <div style={styles.parent} className="grey lighten-5">
+      <div style={styles.parent} className="white">
 
         <TableHeader />
 
@@ -222,7 +223,7 @@ class MainTable extends Component {
         />
         {/* <Footer toggleVisible={this.toggleVisible} /> */}
         <button
-          className="btn-floating btn-large waves-effect waves-light red z-depth-5"
+          className="btn-floating btn-large waves-effect waves-light green z-depth-5"
           style={styles.btnadd}
           onClick={this.toggleVisible}>
           <i className="material-icons">add</i>

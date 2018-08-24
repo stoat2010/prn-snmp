@@ -27,7 +27,7 @@ export default function TopNav(props) {
 
                 <div style={styles.topnavLabel}>
                     <button
-                        className='btn-flat brown lighten-1 white-text'
+                        className='btn-flat grey darken-1 white-text'
                         style={styles.btnExpand}
                         onClick={props.toggleTopVisible}>
                         <div className="row col s12">
