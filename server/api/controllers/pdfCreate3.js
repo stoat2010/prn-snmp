@@ -25,7 +25,7 @@ module.exports.pdfCreate3 = async function (req, res) {
     const PDFDocument = require('pdfkit');
     var devices = await getDev();
 
-    let filename = 'deviceslimit.pdf'
+    let filename = 'deviceslimit-' + new Date().toLocaleDateString() + '.pdf'
 
     res.setHeader('Content-disposition', 'attachment; filename="' + filename + '"')
     res.setHeader('Content-type', 'application/pdf')

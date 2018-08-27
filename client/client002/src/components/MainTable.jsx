@@ -74,7 +74,6 @@ class MainTable extends Component {
   }
 
   toggleVisible() {
-    console.log(this.state.isVisible);
     const newVisibleState = !this.state.isVisible;
     this.setState(
       {
@@ -187,7 +186,7 @@ class MainTable extends Component {
 
         <TableHeader />
 
-        <div style={{ position: 'flex', overflow: 'auto', height: '760px' }}>
+        <div style={{ position: 'flex', overflow: 'auto', height: '720px' }}>
           <div className="row col s12" >
             {this.state.devices.map(device =>
               <Row
@@ -200,11 +199,18 @@ class MainTable extends Component {
         </div>
 
         <button
-          className="btn-floating btn-large waves-effect waves-light green z-depth-5"
+          className="btn-floating btn-large waves-effect waves-light green z-depth-1"
           style={styles.btnadd}
           onClick={this.toggleVisible}>
           <i className="material-icons">add</i>
         </button>
+
+        {/* <button
+          className="btn-floating btn-large waves-effect waves-light yellow z-depth-5"
+          style={styles.btnconf}
+          onClick={this.toggleVisibleConf}>
+          <i className="material-icons">settings</i>
+        </button> */}
         
         <ReportFAB />
 
@@ -229,6 +235,7 @@ class MainTable extends Component {
           handleChangeUnit={this.handleChangeUnit}
           handleChangeVendor={this.handleChangeVendor}
         />
+        
       </div>
     );
   }

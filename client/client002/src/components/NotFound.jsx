@@ -5,7 +5,7 @@ export default function NotFound() {
         <div className="center grey lighten-5" style={{ position: 'flex', overflow: 'auto', height: '750px' }}>
             
             <h2>Не найдено</h2>
-            <i className="material-icons">error_outline</i>
+            <h2><i className="material-icons">error_outline</i></h2>
         </div>
     )
 }
