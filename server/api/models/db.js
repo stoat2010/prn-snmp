@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 require('./devices'); //Схема для продуктов
 require('./printouts'); //Схема для отпечатков
+require('./users'); //Схема для пользователей
+require('./sessions'); //Схема для сессий
 
 mongoose.Promise = global.Promise;
 

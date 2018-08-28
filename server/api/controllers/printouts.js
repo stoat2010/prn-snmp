@@ -15,6 +15,8 @@ module.exports.dataCreate = async function (req, res) {
 
         Loc.create({
             device: req.body.device,
+            device_name: req.body.device_name,
+            device_serial: req.body.device_serial,
             date: req.body.date,
             month: new Date().getMonth() + 1,
             year: new Date().getFullYear(),
@@ -29,7 +31,7 @@ module.exports.dataCreate = async function (req, res) {
     }else{
         Loc.findOneAndUpdate(
             {device: req.body.device},
-            {$set: {printouts: req.body.printouts, date: req.body.date}},
+            {$set: {printouts: req.body.printouts, date: req.body.date, device_name: req.body.device_name, device_serial: req.body.device_serial}},
             function (err, data) {
                 if (err) {
                     sendJSONResponse(res, 440, err);

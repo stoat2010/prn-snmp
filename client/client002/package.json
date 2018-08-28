@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "chart.js": "^2.7.2",
+    "cookie-parser": "^1.4.3",
     "is-ip": "^2.0.0",
     "onsenui": "^2.10.4",
     "react": "^16.4.2",

@@ -133,6 +133,8 @@ export default class Row extends Component {
 
         var submitted = {
             device: this.props.device.device,
+            device_name: this.props.device.name,
+            device_serial: this.props.device.serial,
             date: new Date(),
             printouts: this.state.devData[3]
         };
@@ -200,11 +202,11 @@ export default class Row extends Component {
                 </div>
                 <div className="col s1" style={{ width: '11%', textAlign: 'center'}}>
                     <span style={{color: "#1b5e20", fontSize: 'x-small', textTransform: 'lowercase'}}><b>{this.props.device.name}</b></span><br />
-                    <span style={{color: "#2962ff", fontSize: 'small'}}><b>{this.props.device.device}</b></span>
+                    <span style={{color: "#2962ff", fontSize: 'small'}}><a href={"http://"+this.props.device.device} target="blank"><b>{this.props.device.device}</b></a></span>
                 </div>
                 <div className="col s1" style={{ width: '11%', textAlign: 'center', fontSize: 'small', paddingTop: '0.5%' }}>{this.props.device.model}</div>
                 <div className="col s1" style={{ width: '7%', textAlign: 'center', fontSize: 'small', paddingTop: '0.5%' }}>{this.props.device.vendor}</div>
-                <div className="col s1" style={{ width: '6%', textAlign: 'center', fontSize: 'small', paddingTop: '0.5%' }}>{this.props.device.serial}</div>
+                <div className="col s1" style={{ width: '6%', textAlign: 'center', fontSize: 'x-small', paddingTop: '0.6%' }}>{this.props.device.serial}</div>
                 <div className="col s1" style={{ width: '6%', textAlign: 'center', fontSize: 'small', paddingTop: '0.5%' }}>{this.state.devData[3]}</div>
                 <div className="col s1" style={{ width: '5%', textAlign: 'center', fontSize: 'small'}}>
                     {this.cl()}<br />

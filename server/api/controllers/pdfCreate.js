@@ -32,6 +32,8 @@ module.exports.pdfCreate = async function (req, res) {
     doc.rect(x, y, w, h).stroke();
 
     doc.text(headerText, x, y + 0.5 * (h - doc.heightOfString(headerText, optionsHeader)), optionsHeader);
+    doc.fontSize(8)
+    doc.text("Служба заказчика КЧХК 2018", x, 700, optionsHeader);
 
     const results = devices.map(async (device) => {
 

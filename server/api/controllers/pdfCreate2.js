@@ -96,7 +96,7 @@ module.exports.pdfCreate2 = async function (req, res) {
                 .font('Header Font')
                 .fillColor("#616161")
                 .fontSize(8)
-                .text(dev.unit + " " + "корпус: " + dev.build + " " + "кабинет: " + dev.office, 55, yPos - 15)
+                .text( dev.model + " " + dev.unit + " " + "корпус: " + dev.build + " " + "кабинет: " + dev.office, 55, yPos - 15)
                 .rect(50, yPos, dev.printouts * 450 / maxPrints, 5).fillAndStroke("black", "black")
                 .fillColor("black")
                 .font('Device Font')
