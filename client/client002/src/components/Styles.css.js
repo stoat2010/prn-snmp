@@ -134,5 +134,17 @@ export default {
     cellCap: {
         textAlign: 'center',
         paddingTop: '0.5%'
+    },
+    loginForm: {
+        'position': 'absolute',
+        'width': '20%',
+        'height': '30%',
+        'top': '20%',
+        'left': '40%',
+        'backgroundColor': '#eeeeee',
+        'paddingTop': '20px',
+        'borderStyle': 'solid',
+        'borderRadius': '5px 5px 5px 5px',
+        'borderColor': '#1a237e',
     }
 };
