@@ -25,7 +25,7 @@ router.get('/buildcol/:buildid', ctrlDevices.buildOne);
 router.get('/unitcol/:unitid', ctrlDevices.unitOne);
 router.get('/vendorcol/:vendorid', ctrlDevices.vendorOne);
 
-//router.get('/xls', xlsCreate.xlsCreate);
+router.get('/xls', pdfCreate.pdfCreate);
 router.get('/pdf1', pdfCreate.pdfCreate);
 router.get('/pdf2', pdfCreate2.pdfCreate2);
 router.get('/pdf3', pdfCreate3.pdfCreate3);

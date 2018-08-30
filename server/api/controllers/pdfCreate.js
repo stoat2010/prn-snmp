@@ -82,7 +82,7 @@ module.exports.pdfCreate = async function (req, res) {
                 .text("Серийный номер:", 40, 255)
                 .text("Сетевое имя:", 40, 270)
                 .text("IP:", 40, 285)
-                .text("Принят на обслуживание:", 40, 300)
+                .text("Поставлен на учёт:", 40, 300)
                 .text(dev.vendor, 300, 240)
                 .text(dev.serial, 300, 255)
                 .text(dev.name, 300, 270)
@@ -142,7 +142,7 @@ module.exports.pdfCreate = async function (req, res) {
             var xxx = 60;
             grDay.map(dtgr => {
 
-                if (dtgr === 0) { var dtgrprint = "" } else { var dtgrprint = moment(dtgr).format("DD.MM.YYYY") };
+                if (dtgr === 0) { var dtgrprint = "" } else { var dtgrprint = moment(dtgr).format("DD.MM.YY") };
                 doc
                     .fontSize(8)
                     .fillColor("black")
