@@ -18,6 +18,7 @@
     "react-spinners": "^0.3.3",
     "react-svg": "^5.0.22",
     "sweetalert": "^2.1.0",
+    "sweetalert2": "^7.26.12",
     "underscore": "^1.9.1"
   },
   "scripts": {

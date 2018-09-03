@@ -5,7 +5,7 @@ import 'onsenui/css/onsen-css-components.css';
 
 import styles from './Styles.css';
 
-export default function ReportFAB() {
+export default function ReportFAB(props) {
 
     return (
         <SpeedDial disabled={false} direction='up'style={styles.btnpdf}>
@@ -17,10 +17,8 @@ export default function ReportFAB() {
                     <i className="material-icons white-text" style={{verticalAlign: 'middle'}}>show_chart</i>
                 </a> 
             </SpeedDialItem>
-            <SpeedDialItem  className="orange">
-                <a href="http://192.168.1.102:3333/api/pdf2">
+            <SpeedDialItem  className="orange" onClick={props.pdf2create}>
                     <i className="material-icons white-text" style={{verticalAlign: 'middle'}}>insert_chart</i>
-                </a>
             </SpeedDialItem>
             <SpeedDialItem  className="pink">
                 <a href="http://192.168.1.102:3333/api/pdf3">

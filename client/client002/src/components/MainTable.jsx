@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import swal from 'sweetalert2';
 
 import Row from './Row';
 import TopNav from './TopNav';
@@ -35,6 +36,7 @@ class MainTable extends Component {
     this.handleChangeUnit = this.handleChangeUnit.bind(this);
     this.handleChangeVendor = this.handleChangeVendor.bind(this);
     this.handleIP = this.handleIP.bind(this);
+    this.pdf2create = this.pdf2create.bind(this);
     this.sideStyle = styles.sidenav;
     this.topStyle = styles.topnav;
   }
@@ -179,6 +181,31 @@ class MainTable extends Component {
     this.dbConnInit('http://192.168.1.102:3333/api/devices');
   }
 
+  pdf2create(e) {
+
+    swal({title: "Выбрать месяц и год",
+            input: 'select',
+            inputOptions: {
+              1: 'Январь',
+              2: 'Февраль',
+              3: 'Март',
+              4: 'Апрель',
+              5: 'Май',
+              6: 'Июнь',
+              7: 'Июль',
+              8: 'Август',
+              9: 'Сентябрь',
+              10: 'Октябрь',
+              11: 'Ноябрь',
+              12: 'Декабрь',
+            },
+            inputPlaceholder: 'Выбор месяца'
+            
+        }).then((month)=>{
+          swal(month.value)
+        })
+  }
+
   render() {
 
     return (
@@ -212,7 +239,7 @@ class MainTable extends Component {
           <i className="material-icons">settings</i>
         </button> */}
         
-        <ReportFAB />
+        <ReportFAB pdf2create={this.pdf2create}/>
 
         <Sidenav
           toggleVisible={this.toggleVisible}
