@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "ch-calendar": "^0.9.7",
     "chart.js": "^2.7.2",
     "cookie-parser": "^1.4.3",
     "is-ip": "^2.0.0",
@@ -19,6 +20,7 @@
     "react-svg": "^5.0.22",
     "sweetalert": "^2.1.0",
     "sweetalert2": "^7.26.12",
+    "sweetalert2-react-content": "^1.0.1",
     "underscore": "^1.9.1"
   },
   "scripts": {

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+import { Calendar } from 'ch-calendar';
 
 import Row from './Row';
 import TopNav from './TopNav';
@@ -8,6 +10,7 @@ import Sidenav from './Sidenav';
 import ReportFAB from './ReportFAB';
 
 import styles from './Styles.css';
+import "ch-calendar/dist/ch-calendar.css";
 
 class MainTable extends Component {
 
@@ -22,7 +25,8 @@ class MainTable extends Component {
       btnArrows: 'arrow_downward',
       devData1: {},
       loadSNMP: false,
-      devName: ''
+      devName: '',
+      repDate: new Date()
     };
 
     this.resetForm = this.resetForm.bind(this);
@@ -183,27 +187,27 @@ class MainTable extends Component {
 
   pdf2create(e) {
 
-    swal({title: "Выбрать месяц и год",
-            input: 'select',
-            inputOptions: {
-              1: 'Январь',
-              2: 'Февраль',
-              3: 'Март',
-              4: 'Апрель',
-              5: 'Май',
-              6: 'Июнь',
-              7: 'Июль',
-              8: 'Август',
-              9: 'Сентябрь',
-              10: 'Октябрь',
-              11: 'Ноябрь',
-              12: 'Декабрь',
-            },
-            inputPlaceholder: 'Выбор месяца'
-            
-        }).then((month)=>{
-          swal(month.value)
-        })
+    const mySwal = withReactContent(swal);
+
+    mySwal.fire({
+      showConfirmButton: false,
+      title: 'Выбрать месяц и год',
+      html: <div style={{ display: 'flex', justifyContent: 'center' }}><Calendar isMonth date={new Date()} onSelect={(repDate) => { this.setState({ repDate }); mySwal.clickConfirm() }} /></div>,
+    })
+      .then(() => {
+        fetch('http://192.168.1.102:3333/api/pdf2', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            repdate: this.state.repDate,
+            month: new Date(this.state.repDate).getMonth() + 1,
+            year: new Date(this.state.repDate).getFullYear()
+          })
+        }).then(res => (res.blob())).then((data) => window.open(URL.createObjectURL(data)))
+      })
   }
 
   render() {
@@ -238,8 +242,8 @@ class MainTable extends Component {
           onClick={this.toggleVisibleConf}>
           <i className="material-icons">settings</i>
         </button> */}
-        
-        <ReportFAB pdf2create={this.pdf2create}/>
+
+        <ReportFAB pdf2create={this.pdf2create} />
 
         <Sidenav
           toggleVisible={this.toggleVisible}
@@ -262,7 +266,7 @@ class MainTable extends Component {
           handleChangeUnit={this.handleChangeUnit}
           handleChangeVendor={this.handleChangeVendor}
         />
-        
+
       </div>
     );
   }

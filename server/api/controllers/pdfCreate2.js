@@ -8,22 +8,27 @@ moment.locale('ru');
 
 module.exports.pdfCreate2 = async function (req, res) {
 
-    var curMonth = new Date().getMonth() + 1;
-    var curYear = new Date().getFullYear();
+    var curMonth = new Date(req.body.repdate).getMonth() + 1;
+    var curYear = new Date(req.body.repdate).getFullYear();
+    var lastDay = moment(req.body.repdate).endOf('month').toISOString();
+
+    //var curMonth = req.body.month;
+    //var curYear = req.body.year;
+
     var prints = [];
     var maxPrints = 0;
     var page = 1;
 
     if (curMonth === 1){
         var prevMonth = 12;
-        var prevYear = new Date().getFullYear() - 1;
+        var prevYear = req.body.year - 1;
     }else{
         var prevMonth = curMonth -1;
-        var prevYear = new Date().getFullYear();
+        var prevYear = req.body.year;
     }
 
     const PDFDocument = require('pdfkit');
-    var devices = await getDev();
+    var devices = await getDev(lastDay);
 
     let filename = 'topdevices-' + new Date().toLocaleDateString() + '.pdf'
 
@@ -109,10 +114,10 @@ module.exports.pdfCreate2 = async function (req, res) {
     doc.end();
 }
 
-async function getDev() {
+async function getDev(lastDay) {
     return new Promise(resolve => {
         Loc
-            .find({"inreport": true}, function (err, document) {
+            .find({"inreport": true, start_date: { $lte: lastDay}}, function (err, document) {
                 if (err) {
                     console.log(err);
                 } else {
