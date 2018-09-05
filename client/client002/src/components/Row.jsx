@@ -111,7 +111,7 @@ export default class Row extends Component {
         e.preventDefault();
 
         swal({title: "Вы уверены?",
-            text: "Устройство будет удалено из базы данных",
+            text: "Устройство и данные опроса будут удалены из базы данных",
             icon: "warning",
             showCancelButton: true,
             dangerMode: true
@@ -204,15 +204,18 @@ export default class Row extends Component {
                     <span style={{color: "#1b5e20", fontSize: 'x-small', textTransform: 'lowercase'}}><b>{this.props.device.name}</b></span><br />
                     <span style={{color: "#2962ff", fontSize: 'small'}}><a href={"http://"+this.props.device.device} target="blank"><b>{this.props.device.device}</b></a></span>
                 </div>
-                <div className="col s1" style={{ width: '11%', textAlign: 'center', fontSize: 'small', paddingTop: '0.5%' }}>{this.props.device.model}</div>
-                <div className="col s1" style={{ width: '7%', textAlign: 'center', fontSize: 'small', paddingTop: '0.5%' }}>{this.props.device.vendor}</div>
-                <div className="col s1" style={{ width: '6%', textAlign: 'center', fontSize: 'x-small', paddingTop: '0.6%' }}>{this.props.device.serial}</div>
+                <div className="col s1 indigo-text" style={{ width: '11%', textAlign: 'center', fontSize: 'x-small', paddingTop: '0.25%' }}>
+                    {this.props.device.model}<br/>
+                    {this.props.device.vendor}
+                </div>
+                {/* <div className="col s1" style={{ width: '7%', textAlign: 'center', fontSize: 'small', paddingTop: '0.5%' }}>{this.props.device.vendor}</div> */}
+                <div className="col s1 indigo-text" style={{ width: '6%', textAlign: 'center', fontSize: 'x-small', paddingTop: '0.6%' }}>{this.props.device.serial}</div>
                 <div className="col s1" style={{ width: '6%', textAlign: 'center', fontSize: 'small', paddingTop: '0.5%' }}>{this.state.devData[3]}</div>
                 <div className="col s1" style={{ width: '5%', textAlign: 'center', fontSize: 'small'}}>
                     {this.cl()}<br />
                         {this.state.dataDate === '' ? <span style={{fontSize: 'xx-small'}}></span> : <span className={this.classDate} style={{fontSize: 'xx-small'}}>{new Date(this.state.dataDate).toLocaleDateString()}</span> }
                 </div>
-                <div className="col s1" style={{ width: '4%', textAlign: 'center', fontSize: 'small',}}>
+                <div className="col s1" style={{ width: '7%', textAlign: 'center', fontSize: 'small',}}>
                 <button
                     className={this.classS}
                     id={this.props.device._id}
@@ -220,7 +223,7 @@ export default class Row extends Component {
                     <i className="material-icons">save</i>
                 </button>
                 </div>
-                <div className="col s1" style={{ width: '4%', textAlign: 'center', fontSize: 'small',}}>
+                <div className="col s1" style={{ width: '7%', textAlign: 'center', fontSize: 'small',}}>
                 <button
                     className="btn-flat white"
                     id={this.props.device._id}
@@ -228,7 +231,7 @@ export default class Row extends Component {
                     {this.rep()}
                 </button>
                 </div>
-                <div className="col s1" style={{ width: '25%', textAlign: 'center'}}><PrintBar data={this.state.dataGraph} /></div>
+                <div className="col s1" style={{ width: '26%', textAlign: 'center'}}><PrintBar data={this.state.dataGraph} /></div>
                 <div className="col s1" style={{ width: '3%', textAlign: 'center'}}>
                     <button
                         className="waves-effect waves-gray btn-flat"

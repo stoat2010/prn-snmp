@@ -73,7 +73,7 @@ module.exports.deviceDeleteOne = function (req, res) {
     if (deviceid) {
         Loc
             .findByIdAndRemove(deviceid)
-            .exec(function (err, devicet) {
+            .exec(function (err, device) {
                 if (err) {
                     sendJSONResponse(res, 404, err);
                     return;

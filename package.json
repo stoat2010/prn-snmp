@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +23,7 @@
     "moment": "^2.22.2",
     "mongoose": "^5.0.18",
     "net-snmp": "^1.2.4",
+    "nodemon": "^1.18.4",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "pdfkit": "^0.8.3"

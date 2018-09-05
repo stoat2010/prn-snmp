@@ -17,7 +17,7 @@ export default class Sidenav extends Component {
         event.preventDefault();
         var send = {};
 
-        if (this.refs['device'].value.length > 0) {
+        if (this.refs['device'].value.length > 0 & this.props.devName ) {
 
             send = {
                 device: this.props.devName,
@@ -42,6 +42,7 @@ export default class Sidenav extends Component {
             this.props.resetForm();
             this.props.toggleVisible();
         } else {
+            this.refs['device'].value = '';
             swal('Ошибка при вводе имени!');
         }
     }

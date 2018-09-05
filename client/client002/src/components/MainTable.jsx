@@ -41,6 +41,7 @@ class MainTable extends Component {
     this.handleChangeVendor = this.handleChangeVendor.bind(this);
     this.handleIP = this.handleIP.bind(this);
     this.pdf2create = this.pdf2create.bind(this);
+    this.pdf3create = this.pdf3create.bind(this);
     this.sideStyle = styles.sidenav;
     this.topStyle = styles.topnav;
   }
@@ -74,7 +75,8 @@ class MainTable extends Component {
 
     fetch("http://192.168.1.102:3333/devname/" + devid, options)
       .then((res => {
-        return res.json();
+        if (res.status === 200) { return res.json(); }
+        swal("Имя не найдено в DNS").then(this.setState({ loadSNMP: false }));
       }))
       .then(devName => { this.setState({ devName }); });
   }
@@ -185,7 +187,34 @@ class MainTable extends Component {
     this.dbConnInit('http://192.168.1.102:3333/api/devices');
   }
 
-  pdf2create(e) {
+  pdf2create() {
+
+    const mySwal = withReactContent(swal);
+
+    mySwal.fire({
+      showConfirmButton: false,
+      title: 'Выбрать месяц и год',
+      html: <div style={{ display: 'flex', justifyContent: 'center' }}><Calendar isMonth date={new Date()} onSelect={(repDate) => { this.setState({ repDate }); mySwal.clickConfirm() }} /></div>,
+    })
+      .then((createReport) => {
+        if (createReport.value) {
+          fetch('http://192.168.1.102:3333/api/pdf2', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json, text/plain, */*',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              repdate: this.state.repDate,
+              month: new Date(this.state.repDate).getMonth() + 1,
+              year: new Date(this.state.repDate).getFullYear()
+            })
+          }).then(res => (res.blob())).then((data) => window.open(URL.createObjectURL(data)))
+            .then(() => (this.setState({ repDate: new Date() })))}
+      })
+  }
+
+  pdf3create() {
 
     const mySwal = withReactContent(swal);
 
@@ -195,7 +224,7 @@ class MainTable extends Component {
       html: <div style={{ display: 'flex', justifyContent: 'center' }}><Calendar isMonth date={new Date()} onSelect={(repDate) => { this.setState({ repDate }); mySwal.clickConfirm() }} /></div>,
     })
       .then(() => {
-        fetch('http://192.168.1.102:3333/api/pdf2', {
+        fetch('http://192.168.1.102:3333/api/pdf3', {
           method: 'POST',
           headers: {
             'Accept': 'application/json, text/plain, */*',
@@ -207,6 +236,7 @@ class MainTable extends Component {
             year: new Date(this.state.repDate).getFullYear()
           })
         }).then(res => (res.blob())).then((data) => window.open(URL.createObjectURL(data)))
+          .then(() => (this.setState({ repDate: new Date() })))
       })
   }
 
@@ -236,15 +266,7 @@ class MainTable extends Component {
           <i className="material-icons">add</i>
         </button>
 
-        {/* <button
-          className="btn-floating btn-large waves-effect waves-light yellow z-depth-5"
-          style={styles.btnconf}
-          onClick={this.toggleVisibleConf}>
-          <i className="material-icons">settings</i>
-        </button> */}
-
-        <ReportFAB pdf2create={this.pdf2create} />
-
+        <ReportFAB pdf2create={this.pdf2create} pdf3create={this.pdf3create} />
         <Sidenav
           toggleVisible={this.toggleVisible}
           toBase={this.toBase}
@@ -255,7 +277,6 @@ class MainTable extends Component {
           devData1={this.state.devData1}
           sideStyle={this.sideStyle}
         />
-
         <TopNav
           btnArrows={this.state.btnArrows}
           topStyle={this.topStyle}

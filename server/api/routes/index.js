@@ -28,6 +28,6 @@ router.get('/vendorcol/:vendorid', ctrlDevices.vendorOne);
 router.get('/xls', pdfCreate.pdfCreate);
 router.get('/pdf1', pdfCreate.pdfCreate);
 router.post('/pdf2', pdfCreate2.pdfCreate2);
-router.get('/pdf3', pdfCreate3.pdfCreate3);
+router.post('/pdf3', pdfCreate3.pdfCreate3);
 
 module.exports = router;

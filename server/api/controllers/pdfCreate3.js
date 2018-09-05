@@ -8,10 +8,10 @@ moment.locale('ru');
 
 module.exports.pdfCreate3 = async function (req, res) {
 
-    var curMonth = new Date().getMonth() + 1;
-    var curYear = new Date().getFullYear();
-    var prints = [];
-    var maxPrints = 0;
+    var curMonth = new Date(req.body.repdate).getMonth() + 1;
+    var curYear = new Date(req.body.repdate).getFullYear();
+    var lastDay = moment(req.body.repdate).endOf('month').toISOString();
+
     var page = 1;
 
     if (curMonth === 1){
@@ -23,7 +23,7 @@ module.exports.pdfCreate3 = async function (req, res) {
     }
 
     const PDFDocument = require('pdfkit');
-    var devices = await getDev();
+    var devices = await getDev(lastDay);
 
     let filename = 'deviceslimit-' + new Date().toLocaleDateString() + '.pdf'
 
@@ -38,14 +38,15 @@ module.exports.pdfCreate3 = async function (req, res) {
 
     doc
         .font('Header Font').fontSize(25)
-        .text("Процент использования печатающих устройств", 120, 30)
-        .text("относительно паспортных данных за месяц", 125, 60)
+        .text("Процент использования печатающих устройств", 100, 30)
+        .text("относительно паспортных данных за " + moment(lastDay).format("MMMM YYYY"), 75, 60)
         .fontSize(12)
         .text("На дату: " + moment().format("DD MM YYYY"), 80, 110)
         .text("Страница: " + page, 480, 110)
         .moveTo(70, 100).lineTo(550, 100).lineWidth(3).stroke()
         .moveTo(49, 150).lineTo(49, 750).lineWidth(1).stroke()
         .moveTo(44, 745).lineTo(550, 745).lineWidth(1).stroke()
+        .moveTo(275, 200).lineTo(275, 745).lineWidth(1).fillAndStroke("#eceff1","#eceff1")
 
     var results = devices.map(async (device) => {
 
@@ -62,15 +63,6 @@ module.exports.pdfCreate3 = async function (req, res) {
         return dev1;
     });
 
-    /* await Promise.all(results).then(dev => {
-
-        dev.map(dev => {
-
-            prints.push(dev.printouts);
-         });
-        maxPrints = Math.max(...prints);
-    }); */
-
     await Promise.all(results).then(dev => {
 
         var yPos = 700;
@@ -81,14 +73,15 @@ module.exports.pdfCreate3 = async function (req, res) {
                 doc
                     .addPage()
                     .font('Header Font').fontSize(25)
-                    .text("Процент использования печатающих устройств", 120, 30)
-                    .text("относительно паспортных данных за месяц", 125, 60)
+                    .text("Процент использования печатающих устройств", 100, 30)
+                    .text("относительно паспортных данных за " + moment(lastDay).format("MMMM YYYY"), 75, 60)
                     .fontSize(12)
                     .text("На дату: " + moment().format("DD MM YYYY"), 80, 110)
                     .text("Страница: " + page, 480, 110)
                     .moveTo(70, 100).lineTo(550, 100).lineWidth(3).stroke()
                     .moveTo(49, 150).lineTo(49, 750).lineWidth(1).stroke()
                     .moveTo(44, 745).lineTo(550, 745).lineWidth(1).stroke()
+                    .moveTo(275, 150).lineTo(275, 745).lineWidth(1).fillAndStroke("#eceff1","#eceff1")
                 yPos = 700
             }
             var grad = doc.linearGradient(50, yPos, 50+(dev.printouts * 450 / dev.monthlimit), yPos+10)
@@ -99,8 +92,7 @@ module.exports.pdfCreate3 = async function (req, res) {
                 .fillColor("#616161")
                 .fontSize(8)
                 .text(dev.unit + " " + "корпус: " + dev.build + " " + "кабинет: " + dev.office, 55, yPos - 22)
-        
-                .rect(50, yPos, dev.printouts * 450 / dev.monthlimit, 10).fillAndStroke(grad)  //.fillAndStroke("#4fc3f7", "#4fc3f7")
+                .rect(50, yPos, dev.printouts * 450 / dev.monthlimit, 10).fillAndStroke(grad)
                 .rect(50, yPos-10, 450, 10).fillAndStroke("#01579b", "#01579b")
                 .text(dev.monthlimit , 510, yPos - 10)
                 .fillColor("black")
@@ -114,10 +106,10 @@ module.exports.pdfCreate3 = async function (req, res) {
     doc.end();
 }
 
-async function getDev() {
+async function getDev(lastDay) {
     return new Promise(resolve => {
         Loc
-            .find({"inreport": true}, function (err, document) {
+            .find({"inreport": true, start_date: { $lte: lastDay}}, function (err, document) {
                 if (err) {
                     console.log(err);
                 } else {
