@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { FadeLoader } from 'react-spinners';
 
-import swal from 'sweetalert';
+import swal from 'sweetalert2';
 import styles from './Styles.css.js';
 
 export default class Sidenav extends Component {

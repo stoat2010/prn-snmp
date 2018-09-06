@@ -29,30 +29,31 @@ module.exports.devStatus = async function (req, res) {
 module.exports.devData = async function (req, res) {
     var snmp = require('net-snmp');
     var values = [];
-
+   
     var oids = ['1.3.6.1.2.1.43.5.1.1.16.1', '1.3.6.1.2.1.43.8.2.1.14.1.1', '1.3.6.1.2.1.43.5.1.1.17.1', '1.3.6.1.2.1.43.10.2.1.4.1.1'];
+    
+    //var oids = ['1.3.6.1.2.1.43.5.1.1.16.1', '1.3.6.1.2.1.25.3.6.1.4.5', '1.3.6.1.2.1.43.5.1.1.17.1', '1.3.6.1.2.1.43.10.2.1.4.1.1'];
 
     var deviceIP = await resolveName(req.params.deviceid)
 
     if (deviceIP != -1) {
 
         var session = snmp.createSession(deviceIP[0], "public");
-
         session.get(oids, function (error, varbinds) {
             if (error) {
-                sendJSONResponse(res, 200, 1);
+                sendJSONResponse(res, 401, 0);
                 session.close();
                 return;
             } else {
                 for (var i = 0; i < varbinds.length; i++) {
                     if (snmp.isVarbindError(varbinds[i])) {
-                        //console.log(snmp.isVarbindError(varbinds[i]))
+                        console.log(snmp.isVarbindError(varbinds[i]))
                     } else {
                         values = values.concat(varbinds[i].value)
                     }
                 }
                 var arrData = values.toString('utf8').split(',');
-
+                
                 sendJSONResponse(res, 200, arrData);
                 session.close();
             }
