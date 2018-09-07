@@ -187,7 +187,7 @@ export default class Row extends Component {
                 return res.json();
             }))
             .then(devToner => devToner.arrData.length === 3 ?
-                swal({"text": devToner.arrData[0] +": " + 100 * +devToner.arrData[2] / +devToner.arrData[1] + "%"}) :
+                swal({"text": devToner.arrData[0] +": " + Math.round(100 * +devToner.arrData[2] / +devToner.arrData[1]) + "%"}) :
                 swal({"html": "Черный: " + devToner.arrData[0] +": " + 100 * +devToner.arrData[2] / +devToner.arrData[1] + "%<br>" +
                                 "Синий: " + devToner.arrData[3] +": " + 100 * +devToner.arrData[5] / +devToner.arrData[4] + "%<br>" +
                                 "Красный: " + devToner.arrData[6] +": " + 100 * +devToner.arrData[8] / +devToner.arrData[7] + "%<br>" +
