@@ -13,9 +13,10 @@ export default function TableHeader(){
           <div className="col s1" style={{ width: '6%', ...styles.cellCap }}>S/N</div>
           <div className="col s1" style={{ width: '6%', ...styles.cellCap }}>Оттиски</div>
           <div className="col s1" style={{ width: '5%', ...styles.cellCap }}>Опрошен</div>
-          <div className="col s1" style={{ width: '7%', ...styles.cellCap }}>В базу</div>
-          <div className="col s1" style={{ width: '7%', ...styles.cellCap }}>В отчёт</div>
-          <div className="col s1" style={{ width: '26%', ...styles.cellCap }}>График {new Date().getFullYear()}</div>
+          <div className="col s1" style={{ width: '6%', ...styles.cellCap }}>В базу</div>
+          <div className="col s1" style={{ width: '6%', ...styles.cellCap }}>В отчёт</div>
+          <div className="col s1" style={{ width: '3%', ...styles.cellCap }}></div>
+          <div className="col s1" style={{ width: '25%', ...styles.cellCap }}>График {new Date().getFullYear()}</div>
           <div className="col s1" style={{ width: '3%', ...styles.cellCap }}></div>
         </div>
     )

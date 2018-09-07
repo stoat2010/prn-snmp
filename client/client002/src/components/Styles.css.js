@@ -42,7 +42,7 @@ export default {
         'overflow': 'hidden'
     },
     sidenavActive: {
-        'height': '73%',
+        'height': '95%',
         'width': '27%',
         'position': 'fixed',
         'zIndex': 1,

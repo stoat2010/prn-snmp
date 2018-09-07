@@ -12,7 +12,8 @@ var deviceShema = new mongoose.Schema({
     start_date: {type: Date, required: true},
     name: {type: String, required: true},
     inreport: {type: Boolean, required: true, default: false},
-    monthlimit: {type: Number, required: false}
+    monthlimit: {type: Number, required: false},
+    type: {type: Number, required: true}
 });
 
 mongoose.model('device', deviceShema, 'devices');

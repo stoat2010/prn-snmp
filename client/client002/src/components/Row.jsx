@@ -174,6 +174,28 @@ export default class Row extends Component {
 
     }
 
+    handleToner(dev, e) {
+        e.preventDefault();
+        var options = {
+            method: 'GET',
+            mode: 'cors',
+            cache: 'default'
+        };
+
+        fetch("http://192.168.1.102:3333/devtoner/" + dev, options)
+            .then((res => {
+                return res.json();
+            }))
+            .then(devToner => devToner.arrData.length === 3 ?
+                swal({"text": devToner.arrData[0] +": " + 100 * +devToner.arrData[2] / +devToner.arrData[1] + "%"}) :
+                swal({"html": "Черный: " + devToner.arrData[0] +": " + 100 * +devToner.arrData[2] / +devToner.arrData[1] + "%<br>" +
+                                "Синий: " + devToner.arrData[3] +": " + 100 * +devToner.arrData[5] / +devToner.arrData[4] + "%<br>" +
+                                "Красный: " + devToner.arrData[6] +": " + 100 * +devToner.arrData[8] / +devToner.arrData[7] + "%<br>" +
+                                "Желтый:" + devToner.arrData[9] +": " + 100 * +devToner.arrData[11] / +devToner.arrData[10] + "%"})
+                );
+
+    }
+
     cl = () => this.state.dataAllow === 0 ? <i className="material-icons red-text">block</i> : <i className="material-icons green-text">check_circle</i>;
     rep = () => this.state.reportStatus === false ? <span className="red-text"><b>Нет</b></span> : <span className="green-text"><b>Да</b></span>;
 
@@ -215,7 +237,7 @@ export default class Row extends Component {
                     {this.cl()}<br />
                         {this.state.dataDate === '' ? <span style={{fontSize: 'xx-small'}}></span> : <span className={this.classDate} style={{fontSize: 'xx-small'}}>{new Date(this.state.dataDate).toLocaleDateString()}</span> }
                 </div>
-                <div className="col s1" style={{ width: '7%', textAlign: 'center', fontSize: 'small',}}>
+                <div className="col s1" style={{ width: '6%', textAlign: 'center', fontSize: 'small',}}>
                 <button
                     className={this.classS}
                     id={this.props.device._id}
@@ -223,7 +245,7 @@ export default class Row extends Component {
                     <i className="material-icons">save</i>
                 </button>
                 </div>
-                <div className="col s1" style={{ width: '7%', textAlign: 'center', fontSize: 'small',}}>
+                <div className="col s1" style={{ width: '6%', textAlign: 'center', fontSize: 'small',}}>
                 <button
                     className="btn-flat white"
                     id={this.props.device._id}
@@ -231,7 +253,15 @@ export default class Row extends Component {
                     {this.rep()}
                 </button>
                 </div>
-                <div className="col s1" style={{ width: '26%', textAlign: 'center'}}><PrintBar data={this.state.dataGraph} /></div>
+                <div className="col s1" style={{ width: '3%', textAlign: 'center'}}>
+                    <button
+                        className={this.classS}
+                        id={this.props.device._id}
+                        onClick={this.handleToner.bind(this, this.props.device.name)}>
+                        <i className="material-icons">print</i>
+                    </button>
+                </div>
+                <div className="col s1" style={{ width: '25%', textAlign: 'center'}}><PrintBar data={this.state.dataGraph} /></div>
                 <div className="col s1" style={{ width: '3%', textAlign: 'center'}}>
                     <button
                         className="waves-effect waves-gray btn-flat"

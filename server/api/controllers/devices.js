@@ -17,7 +17,8 @@ module.exports.deviceCreate = function(req, res) {
         vendor: req.body.vendor,
         start_date: req.body.start_date,
         monthlimit: req.body.monthlimit,
-        name: req.body.name
+        name: req.body.name,
+        type: req.body.type
     }, function(err, device){
         if(err){
             sendJSONResponse(res, 440, err);

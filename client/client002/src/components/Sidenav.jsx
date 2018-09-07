@@ -17,7 +17,7 @@ export default class Sidenav extends Component {
         event.preventDefault();
         var send = {};
 
-        if (this.refs['device'].value.length > 0 & this.props.devName ) {
+        if (this.refs['device'].value.length > 0 ) {
 
             send = {
                 device: this.props.devName,
@@ -30,6 +30,7 @@ export default class Sidenav extends Component {
                 model: this.props.devData1[0],
                 name: this.refs['device'].value,
                 monthlimit: this.refs['monthlimit'].value,
+                type: this.refs['type'].value,
                 start_date: new Date()
             };
 
@@ -95,6 +96,20 @@ export default class Sidenav extends Component {
                             <input id="device" type="text" className="validate" ref="device" onBlur={this.props.handleIP} />
                             <label htmlFor="device">FQDN</label>
                         </div>
+                        <table><tbody><tr>
+                        <td>
+                        <label>
+                            <input name="group1" type="radio" ref="type" className="with-gap" value="0" checked />
+                            <span>Монохром</span>
+                        </label>
+                        </td>
+                        <td>
+                        <label>
+                            <input name="group1" type="radio" ref="type" className="with-gap" value="1" />
+                            <span>Цветной</span>
+                        </label>
+                        </td>
+                        </tr></tbody></table>
                         <div className="input-field">
                             <input id="build" type="text" className="validate" ref="build" />
                             <label htmlFor="build">Корпус</label>
