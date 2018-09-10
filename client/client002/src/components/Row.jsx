@@ -261,7 +261,7 @@ export default class Row extends Component {
                         <i className="material-icons">print</i>
                     </button>
                 </div>
-                <div className="col s1" style={{ width: '25%', textAlign: 'center'}}><PrintBar data={this.state.dataGraph} /></div>
+                <div className="col s1" style={{ width: '25%', textAlign: 'center'}}><PrintBar data={this.state.dataGraph} height={70} /></div>
                 <div className="col s1" style={{ width: '3%', textAlign: 'center'}}>
                     <button
                         className="waves-effect waves-gray btn-flat"

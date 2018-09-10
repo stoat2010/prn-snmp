@@ -35,7 +35,7 @@ export default function PrintBar(props){
     };
 
     return (
-        <Bar data={graphData} height={70} options={ graphOptions } />
+        <Bar data={graphData} height={props.height} options={ graphOptions } />
     )
 
 }

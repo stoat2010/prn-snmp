@@ -182,11 +182,6 @@ class MainTable extends Component {
       .then(devices => { this.setState({ devlist: devices }); });
   }
 
-  componentDidMount() {
-    this.dbConn('http://192.168.1.102:3333/api/devices');
-    this.dbConnInit('http://192.168.1.102:3333/api/devices');
-  }
-
   pdf2create() {
 
     const mySwal = withReactContent(swal);
@@ -238,6 +233,11 @@ class MainTable extends Component {
         }).then(res => (res.blob())).then((data) => window.open(URL.createObjectURL(data)))
           .then(() => (this.setState({ repDate: new Date() })))
       })
+  }
+
+  componentDidMount() {
+    this.dbConn('http://192.168.1.102:3333/api/devices');
+    this.dbConnInit('http://192.168.1.102:3333/api/devices');
   }
 
   render() {
