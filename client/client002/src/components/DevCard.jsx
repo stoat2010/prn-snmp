@@ -11,14 +11,17 @@ export default class DevCard extends Component {
             classes: 1,
             devData: {},
             dataGraph: [],
-            content: false
+            content: false,
+            devToner: {
+                arrData:[]
+            }
         };
         this.readStatus = this.readStatus.bind(this);
         this.readData = this.readData.bind(this);
         this.devInfo = this.devInfo.bind(this);
         this.changeView = this.changeView.bind(this);
 
-        this.classS = "btn-flat white";
+        this.classS = "material-icons right disabled";
     }
 
     readStatus() {
@@ -62,8 +65,8 @@ export default class DevCard extends Component {
             .then(dataGraph => { this.setState({ dataGraph }); });
     }
 
-    handleToner(dev, e) {
-        e.preventDefault();
+    handleToner(dev) {
+
         var options = {
             method: 'GET',
             mode: 'cors',
@@ -74,14 +77,7 @@ export default class DevCard extends Component {
             .then((res => {
                 return res.json();
             }))
-            .then(devToner => devToner.arrData.length === 3 ?
-                swal({ "text": devToner.arrData[0] + ": " + Math.round(100 * +devToner.arrData[2] / +devToner.arrData[1]) + "%" }) :
-                swal({
-                    "html": "Черный: " + devToner.arrData[0] + ": " + 100 * +devToner.arrData[2] / +devToner.arrData[1] + "%<br>" +
-                        "Синий: " + devToner.arrData[3] + ": " + 100 * +devToner.arrData[5] / +devToner.arrData[4] + "%<br>" +
-                        "Красный: " + devToner.arrData[6] + ": " + 100 * +devToner.arrData[8] / +devToner.arrData[7] + "%<br>" +
-                        "Желтый:" + devToner.arrData[9] + ": " + 100 * +devToner.arrData[11] / +devToner.arrData[10] + "%"
-                })
+            .then(devToner => devToner.arrData && this.setState({devToner})
             );
 
     }
@@ -92,6 +88,7 @@ export default class DevCard extends Component {
             {
                 content: newContentState,
             });
+        this.handleToner(this.props.device.name);
 
     }
 
@@ -108,17 +105,35 @@ export default class DevCard extends Component {
             кабинет: <b>{this.props.device.office}</b><br />
             принято: <b>{new Date(this.props.device.start_date).toLocaleDateString()}</b><span>&nbsp;</span>
             начальный остаток: <b>{this.props.device.balance}</b>
-            <i className="material-icons activator" style={{ position: "absolute", right: "5px" }}>more_vert</i>
+            <i className="material-icons right" onClick={this.changeView}>expand_more</i>
         </div> : <div><div className="card-content" style={{ fontSize: 'x-small' }}>
             цех/отдел: <b>{this.props.device.unit}</b><br />
             корпус: <b>{this.props.device.build}</b><span>&nbsp;</span>
             кабинет: <b>{this.props.device.office}</b><br />
             принято: <b>{new Date(this.props.device.start_date).toLocaleDateString()}</b><span>&nbsp;</span>
             начальный остаток: <b>{this.props.device.balance}</b>
-            <i className="material-icons activator" style={{ position: "absolute", right: "5px" }}>more_vert</i>
-        </div><div className="card-content" style={{ fontSize: 'x-small' }}>
-            <PrintBar data={this.state.dataGraph} height={180} />
-        </div></div>
+            <i className="material-icons right" onClick={this.changeView}>expand_less</i>
+        </div>
+            <div className="card-content">
+                Модель: <b>{this.state.devData[0]}</b><br />
+                Вендор: <b>{this.state.devData[1]}</b><br />
+                S/N: <b>{this.state.devData[2]}</b><br />
+                Отпечатков: <b>{this.state.devData[3]}</b>
+            </div>
+            <div className="card-content" style={{ fontSize: 'x-small' }}>
+            <div className="card-title" style={{ fontSize: 'small' }}><b>% заполнения картриджей</b></div>
+             {this.state.devToner.arrData.length > 3 ?
+                <div>
+                    <span><b>Черный: </b>{this.state.devToner.arrData[0]} :  {100 * +this.state.devToner.arrData[2] / +this.state.devToner.arrData[1]}%<br /></span>
+                    <span className="blue-text"><b>Синий:  </b>{this.state.devToner.arrData[3]} : {100 * +this.state.devToner.arrData[5] / +this.state.devToner.arrData[4]}%<br/></span>
+                    <span className="red-text"><b>Красный: </b>{this.state.devToner.arrData[6]} : {100 * +this.state.devToner.arrData[8] / +this.state.devToner.arrData[7]}%<br /></span>
+                    <span className="yellow-text"><b>Желтый: </b>{this.state.devToner.arrData[9]} : {100 * +this.state.devToner.arrData[11] / +this.state.devToner.arrData[10]}%</span>
+                </div> : this.state.devToner.arrData.length > 0 ? <span><b>Черный: </b>{this.state.devToner.arrData[0]} :  {100 * +this.state.devToner.arrData[2] / +this.state.devToner.arrData[1]}%<br /></span> : null}
+            </div>
+            <div className="card-content">
+                <PrintBar data={this.state.dataGraph} height={170} />
+            </div>
+            </div>
 
     componentDidMount() {
         this.readStatus();
@@ -132,19 +147,12 @@ export default class DevCard extends Component {
         return (
 
             <div className="col s3">
-                <div className="card sticky-action">
+                <div className="card">
                     <div className="card-title" style={{ fontSize: 'small' }}>
                         {this.props.device.name}
                         <div style={{ position: "absolute", right: "5px", top: "5px" }}>{this.cl()}</div>
                     </div>
                     {this.cont()}
-                    <div className="card-reveal">
-                        <span className="card-title"><i className="material-icons right">close</i></span>
-                        Модель: <b>{this.state.devData[0]}</b><br />
-                        Вендор: <b>{this.state.devData[1]}</b><br />
-                        S/N: <b>{this.state.devData[2]}</b><br />
-                        Отпечатков: <b>{this.state.devData[3]}</b>
-                    </div>
                     <div className="card-action">
                         <button
                             className="waves-effect waves-gray btn-flat"
@@ -158,18 +166,12 @@ export default class DevCard extends Component {
                     /* onClick={this.handleSave} */>
                             <i className="material-icons">save</i>
                         </button>
-                        <button
+                       {/*  <button
                             className={this.classS}
                             id={this.props.device._id}
                             onClick={this.handleToner.bind(this, this.props.device.name)}>
                             <i className="material-icons">print</i>
-                        </button>
-                        <button
-                            className="waves-effect waves-gray btn-flat"
-                            id={this.props.device._id}
-                            onClick={this.changeView}>
-                            <i className="material-icons">insert_chart</i>
-                        </button>
+                        </button> */}
                         <button
                             className="waves-effect waves-gray btn-flat right"
                             id={this.props.device._id}
