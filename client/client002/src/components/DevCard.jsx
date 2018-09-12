@@ -20,6 +20,7 @@ export default class DevCard extends Component {
         this.readData = this.readData.bind(this);
         this.devInfo = this.devInfo.bind(this);
         this.changeView = this.changeView.bind(this);
+        this.handleSave = this.handleSave.bind(this);
 
         this.classS = "material-icons right disabled";
     }
@@ -79,7 +80,29 @@ export default class DevCard extends Component {
             }))
             .then(devToner => devToner.arrData && this.setState({devToner})
             );
+    }
 
+    handleSave(event) {
+        event.preventDefault();
+
+        var submitted = {
+            device: this.props.device.device,
+            device_name: this.props.device.name,
+            device_serial: this.props.device.serial,
+            date: new Date(),
+            printouts: this.state.devData[3]
+        };
+
+        fetch('http://192.168.1.102:3333/api/data', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(submitted)
+        }).then(res => {
+            this.readGraphData();
+        });
     }
 
     changeView() {
@@ -103,32 +126,49 @@ export default class DevCard extends Component {
             цех/отдел: <b>{this.props.device.unit}</b><br />
             корпус: <b>{this.props.device.build}</b><span>&nbsp;</span>
             кабинет: <b>{this.props.device.office}</b><br />
-            принято: <b>{new Date(this.props.device.start_date).toLocaleDateString()}</b><span>&nbsp;</span>
-            начальный остаток: <b>{this.props.device.balance}</b>
+            принято: <b>{new Date(this.props.device.start_date).toLocaleDateString()}</b><br />
+            начальный остаток: <b>{this.props.device.balance}</b><span>&nbsp;</span>
+            отпечатков: <span className="green-text"><b>{this.state.devData[3]}</b></span>
             <i className="material-icons right" onClick={this.changeView}>expand_more</i>
         </div> : <div><div className="card-content" style={{ fontSize: 'x-small' }}>
             цех/отдел: <b>{this.props.device.unit}</b><br />
             корпус: <b>{this.props.device.build}</b><span>&nbsp;</span>
             кабинет: <b>{this.props.device.office}</b><br />
-            принято: <b>{new Date(this.props.device.start_date).toLocaleDateString()}</b><span>&nbsp;</span>
-            начальный остаток: <b>{this.props.device.balance}</b>
+            принято: <b>{new Date(this.props.device.start_date).toLocaleDateString()}</b><br />
+            начальный остаток: <b>{this.props.device.balance}</b><span>&nbsp;</span>
+            отпечатков: <span className="green-text"><b>{this.state.devData[3]}</b></span>
             <i className="material-icons right" onClick={this.changeView}>expand_less</i>
         </div>
             <div className="card-content">
                 Модель: <b>{this.state.devData[0]}</b><br />
                 Вендор: <b>{this.state.devData[1]}</b><br />
                 S/N: <b>{this.state.devData[2]}</b><br />
-                Отпечатков: <b>{this.state.devData[3]}</b>
+                
             </div>
             <div className="card-content" style={{ fontSize: 'x-small' }}>
             <div className="card-title" style={{ fontSize: 'small' }}><b>% заполнения картриджей</b></div>
              {this.state.devToner.arrData.length > 3 ?
-                <div>
-                    <span><b>Черный: </b>{this.state.devToner.arrData[0]} :  {100 * +this.state.devToner.arrData[2] / +this.state.devToner.arrData[1]}%<br /></span>
-                    <span className="blue-text"><b>Синий:  </b>{this.state.devToner.arrData[3]} : {100 * +this.state.devToner.arrData[5] / +this.state.devToner.arrData[4]}%<br/></span>
-                    <span className="red-text"><b>Красный: </b>{this.state.devToner.arrData[6]} : {100 * +this.state.devToner.arrData[8] / +this.state.devToner.arrData[7]}%<br /></span>
-                    <span className="yellow-text"><b>Желтый: </b>{this.state.devToner.arrData[9]} : {100 * +this.state.devToner.arrData[11] / +this.state.devToner.arrData[10]}%</span>
-                </div> : this.state.devToner.arrData.length > 0 ? <span><b>Черный: </b>{this.state.devToner.arrData[0]} :  {100 * +this.state.devToner.arrData[2] / +this.state.devToner.arrData[1]}%<br /></span> : null}
+                <svg width='360px' height='80px'>
+                    <rect width="360" height="17" x="0" y="0" rx="3" ry="3" style={{border: '1px solid #000000', fill: '#757575'}}/>
+                    <rect width={+this.state.devToner.arrData[2] / +this.state.devToner.arrData[1] *360} height="15" x="1" y="1" rx="3" ry="3" style={{border: '1px solid #000000', fill: '#000000'}}/>
+                    <rect width="360" height="17" x="0" y="20" rx="3" ry="3" style={{border: '1px solid #000000', fill: '#757575'}}/>
+                    <rect width={+this.state.devToner.arrData[5] / +this.state.devToner.arrData[4] *360} height="15" x="1" y="21" rx="3" ry="3" style={{border: '1px solid #000000', fill: '#1565c0'}}/>
+                    <rect width="360" height="17" x="0" y="40" rx="3" ry="3" style={{border: '1px solid #000000', fill: '#757575'}}/>
+                    <rect width={+this.state.devToner.arrData[8] / +this.state.devToner.arrData[7] *360} height="15" x="1" y="41" rx="3" ry="3" style={{border: '1px solid #000000', fill: '#d81b60'}}/>
+                    <rect width="360" height="17" x="0" y="60" rx="3" ry="3" style={{border: '1px solid #000000', fill: '#757575'}}/>
+                    <rect width={+this.state.devToner.arrData[11] / +this.state.devToner.arrData[10] *360} height="15" x="1" y="61" rx="3" ry="3" style={{border: '1px solid #000000', fill: '#f9a825'}}/>
+
+                    <text x="170" y="13" fill="white" fontSize="13">{Math.round(+this.state.devToner.arrData[2] / +this.state.devToner.arrData[1] *100)}%</text>
+                    <text x="170" y="33" fill="white" fontSize="13">{Math.round(+this.state.devToner.arrData[5] / +this.state.devToner.arrData[4] *100)}%</text>
+                    <text x="170" y="53" fill="white" fontSize="13">{Math.round(+this.state.devToner.arrData[8] / +this.state.devToner.arrData[7] *100)}%</text>
+                    <text x="170" y="73" fill="white" fontSize="13">{Math.round(+this.state.devToner.arrData[11] / +this.state.devToner.arrData[10] *100)}%</text>
+
+            </svg> : this.state.devToner.arrData.length > 0 ? 
+                    <svg width='360px' height='80px'>
+                        <rect width="360" height="17" x="0" y="0" rx="3" ry="3" style={{border: '1px solid #000000', fill: '#9e9e9e'}}/>
+                        <rect width={+this.state.devToner.arrData[2] / +this.state.devToner.arrData[1] *360} height="15" x="1" y="1"  rx="3" ry="3" style={{border: '1px solid #000000', fill: '#000000'}}/>
+                        <text x="170" y="13" fill="white" fontSize="13">{Math.round(+this.state.devToner.arrData[2] / +this.state.devToner.arrData[1] *100)}%</text>
+                    </svg> : null}
             </div>
             <div className="card-content">
                 <PrintBar data={this.state.dataGraph} height={170} />
@@ -163,7 +203,7 @@ export default class DevCard extends Component {
                         <button
                             className={this.classS}
                             id={this.props.device._id}
-                    /* onClick={this.handleSave} */>
+                            onClick={this.handleSave} >
                             <i className="material-icons">save</i>
                         </button>
                        {/*  <button

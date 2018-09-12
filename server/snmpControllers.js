@@ -30,7 +30,7 @@ module.exports.devData = async function (req, res) {
     var snmp = require('net-snmp');
     var values = [];
    
-    var oids = ['1.3.6.1.2.1.43.5.1.1.16.1', '1.3.6.1.2.1.43.8.2.1.14.1.1', '1.3.6.1.2.1.43.5.1.1.17.1', '1.3.6.1.2.1.43.10.2.1.4.1.1'];
+    var oids = ['1.3.6.1.2.1.25.3.2.1.3.1', '1.3.6.1.2.1.43.8.2.1.14.1.1', '1.3.6.1.2.1.43.5.1.1.17.1', '1.3.6.1.2.1.43.10.2.1.4.1.1'];
     
     //var oids = ['1.3.6.1.2.1.43.5.1.1.16.1', '1.3.6.1.2.1.25.3.6.1.4.5', '1.3.6.1.2.1.43.5.1.1.17.1', '1.3.6.1.2.1.43.10.2.1.4.1.1'];
 
@@ -122,7 +122,7 @@ module.exports.getToner = async function(req, res) {
 
 function resolveName(devid) {
     return new Promise(resolve => {
-        dns.setServers(['172.25.140.17', '172.25.140.27']);
+        dns.setServers(['172.25.140.17', '172.25.140.27', '172.22.123.3', '172.22.123.4']);
         dns.resolve4(devid, function (err, devip) {
             if (err) {
                 resolve(-1);
