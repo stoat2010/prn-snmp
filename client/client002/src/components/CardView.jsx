@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import DevCard from './DevCard'
+import DevCard from './DevCard';
 
 export default class CardView extends Component {
 
@@ -28,7 +28,7 @@ export default class CardView extends Component {
     render() {
 
         return (
-
+            
             <div style={{ position: 'flex', overflow: 'auto', height: '800px' }}>
                 <div className="row col s12" >
                     {this.state.devices.map(device =>

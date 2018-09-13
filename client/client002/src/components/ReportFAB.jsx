@@ -17,10 +17,10 @@ export default function ReportFAB(props) {
                     <i className="material-icons white-text" style={{verticalAlign: 'middle'}}>show_chart</i>
                 </a> 
             </SpeedDialItem>
-            <SpeedDialItem  className="orange" onClick={props.pdf2create}>
+            <SpeedDialItem  className="orange" onClick={()=>props.pdfCreate({addr: 'http://192.168.1.102:3333/api/pdf2', name: 'topdevices-' + new Date().toLocaleDateString() + '.pdf'})}>
                     <i className="material-icons white-text" style={{verticalAlign: 'middle'}}>insert_chart</i>
             </SpeedDialItem>
-            <SpeedDialItem  className="pink" onClick={props.pdf3create}>
+            <SpeedDialItem  className="pink" onClick={()=>props.pdfCreate({ addr: 'http://192.168.1.102:3333/api/pdf3', name: 'devicelimit-' + new Date().toLocaleDateString() + '.pdf'})}>
                     <i className="material-icons white-text" style={{verticalAlign: 'middle'}}>reorder</i>
             </SpeedDialItem>
             <SpeedDialItem  className="green white-text">

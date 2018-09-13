@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import swal from 'sweetalert2';
+import domtoimage from 'dom-to-image';
+import FileSaver from 'file-saver';
 
 import PrintBar from './Bar';
+import {SvgDevOn, SvgDevOff, SvgBtnRefresh, SvgBtnSave, SvgDevShot, SvgBtnDel, SvgExpLess, SvgExpMore} from './Svg';
 
 export default class DevCard extends Component {
 
@@ -105,6 +108,11 @@ export default class DevCard extends Component {
         });
     }
 
+    saveImage(id, name){
+
+        domtoimage.toBlob(document.getElementById(id)).then(function(blob) {FileSaver.saveAs(blob, name+'_card.png');});
+    }
+
     changeView() {
         const newContentState = !this.state.content;
         this.setState(
@@ -120,7 +128,8 @@ export default class DevCard extends Component {
         this.readData();
     }
 
-    cl = () => this.state.classes === 1 ? <i className="material-icons red-text">block</i> : <i className="material-icons green-text">check_circle</i>;
+    cl = () => this.state.classes === 1 ? <SvgDevOff fill="#d81b60" /> 
+    : <SvgDevOn fill="green" />;
     cont = () => !this.state.content ?
         <div className="card-content" style={{ fontSize: 'x-small' }}>
             цех/отдел: <b>{this.props.device.unit}</b><br />
@@ -129,7 +138,7 @@ export default class DevCard extends Component {
             принято: <b>{new Date(this.props.device.start_date).toLocaleDateString()}</b><br />
             начальный остаток: <b>{this.props.device.balance}</b><span>&nbsp;</span>
             отпечатков: <span className="green-text"><b>{this.state.devData[3]}</b></span>
-            <i className="material-icons right" onClick={this.changeView}>expand_more</i>
+            <i className="right" onClick={this.changeView}><SvgExpMore /></i>
         </div> : <div><div className="card-content" style={{ fontSize: 'x-small' }}>
             цех/отдел: <b>{this.props.device.unit}</b><br />
             корпус: <b>{this.props.device.build}</b><span>&nbsp;</span>
@@ -137,7 +146,7 @@ export default class DevCard extends Component {
             принято: <b>{new Date(this.props.device.start_date).toLocaleDateString()}</b><br />
             начальный остаток: <b>{this.props.device.balance}</b><span>&nbsp;</span>
             отпечатков: <span className="green-text"><b>{this.state.devData[3]}</b></span>
-            <i className="material-icons right" onClick={this.changeView}>expand_less</i>
+            <i className="right" onClick={this.changeView}><SvgExpLess /></i>
         </div>
             <div className="card-content">
                 Модель: <b>{this.state.devData[0]}</b><br />
@@ -164,7 +173,7 @@ export default class DevCard extends Component {
                     <text x="170" y="73" fill="white" fontSize="13">{Math.round(+this.state.devToner.arrData[11] / +this.state.devToner.arrData[10] *100)}%</text>
 
             </svg> : this.state.devToner.arrData.length > 0 ? 
-                    <svg width='360px' height='80px'>
+                    <svg width='360px' height='20px'>
                         <rect width="360" height="17" x="0" y="0" rx="3" ry="3" style={{border: '1px solid #000000', fill: '#9e9e9e'}}/>
                         <rect width={+this.state.devToner.arrData[2] / +this.state.devToner.arrData[1] *360} height="15" x="1" y="1"  rx="3" ry="3" style={{border: '1px solid #000000', fill: '#000000'}}/>
                         <text x="170" y="13" fill="white" fontSize="13">{Math.round(+this.state.devToner.arrData[2] / +this.state.devToner.arrData[1] *100)}%</text>
@@ -182,41 +191,48 @@ export default class DevCard extends Component {
     }
 
     render() {
-        this.state.classes === 1 ? this.classS = "disabled btn-flat white" : this.classS = "btn-flat waves-effect waves-grey";
+        this.state.classes === 1 ? this.classS = "disabled btn-flat white" : this.classS = "btn-flat waves-effect waves-gray white";
+        this.state.classes === 1 ? this.btnDisable = "#bdbdbd" : this.btnDisable = "#424242";
 
         return (
 
-            <div className="col s3">
+            <div id={this.props.device._id} className="col s3">
                 <div className="card">
                     <div className="card-title" style={{ fontSize: 'small' }}>
                         {this.props.device.name}
                         <div style={{ position: "absolute", right: "5px", top: "5px" }}>{this.cl()}</div>
                     </div>
                     {this.cont()}
-                    <div className="card-action">
+                    <div className="card-action" style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                        <div style={{display: 'flex', flexDirection: 'row'}}>
                         <button
-                            className="waves-effect waves-gray btn-flat"
+                            className="btn-flat waves-effect waves-gray white"
+                            style={{display: 'flex'}}
                             id={this.props.device._id}
                             onClick={this.devInfo}>
-                            <i className="material-icons">refresh</i>
+                            <SvgBtnRefresh />
                         </button>
                         <button
                             className={this.classS}
+                            style={{display: 'flex'}}
                             id={this.props.device._id}
                             onClick={this.handleSave} >
-                            <i className="material-icons">save</i>
+                            <SvgBtnSave fill={this.btnDisable}/>
                         </button>
-                       {/*  <button
-                            className={this.classS}
+                       <button
                             id={this.props.device._id}
-                            onClick={this.handleToner.bind(this, this.props.device.name)}>
-                            <i className="material-icons">print</i>
-                        </button> */}
+                            className="btn-flat waves-effect waves-gray white"
+                            style={{display: 'flex'}}
+                            onClick={this.saveImage.bind(this, this.props.device._id, this.props.device.name)}>
+                            <SvgDevShot />
+                        </button>
+                        </div>
                         <button
                             className="waves-effect waves-gray btn-flat right"
                             id={this.props.device._id}
+                            style={{display: 'flex'}}
                         /* onClick={this.handleDelButton.bind(this, this.props.device._id)} */>
-                            <i className="material-icons">delete</i>
+                            <SvgBtnDel />
                         </button>
                     </div>
                 </div>

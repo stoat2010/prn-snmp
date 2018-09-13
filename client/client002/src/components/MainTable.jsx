@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { Calendar } from 'ch-calendar';
+import FileSaver from 'file-saver';
 
 import Row from './Row';
 import TopNav from './TopNav';
@@ -40,8 +41,7 @@ class MainTable extends Component {
     this.handleChangeUnit = this.handleChangeUnit.bind(this);
     this.handleChangeVendor = this.handleChangeVendor.bind(this);
     this.handleIP = this.handleIP.bind(this);
-    this.pdf2create = this.pdf2create.bind(this);
-    this.pdf3create = this.pdf3create.bind(this);
+    this.pdfCreate = this.pdfCreate.bind(this);
     this.sideStyle = styles.sidenav;
     this.topStyle = styles.topnav;
   }
@@ -182,34 +182,7 @@ class MainTable extends Component {
       .then(devices => { this.setState({ devlist: devices }); });
   }
 
-  pdf2create() {
-
-    const mySwal = withReactContent(swal);
-
-    mySwal.fire({
-      showConfirmButton: false,
-      title: 'Выбрать месяц и год',
-      html: <div style={{ display: 'flex', justifyContent: 'center' }}><Calendar isMonth date={new Date()} onSelect={(repDate) => { this.setState({ repDate }); mySwal.clickConfirm() }} /></div>,
-    })
-      .then((createReport) => {
-        if (createReport.value) {
-          fetch('http://192.168.1.102:3333/api/pdf2', {
-            method: 'POST',
-            headers: {
-              'Accept': 'application/json, text/plain, */*',
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              repdate: this.state.repDate,
-              month: new Date(this.state.repDate).getMonth() + 1,
-              year: new Date(this.state.repDate).getFullYear()
-            })
-          }).then(res => (res.blob())).then((data) => window.open(URL.createObjectURL(data)))
-            .then(() => (this.setState({ repDate: new Date() })))}
-      })
-  }
-
-  pdf3create() {
+  pdfCreate(props) {
 
     const mySwal = withReactContent(swal);
 
@@ -219,7 +192,7 @@ class MainTable extends Component {
       html: <div style={{ display: 'flex', justifyContent: 'center' }}><Calendar isMonth date={new Date()} onSelect={(repDate) => { this.setState({ repDate }); mySwal.clickConfirm() }} /></div>,
     })
       .then(() => {
-        fetch('http://192.168.1.102:3333/api/pdf3', {
+        fetch(props.addr, {
           method: 'POST',
           headers: {
             'Accept': 'application/json, text/plain, */*',
@@ -230,7 +203,7 @@ class MainTable extends Component {
             month: new Date(this.state.repDate).getMonth() + 1,
             year: new Date(this.state.repDate).getFullYear()
           })
-        }).then(res => (res.blob())).then((data) => window.open(URL.createObjectURL(data)))
+        }).then(res => (res.blob())).then((data) => FileSaver.saveAs(data, props.name))
           .then(() => (this.setState({ repDate: new Date() })))
       })
   }
@@ -266,7 +239,7 @@ class MainTable extends Component {
           <i className="material-icons">add</i>
         </button>
 
-        <ReportFAB pdf2create={this.pdf2create} pdf3create={this.pdf3create} />
+        <ReportFAB pdfCreate={this.pdfCreate} />
         <Sidenav
           toggleVisible={this.toggleVisible}
           toBase={this.toBase}
