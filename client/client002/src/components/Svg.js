@@ -14,5 +14,16 @@ const SvgDevShot = (props) => <Svg {...props}><path d="M9 2L7.17 4H4c-1.1 0-2 .9
 const SvgBtnDel = (props) => <Svg {...props}><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></Svg>
 const SvgExpLess = (props) => <Svg {...props}><path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"/></Svg>
 const SvgExpMore = (props) => <Svg {...props}><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></Svg>
+const SvgChart = (props) => <Svg {...props}><path d="M9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4zm2.5 2.1h-15V5h15v14.1zm0-16.1h-15c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></Svg>
 
-export {SvgDevOn, SvgDevOff, SvgBtnRefresh, SvgBtnSave, SvgDevShot, SvgBtnDel, SvgExpLess, SvgExpMore}
+export {
+    SvgDevOn, 
+    SvgDevOff, 
+    SvgBtnRefresh, 
+    SvgBtnSave, 
+    SvgDevShot, 
+    SvgBtnDel, 
+    SvgExpLess, 
+    SvgExpMore,
+    SvgChart
+}
