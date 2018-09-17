@@ -16,8 +16,8 @@ export default function PageHeader() {
             </div>
             <div className="nav-content">
                 <ul className="tabs tabs-transparent">
-                    <li className="tab"><NavLink exact to = "/" activeClassName="yellow-text">Главная</NavLink></li>
-                    <li className="tab"><NavLink to = "/card" activeClassName="yellow-text">Карточки</NavLink></li>
+                    <li className="tab"><NavLink exact to = "/" activeClassName="yellow-text">Главная</NavLink></li> 
+                    {/* <li className="tab"><NavLink to = "/card" activeClassName="yellow-text">Карточки</NavLink></li> */}
                     <li className="tab"><NavLink to = "/adminpoint" activeClassName="yellow-text">Администрирование</NavLink></li>
                     <li className="tab"><NavLink to = "/config" activeClassName="yellow-text">Настройки</NavLink></li>
                 </ul>

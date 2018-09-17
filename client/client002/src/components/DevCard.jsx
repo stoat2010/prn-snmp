@@ -3,7 +3,7 @@ import domtoimage from 'dom-to-image';
 import FileSaver from 'file-saver';
 
 import PrintBar from './Bar';
-import {SvgDevOn, SvgDevOff, SvgBtnRefresh, SvgBtnSave, SvgDevShot, SvgBtnDel, SvgExpLess, SvgExpMore, SvgChart} from './Svg';
+import {SvgDevOn, SvgDevOff, SvgBtnRefresh, SvgBtnSave, SvgDevShot, SvgBtnDel, SvgExpLess, SvgExpMore, SvgChart, SvgBtnEdit} from './Svg';
 
 export default class DevCard extends Component {
 
@@ -236,6 +236,12 @@ export default class DevCard extends Component {
                             id={this.props.device._id}
                             onClick={this.devInfo}>
                             <SvgBtnRefresh />
+                        </button>
+                        <button
+                            className="btn-flat waves-effect waves-gray"
+                            style={{display: 'flex', backgroundColor: this.cardColor}}
+                            id={this.props.device._id}>
+                            <SvgBtnEdit />
                         </button>
                         <button
                             className={this.classS}

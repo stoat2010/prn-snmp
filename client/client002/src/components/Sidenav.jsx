@@ -99,7 +99,7 @@ export default class Sidenav extends Component {
                         <table><tbody><tr>
                         <td>
                         <label>
-                            <input name="group1" type="radio" ref="type" className="with-gap" value="0" checked />
+                            <input name="group1" type="radio" ref="type" className="with-gap" value="0" defaultChecked />
                             <span>Монохром</span>
                         </label>
                         </td>

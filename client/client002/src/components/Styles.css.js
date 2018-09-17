@@ -3,7 +3,30 @@ export default {
     btnadd: {
         'position': 'absolute',
         'bottom': '6px',
-        'right': '1%'
+        'right': '1%',
+        'display': 'flex',
+        'justifyContent': 'center'
+    },
+    btnview: {
+        'position': 'absolute',
+        'bottom': '10px',
+        'left': '3%',
+        'display': 'flex',
+        'justifyContent': 'center'
+    },
+    btnrefresh: {
+        'position': 'absolute',
+        'bottom': '10px',
+        'left': '6%',
+        'display': 'flex',
+        'justifyContent': 'center'
+    },
+    btnsave: {
+        'position': 'absolute',
+        'bottom': '10px',
+        'left': '9%',
+        'display': 'flex',
+        'justifyContent': 'center'
     },
     btnpdf: {
         'position': 'absolute',
