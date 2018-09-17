@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import swal from 'sweetalert2';
 import domtoimage from 'dom-to-image';
 import FileSaver from 'file-saver';
 
