@@ -18,6 +18,7 @@ router.put('/devices/:deviceid', cors(), ctrlDevices.deviceToReport);
 router.get('/data/:deviceid', ctrlData.dataDevice);
 router.get('/datadate/:deviceid', ctrlData.dataDate);
 router.get('/datagraph/:deviceid', ctrlData.dataGraph);
+router.get('/datacurrent/:deviceid', ctrlData.curPrintouts);
 router.post('/data', ctrlData.dataCreate);
 
 router.get('/devcol/:deviceid', ctrlDevices.deviceOne);

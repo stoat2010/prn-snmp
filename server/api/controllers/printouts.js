@@ -69,6 +69,20 @@ module.exports.dataDate = function (req, res) {
         });
 };
 
+module.exports.curPrintouts = function (req, res) {
+    Loc
+        .find({ device: req.params.deviceid, month: new Date().getMonth() + 1, year: new Date().getFullYear() }, { printouts: 1, _id: 0 })
+        .exec(function (err, device) {
+            if (err) {
+                sendJSONResponse(res, 440, err);
+            } else {
+                if (device.length > 0)    
+                    {sendJSONResponse(res, 200, device[0].printouts);}
+                else{sendJSONResponse(res, 200, 0);}
+            }
+        });
+};
+
 module.exports.dataGraph = function (req, res) {
 
     var prouts = [0];

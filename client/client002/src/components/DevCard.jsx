@@ -15,12 +15,14 @@ export default class DevCard extends Component {
             dataGraph: [],
             content: false,
             reportStatus: this.props.device.inreport,
+            curPrintouts: 0,
             devToner: {
                 arrData:[]
             }
         };
         this.readStatus = this.readStatus.bind(this);
         this.readData = this.readData.bind(this);
+        this.readCurData = this.readCurData.bind(this);
         this.devInfo = this.devInfo.bind(this);
         this.changeView = this.changeView.bind(this);
         this.handleSave = this.handleSave.bind(this);
@@ -70,6 +72,20 @@ export default class DevCard extends Component {
             .then(dataGraph => { this.setState({ dataGraph }); });
     }
 
+    readCurData() {
+        var options = {
+            method: 'GET',
+            mode: 'cors',
+            cache: 'default'
+        };
+
+        fetch("http://192.168.1.102:3333/api/datacurrent/" + this.props.device.device, options)
+            .then((res => {
+                return res.json();
+            }))
+            .then(curPrintouts => { this.setState({ curPrintouts }); });
+    }
+
     handleToner(dev) {
 
         var options = {
@@ -106,6 +122,7 @@ export default class DevCard extends Component {
             body: JSON.stringify(submitted)
         }).then(res => {
             this.readGraphData();
+            this.readCurData();
         });
     }
 
@@ -147,6 +164,7 @@ export default class DevCard extends Component {
     devInfo() {
         this.readStatus();
         this.readData();
+        this.readCurData();
     }
 
     cl = () => this.state.classes === 1 ? <SvgDevOff fill="#d81b60" /> 
@@ -212,12 +230,13 @@ export default class DevCard extends Component {
         this.readStatus();
         this.readData();
         this.readGraphData();
+        this.readCurData();
     }
 
     render() {
-        this.state.classes === 1 ? this.classS = "disabled btn-flat white" : this.classS = "btn-flat waves-effect waves-gray white";
+        this.state.classes === 1 ? this.classS = "disabled btn-flat " + this.cardColor : this.classS = "btn-flat waves-effect waves-gray " + this.cardColor;
         this.state.classes === 1 ? this.btnDisable = "#bdbdbd" : this.btnDisable = "#424242";
-        this.state.classes === 1 ? this.cardColor = "#eeeeee" : this.cardColor = "white";
+        this.state.classes === 1 ? this.cardColor = "#eeeeee" : this.state.devData[3] == this.state.curPrintouts ? this.cardColor = "white" : this.cardColor = "#ffab91";
 
         return (
 
