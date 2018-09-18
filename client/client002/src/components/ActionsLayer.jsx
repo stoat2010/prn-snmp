@@ -262,7 +262,7 @@ class ActionsLayer extends Component {
           <SvgBtnRefresh fill="white"/>
         </button>
         <button
-          className="btn-floating btn waves-effect waves-light indigo z-depth-1"
+          className="disabled btn-floating btn waves-effect waves-light indigo z-depth-1"
           style={styles.btnsave}>
           <SvgBtnSave fill="white"/>
         </button>

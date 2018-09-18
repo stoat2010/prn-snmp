@@ -19,6 +19,7 @@ const SvgViewTable = (props) => <Svg {...props}><path d="M4 14h4v-4H4v4zm0 5h4v-
 const SvgViewCard = (props) => <Svg {...props}><path d="M4 11h5V5H4v6zm0 7h5v-6H4v6zm6 0h5v-6h-5v6zm6 0h5v-6h-5v6zm-6-7h5V5h-5v6zm6-6v6h5V5h-5z"/></Svg>
 const SvgBtnAdd = (props) => <Svg {...props}><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></Svg>
 const SvgBtnEdit = (props) => <Svg {...props}><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></Svg>
+const SvgBtnPrint = (props) => <Svg {...props}><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></Svg>
 
 export {
     SvgDevOn, 
@@ -33,5 +34,6 @@ export {
     SvgViewTable,
     SvgViewCard,
     SvgBtnAdd,
-    SvgBtnEdit
+    SvgBtnEdit,
+    SvgBtnPrint
 }

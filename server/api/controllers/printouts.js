@@ -74,7 +74,7 @@ module.exports.curPrintouts = function (req, res) {
         .find({ device: req.params.deviceid, month: new Date().getMonth() + 1, year: new Date().getFullYear() }, { printouts: 1, _id: 0 })
         .exec(function (err, device) {
             if (err) {
-                sendJSONResponse(res, 440, err);
+                sendJSONResponse(res, 200, 0);
             } else {
                 if (device.length > 0)    
                     {sendJSONResponse(res, 200, device[0].printouts);}

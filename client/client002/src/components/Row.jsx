@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import swal from 'sweetalert2';
+import {SvgDevOn, SvgDevOff, SvgBtnRefresh, SvgBtnSave, SvgBtnDel, SvgBtnPrint} from './Svg';
 
 import PrintBar from './Bar';
 
@@ -196,7 +197,7 @@ export default class Row extends Component {
 
     }
 
-    cl = () => this.state.dataAllow === 0 ? <i className="material-icons red-text">block</i> : <i className="material-icons green-text">check_circle</i>;
+    cl = () => this.state.dataAllow === 0 ? <SvgDevOff fill="red" /> : <SvgDevOn fill="green" />;
     rep = () => this.state.reportStatus === false ? <span className="red-text"><b>Нет</b></span> : <span className="green-text"><b>Да</b></span>;
 
     componentDidMount() {
@@ -207,13 +208,14 @@ export default class Row extends Component {
 
         this.state.classes === 1 ? this.classN = "btn-floating btn-small waves-effect waves-light red lighten-3" : this.classN = "btn-floating btn-small waves-effect waves-light green darken-4";
         this.state.classes === 1 ? this.classS = "disabled btn-flat white" : this.classS = "btn-flat waves-effect waves-grey white";
+        this.state.classes === 1 ? this.btnDisable = "#bdbdbd" : this.btnDisable = "#424242";
         //this.state.dataAllow === 1 ? this.classS = "disabled btn-flat" : this.classS = "btn-flat";
         this.props.device.serial ? this.classIP = "black-text" : this.classIP = "pink-text";
         new Date(this.state.dataDate).toLocaleDateString() === new Date().toLocaleDateString() ? this.classDate = "green-text": this.classDate = 'orange-text';
 
         return (
             <div className="row col s12">
-                <div className="col s1" style={{ width: '3%', textAlign: 'center', paddingTop: '0.5%'}}><button className={this.classN} onClick={this.devInfo}><i className="material-icons">refresh</i></button></div>
+                <div className="col s1" style={{width: '3%', textAlign: 'center', paddingTop: '0.5%'}}><button className={this.classN} onClick={this.devInfo} style={{display: 'flex', justifyContent: 'center'}}><SvgBtnRefresh fill="white" /></button></div>
                 
                 <div className="col s1 brown-text" style={{ width: '15%', textAlign: 'left', fontSize: 'x-small' }}>
                     цех/отдел: <b>{this.props.device.unit}</b><br />
@@ -241,8 +243,9 @@ export default class Row extends Component {
                 <button
                     className={this.classS}
                     id={this.props.device._id}
+                    style={{display: 'flex', justifyContent: 'center'}}
                     onClick={this.handleSave}>
-                    <i className="material-icons">save</i>
+                    <SvgBtnSave fill={this.btnDisable} />
                 </button>
                 </div>
                 <div className="col s1" style={{ width: '6%', textAlign: 'center', fontSize: 'small',}}>
@@ -258,16 +261,17 @@ export default class Row extends Component {
                         className={this.classS}
                         id={this.props.device._id}
                         onClick={this.handleToner.bind(this, this.props.device.name)}>
-                        <i className="material-icons">print</i>
+                        <SvgBtnPrint fill={this.btnDisable} />
                     </button>
                 </div>
                 <div className="col s1" style={{ width: '25%', textAlign: 'center'}}><PrintBar data={this.state.dataGraph} height={70} /></div>
                 <div className="col s1" style={{ width: '3%', textAlign: 'center'}}>
                     <button
                         className="waves-effect waves-gray btn-flat"
+                        style={{display: 'flex', justifyContent: 'center'}}
                         id={this.props.device._id}
                         onClick={this.handleDelButton.bind(this, this.props.device._id)}>
-                        <i className="material-icons">delete</i>
+                        <SvgBtnDel />
                     </button>
                 </div>
             </div>

@@ -31,6 +31,14 @@ export default class DevCard extends Component {
         this.classS = "material-icons right disabled";
     }
 
+    getInitialState(){
+        return {secondsElapsed: 0}
+    }
+
+    tick(){
+        this.setState({secondsElapsed: this.state.secondsElapsed +1})
+    }
+
     readStatus() {
         var options = {
             method: 'GET',
@@ -231,17 +239,23 @@ export default class DevCard extends Component {
         this.readData();
         this.readGraphData();
         this.readCurData();
+        this.interval = setInterval(this.devInfo, 900000);
+    }
+
+    componentWillUnmount(){
+        clearInterval(this.interval);
     }
 
     render() {
         this.state.classes === 1 ? this.classS = "disabled btn-flat " + this.cardColor : this.classS = "btn-flat waves-effect waves-gray " + this.cardColor;
         this.state.classes === 1 ? this.btnDisable = "#bdbdbd" : this.btnDisable = "#424242";
-        this.state.classes === 1 ? this.cardColor = "#eeeeee" : this.state.devData[3] == this.state.curPrintouts ? this.cardColor = "white" : this.cardColor = "#ffab91";
+        this.state.classes === 1 ? this.cardColor = "#eeeeee" : this.cardColor = "white"
+        this.state.devData[3] == this.state.curPrintouts ? this.borderColor = "white" : this.borderColor = "#ffab91";
 
         return (
 
             <div className="z-depth-5" id={this.props.device._id} className="col s3">
-                <div className="card hoverable" style={{backgroundColor: this.cardColor}}>
+                <div className="card hoverable" style={{borderStyle: 'solid', borderColor: this.borderColor, backgroundColor: this.cardColor}}>
                     <div className="card-title" style={{ fontSize: 'small' }}>
                         {this.props.device.name}
                         <div style={{ position: "absolute", right: "5px", top: "5px" }}>{this.cl()}</div>
