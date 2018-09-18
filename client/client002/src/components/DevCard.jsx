@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import domtoimage from 'dom-to-image';
 import FileSaver from 'file-saver';
-import { FadeLoader } from 'react-spinners';
+//import { FadeLoader } from 'react-spinners';
 
 import PrintBar from './Bar';
 import {SvgDevOn, SvgDevOff, SvgBtnRefresh, SvgBtnSave, SvgDevShot, SvgBtnDel, SvgExpLess, SvgExpMore, SvgChart, SvgBtnEdit} from './Svg';
@@ -256,7 +256,7 @@ export default class DevCard extends Component {
 
         return (
 
-            <div className="z-depth-5" id={this.props.device._id} className="col s3">
+            <div id={this.props.device._id} className="col s3">
                 <div className="card hoverable" style={{borderStyle: 'solid', borderColor: this.borderColor, backgroundColor: this.cardColor}}>
                     <div className="card-title" style={{ fontSize: 'small' }}>
                         {this.props.device.name}
