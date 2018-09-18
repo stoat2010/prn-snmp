@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import domtoimage from 'dom-to-image';
 import FileSaver from 'file-saver';
+import { FadeLoader } from 'react-spinners';
 
 import PrintBar from './Bar';
 import {SvgDevOn, SvgDevOff, SvgBtnRefresh, SvgBtnSave, SvgDevShot, SvgBtnDel, SvgExpLess, SvgExpMore, SvgChart, SvgBtnEdit} from './Svg';
@@ -14,6 +15,7 @@ export default class DevCard extends Component {
             devData: {},
             dataGraph: [],
             content: false,
+            loadCard: true,
             reportStatus: this.props.device.inreport,
             curPrintouts: 0,
             devToner: {

@@ -5,7 +5,6 @@ import ActionsLayer from './components/ActionsLayer'
 import PageHeader from './components/PageHeader';
 import LoginForm from './components/LoginForm';
 import NotFound from './components/NotFound';
-import CardView from './components/CardView';
 
 export default function App() {
     return (
