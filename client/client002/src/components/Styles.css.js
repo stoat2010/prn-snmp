@@ -46,7 +46,9 @@ export default {
     btclose: {
         'position': 'absolute',
         'top': '0px',
-        'right': '0px'
+        'right': '0px',
+        'display': 'flex',
+        'justifyContent': 'center'
     },
     sidenav: {
         'height': '35%',

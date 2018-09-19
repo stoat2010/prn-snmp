@@ -4,6 +4,7 @@ import { FadeLoader } from 'react-spinners';
 
 import swal from 'sweetalert2';
 import styles from './Styles.css.js';
+import {SvgBtnClose} from './Svg';
 
 export default class Sidenav extends Component {
 
@@ -55,7 +56,7 @@ export default class Sidenav extends Component {
                     className="btn-flat grey lighten-3"
                     style={styles.btclose}
                     onClick={this.props.toggleVisible}>
-                    <i className="material-icons">close</i>
+                    <SvgBtnClose />
                 </button>
                 <div className="container">
                     <div style={styles.loader}>
@@ -127,8 +128,10 @@ export default class Sidenav extends Component {
                             <label htmlFor="monthlimit">Отпечатков в месяц</label>
                         </div>
                         <div className="center-align">
-                            <button className="btn waves-effect waves-light" type="submit" name="action">Добавить
-                                 <i className="material-icons right">print</i>
+                            <button 
+                                className="btn waves-effect waves-light" 
+                                type="submit" 
+                                name="action">Добавить
                             </button>
                         </div>
                     </form >

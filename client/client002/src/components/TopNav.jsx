@@ -3,6 +3,7 @@ import React from 'react';
 import ListFilter from './ListFilter';
 
 import styles from './Styles.css.js';
+import {SvgBtnArrDown, SvgBtnArrUp} from './Svg';
 
 export default function TopNav(props) {
 

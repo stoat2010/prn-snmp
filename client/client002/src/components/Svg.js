@@ -20,6 +20,10 @@ const SvgViewCard = (props) => <Svg {...props}><path d="M4 11h5V5H4v6zm0 7h5v-6H
 const SvgBtnAdd = (props) => <Svg {...props}><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></Svg>
 const SvgBtnEdit = (props) => <Svg {...props}><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></Svg>
 const SvgBtnPrint = (props) => <Svg {...props}><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></Svg>
+const SvgBtnClose = (props) => <Svg {...props}><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></Svg>
+const SvgBtnArrUp = (props) => <Svg {...props}><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></Svg>
+const SvgBtnArrDown = (props) => <Svg {...props}><path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/></Svg>
+const SvgBtnPwrOn = (props) => <Svg {...props}><path d="M13 3h-2v10h2V3zm4.83 2.17l-1.42 1.42C17.99 7.86 19 9.81 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-2.19 1.01-4.14 2.58-5.42L6.17 5.17C4.23 6.82 3 9.26 3 12c0 4.97 4.03 9 9 9s9-4.03 9-9c0-2.74-1.23-5.18-3.17-6.83z"/></Svg>
 
 export {
     SvgDevOn, 
@@ -35,5 +39,9 @@ export {
     SvgViewCard,
     SvgBtnAdd,
     SvgBtnEdit,
-    SvgBtnPrint
+    SvgBtnPrint,
+    SvgBtnClose,
+    SvgBtnArrUp,
+    SvgBtnArrDown,
+    SvgBtnPwrOn
 }

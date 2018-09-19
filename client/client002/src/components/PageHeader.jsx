@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-//import ReactSVG from 'react-svg';
+import {SvgBtnPwrOn,} from './Svg';
 
 export default function PageHeader() {
     return (
@@ -11,7 +11,7 @@ export default function PageHeader() {
                 {/* <NavLink exact to="/" className="brand-logo left"><ReactSVG path="logo-text.svg" svgStyle={{ height: 20, margin: "10"}} /></NavLink> */}
                 <NavLink exact to="/" className="brand-logo center white-text">SNMP опрос сетевых МФУ и принтеров</NavLink>
                 <ul id="nav-mobile" className="right hide-on-med-and-down">
-                    <li><NavLink to = "/login"><i className="material-icons">power_settings_new</i></NavLink></li>
+                    <li><NavLink to = "/login"><SvgBtnPwrOn fill="white" /></NavLink></li>
                 </ul>
             </div>
             <div className="nav-content">
