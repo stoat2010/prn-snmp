@@ -9,7 +9,7 @@ import Sidenav from './Sidenav';
 import ReportFAB from './ReportFAB';
 import MainTable from './MainTable';
 import CardView from './CardView';
-import {SvgViewTable, SvgViewCard, SvgBtnAdd, SvgBtnRefresh, SvgBtnSave} from './Svg';
+import {SvgViewTable, SvgViewCard, SvgBtnAdd, SvgBtnRefresh, SvgBtnSave, SvgBtnArrUp, SvgBtnArrDown} from './Svg';
 
 import styles from './Styles.css';
 import "ch-calendar/dist/ch-calendar.css";
@@ -25,7 +25,7 @@ class ActionsLayer extends Component {
       devlist: [],
       isVisible: false,
       isTopVisible: false,
-      btnArrows: 'arrow_downward',
+      btnArrows: <SvgBtnArrDown fill="white" />,
       devData1: {},
       loadSNMP: false,
       devName: '',
@@ -109,7 +109,7 @@ class ActionsLayer extends Component {
     const newTopVisibleState = !this.state.isTopVisible;
     this.setState({ isTopVisible: newTopVisibleState, });
     this.state.isTopVisible === true ? this.topStyle = styles.topnav : this.topStyle = styles.topnavActive;
-    this.state.isTopVisible === true ? this.setState({ btnArrows: 'arrow_downward' }) : this.setState({ btnArrows: 'arrow_upward' });
+    this.state.isTopVisible === true ? this.setState({ btnArrows: <SvgBtnArrDown fill="white" /> }) : this.setState({ btnArrows: <SvgBtnArrUp fill="white" /> });
   }
 
   resetForm() {
