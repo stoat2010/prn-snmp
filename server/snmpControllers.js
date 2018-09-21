@@ -16,7 +16,7 @@ module.exports.devData = async function (req, res) {
    
     var oids = ['1.3.6.1.2.1.43.10.2.1.4.1.1'];
     var printouts = await snmpGet(req.params.deviceid, oids);
-    sendJSONResponse(res, 200, !!printouts.length? printouts :   ['-']);
+    sendJSONResponse(res, 200, !!printouts.length ? printouts :   ['-']);
 }
 
 module.exports.devDataFull = async function (req, res) {
@@ -45,7 +45,6 @@ module.exports.getToner = async function(req, res) {
     var deviceIP = await resolveName(req.params.deviceid)
 
     if (deviceType[0].type === 0) {
-
         var oids = ['1.3.6.1.2.1.43.11.1.1.6.1.1','1.3.6.1.2.1.43.11.1.1.8.1.1', '1.3.6.1.2.1.43.11.1.1.9.1.1'];
     }else{
         var oids = ['1.3.6.1.2.1.43.11.1.1.6.1.1','1.3.6.1.2.1.43.11.1.1.8.1.1', '1.3.6.1.2.1.43.11.1.1.9.1.1',
