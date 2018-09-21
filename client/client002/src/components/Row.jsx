@@ -9,7 +9,7 @@ export default class Row extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            classes: 1,
+            classes: 0,
             devData: {},
             dataAllow: 0,
             dataGraph: [],
@@ -137,7 +137,7 @@ export default class Row extends Component {
             device_name: this.props.device.name,
             device_serial: this.props.device.serial,
             date: new Date(),
-            printouts: this.state.devData[3]
+            printouts: this.state.devData[0]
         };
 
         fetch('http://192.168.1.102:3333/api/data', {
@@ -206,9 +206,9 @@ export default class Row extends Component {
 
     render() {
 
-        this.state.classes === 1 ? this.classN = "btn-floating btn-small waves-effect waves-light red lighten-3" : this.classN = "btn-floating btn-small waves-effect waves-light green darken-4";
-        this.state.classes === 1 ? this.classS = "disabled btn-flat white" : this.classS = "btn-flat waves-effect waves-grey white";
-        this.state.classes === 1 ? this.btnDisable = "#bdbdbd" : this.btnDisable = "#424242";
+        this.state.classes === 0 ? this.classN = "btn-floating btn-small waves-effect waves-light red lighten-3" : this.classN = "btn-floating btn-small waves-effect waves-light green darken-4";
+        this.state.classes === 0 ? this.classS = "disabled btn-flat white" : this.classS = "btn-flat waves-effect waves-grey white";
+        this.state.classes === 0 ? this.btnDisable = "#bdbdbd" : this.btnDisable = "#424242";
         //this.state.dataAllow === 1 ? this.classS = "disabled btn-flat" : this.classS = "btn-flat";
         this.props.device.serial ? this.classIP = "black-text" : this.classIP = "pink-text";
         new Date(this.state.dataDate).toLocaleDateString() === new Date().toLocaleDateString() ? this.classDate = "green-text": this.classDate = 'orange-text';
@@ -232,9 +232,8 @@ export default class Row extends Component {
                     {this.props.device.model}<br/>
                     {this.props.device.vendor}
                 </div>
-                {/* <div className="col s1" style={{ width: '7%', textAlign: 'center', fontSize: 'small', paddingTop: '0.5%' }}>{this.props.device.vendor}</div> */}
                 <div className="col s1 indigo-text" style={{ width: '6%', textAlign: 'center', fontSize: 'x-small', paddingTop: '0.6%' }}>{this.props.device.serial}</div>
-                <div className="col s1" style={{ width: '6%', textAlign: 'center', fontSize: 'small', paddingTop: '0.5%' }}>{this.state.devData[3]}</div>
+                <div className="col s1" style={{ width: '6%', textAlign: 'center', fontSize: 'small', paddingTop: '0.5%' }}>{this.state.devData[0]}</div>
                 <div className="col s1" style={{ width: '5%', textAlign: 'center', fontSize: 'small'}}>
                     {this.cl()}<br />
                         {this.state.dataDate === '' ? <span style={{fontSize: 'xx-small'}}></span> : <span className={this.classDate} style={{fontSize: 'xx-small'}}>{new Date(this.state.dataDate).toLocaleDateString()}</span> }

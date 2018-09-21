@@ -35,7 +35,7 @@ class ActionsLayer extends Component {
 
     this.resetForm = this.resetForm.bind(this);
     this.toBase = this.toBase.bind(this);
-    this.readData = this.readData.bind(this);
+    this.readDataFull = this.readDataFull.bind(this);
     this.Refresh = this.Refresh.bind(this);
     this.dbConn = this.dbConn.bind(this);
     this.toggleVisible = this.toggleVisible.bind(this);
@@ -51,7 +51,7 @@ class ActionsLayer extends Component {
     this.topStyle = styles.topnav;
   }
 
-  readData(devid) {
+  readDataFull(devid) {
 
     this.setState({ loadSNMP: true });
 
@@ -61,7 +61,7 @@ class ActionsLayer extends Component {
       cache: 'default'
     };
 
-    fetch("http://192.168.1.102:3333/devdata/" + devid, options)
+    fetch("http://192.168.1.102:3333/devdatafull/" + devid, options)
       .then((res => {
         return res.json();
       }))
@@ -168,7 +168,7 @@ class ActionsLayer extends Component {
 
     if (event.target.value.length > 0) {
       this.readName(event.target.value)
-      this.readData(event.target.value);
+      this.readDataFull(event.target.value);
     }
   }
 

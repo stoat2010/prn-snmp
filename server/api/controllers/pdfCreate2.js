@@ -84,7 +84,7 @@ module.exports.pdfCreate2 = async function (req, res) {
                     .addPage()
                     .font('Header Font').fontSize(25)
                     .text("Сравнительный отчет: устройства", 140, 30)
-                    .text("по  количеству отпечатков за месяц", 100, 60)
+                    .text("по  количеству отпечатков за " + moment(lastDay).format("MMMM YYYY"), 100, 60)
                     .fontSize(12)
                     .text("На дату: " + moment().format("DD MM YYYY"), 80, 110)
                     .text("Страница: " + page, 480, 110)

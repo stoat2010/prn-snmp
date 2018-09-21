@@ -18,6 +18,7 @@ app.get('/', (req, res)=> res.send('SNMP опрос сетевых МФУ и п�
 
 app.get('/devstatus/:deviceid', devStatus.devStatus);
 app.get('/devdata/:deviceid', devStatus.devData);
+app.get('/devdatafull/:deviceid', devStatus.devDataFull);
 app.get('/devname/:deviceid', devStatus.devName);
 app.get('/devtoner/:deviceid', devStatus.getToner);
 

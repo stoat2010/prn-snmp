@@ -11,7 +11,7 @@ export default class DevCard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            classes: 1,
+            classes: 0,
             devData: {},
             dataGraph: [],
             content: false,
@@ -120,7 +120,7 @@ export default class DevCard extends Component {
             device_name: this.props.device.name,
             device_serial: this.props.device.serial,
             date: new Date(),
-            printouts: this.state.devData[3]
+            printouts: this.state.devData[0]
         };
 
         fetch('http://192.168.1.102:3333/api/data', {
@@ -177,7 +177,7 @@ export default class DevCard extends Component {
         this.readCurData();
     }
 
-    cl = () => this.state.classes === 1 ? <SvgDevOff fill="#d81b60" /> 
+    cl = () => this.state.classes === 0 ? <SvgDevOff fill="#d81b60" /> 
     : <SvgDevOn fill="green" />;
     cont = () => !this.state.content ?
         <div className="card-content" style={{ fontSize: 'x-small' }}>
@@ -186,7 +186,7 @@ export default class DevCard extends Component {
             кабинет: <b>{this.props.device.office}</b><br />
             принято: <b>{new Date(this.props.device.start_date).toLocaleDateString()}</b><br />
             начальный остаток: <b>{this.props.device.balance}</b><span>&nbsp;</span>
-            отпечатков: <span className="green-text"><b>{this.state.devData[3]}</b></span>
+            отпечатков: <span className="green-text"><b>{this.state.devData[0]}</b></span>
             <i className="right" onClick={this.changeView}><SvgExpMore /></i>
         </div> : <div><div className="card-content" style={{ fontSize: 'x-small' }}>
             цех/отдел: <b>{this.props.device.unit}</b><br />
@@ -194,13 +194,13 @@ export default class DevCard extends Component {
             кабинет: <b>{this.props.device.office}</b><br />
             принято: <b>{new Date(this.props.device.start_date).toLocaleDateString()}</b><br />
             начальный остаток: <b>{this.props.device.balance}</b><span>&nbsp;</span>
-            отпечатков: <span className="green-text"><b>{this.state.devData[3]}</b></span>
+            отпечатков: <span className="green-text"><b>{this.state.devData[0]}</b></span>
             <i className="right" onClick={this.changeView}><SvgExpLess /></i>
         </div>
             <div className="card-content">
-                Модель: <b>{this.state.devData[0]}</b><br />
-                Вендор: <b>{this.state.devData[1]}</b><br />
-                S/N: <b>{this.state.devData[2]}</b><br />
+                Модель: <b>{this.props.device.model}</b><br />
+                Вендор: <b>{this.props.device.vendor}</b><br />
+                S/N: <b>{this.props.device.serial}</b><br />
                 
             </div>
             <div className="card-content" style={{ fontSize: 'x-small' }}>
@@ -249,10 +249,10 @@ export default class DevCard extends Component {
     }
 
     render() {
-        this.state.classes === 1 ? this.classS = "disabled btn-flat " + this.cardColor : this.classS = "btn-flat waves-effect waves-gray " + this.cardColor;
-        this.state.classes === 1 ? this.btnDisable = "#bdbdbd" : this.btnDisable = "#424242";
-        this.state.classes === 1 ? this.cardColor = "#eeeeee" : this.cardColor = "white"
-        this.state.devData[3] == this.state.curPrintouts ? this.borderColor = "white" : this.borderColor = "#ffab91";
+        this.state.classes === 0 ? this.classS = "disabled btn-flat " + this.cardColor : this.classS = "btn-flat waves-effect waves-gray " + this.cardColor;
+        this.state.classes === 0 ? this.btnDisable = "#bdbdbd" : this.btnDisable = "#424242";
+        this.state.classes === 0 ? this.cardColor = "#eeeeee" : this.cardColor = "white"
+        this.state.devData[0] == this.state.curPrintouts ? this.borderColor = "white" : this.borderColor = "#ffab91";
 
         return (
 
