@@ -250,7 +250,7 @@ export default class DevCard extends Component {
         this.state.classes === 0 ? this.classS = "disabled btn-flat " + this.cardColor : this.classS = "btn-flat waves-effect waves-gray " + this.cardColor;
         this.state.classes === 0 ? this.btnDisable = "#bdbdbd" : this.btnDisable = "#424242";
         this.state.classes === 0 ? this.cardColor = "#eeeeee" : this.cardColor = "white"
-        this.state.devData[0] == this.state.curPrintouts ? this.borderColor = "white" : this.borderColor = "#ffab91";
+        this.state.classes === 0 ? this.borderColor = "#eeeeee" : this.state.devData[0] == this.state.curPrintouts ? this.borderColor = "white" : this.borderColor = "#ffab91";
 
         return (
 
