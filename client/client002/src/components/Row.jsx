@@ -187,12 +187,12 @@ export default class Row extends Component {
             .then((res => {
                 return res.json();
             }))
-            .then(devToner => devToner.arrData.length === 3 ?
-                swal({"text": devToner.arrData[0] +": " + Math.round(100 * +devToner.arrData[2] / +devToner.arrData[1]) + "%"}) :
-                swal({"html": "Черный: " + devToner.arrData[0] +": " + 100 * +devToner.arrData[2] / +devToner.arrData[1] + "%<br>" +
-                                "Синий: " + devToner.arrData[3] +": " + 100 * +devToner.arrData[5] / +devToner.arrData[4] + "%<br>" +
-                                "Красный: " + devToner.arrData[6] +": " + 100 * +devToner.arrData[8] / +devToner.arrData[7] + "%<br>" +
-                                "Желтый:" + devToner.arrData[9] +": " + 100 * +devToner.arrData[11] / +devToner.arrData[10] + "%"})
+            .then(devToner => devToner.length === 3 ?
+                swal({"text": devToner[0] +": " + Math.round(100 * +devToner[2] / +devToner[1]) + "%"}) :
+                swal({"html": "Черный: " + devToner[0] +": " + 100 * +devToner[2] / +devToner[1] + "%<br>" +
+                                "Синий: " + devToner[3] +": " + 100 * +devToner[5] / +devToner[4] + "%<br>" +
+                                "Красный: " + devToner[6] +": " + 100 * +devToner[8] / +devToner[7] + "%<br>" +
+                                "Желтый:" + devToner[9] +": " + 100 * +devToner[11] / +devToner[10] + "%"})
                 );
 
     }

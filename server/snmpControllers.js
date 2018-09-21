@@ -13,65 +13,67 @@ module.exports.devStatus = async function (req, res) {
 }
 
 module.exports.devData = async function (req, res) {
-   
+
     var oids = ['1.3.6.1.2.1.43.10.2.1.4.1.1'];
     var printouts = await snmpGet(req.params.deviceid, oids);
-    sendJSONResponse(res, 200, !!printouts.length ? printouts :   ['-']);
+    sendJSONResponse(res, 200, !!printouts.length ? printouts : ['-']);
 }
 
 module.exports.devDataFull = async function (req, res) {
-   
+
     var oids = ['1.3.6.1.2.1.25.3.2.1.3.1', '1.3.6.1.2.1.43.8.2.1.14.1.1', '1.3.6.1.2.1.43.5.1.1.17.1', '1.3.6.1.2.1.43.10.2.1.4.1.1'];
 
-    const results = oids.map(async oid=> {
-        
+    const results = oids.map(async oid => {
+
         var value = await snmpGet(req.params.deviceid, [oid]);
-        return !!value.length? value[0] :   '-';
+        return !!value.length ? value[0] : '-';
     })
 
-    await Promise.all(results).then(result=>{
-        sendJSONResponse(res, 200, result);    
+    await Promise.all(results).then(result => {
+        sendJSONResponse(res, 200, result);
     })
 }
 
 
-module.exports.getToner = async function(req, res) {
+module.exports.getToner = async function (req, res) {
 
     var snmp = require('net-snmp');
     var values = [];
-   
-    
+
+
     var deviceType = await getType(req.params.deviceid);
     var deviceIP = await resolveName(req.params.deviceid)
 
     if (deviceType[0].type === 0) {
-        var oids = ['1.3.6.1.2.1.43.11.1.1.6.1.1','1.3.6.1.2.1.43.11.1.1.8.1.1', '1.3.6.1.2.1.43.11.1.1.9.1.1'];
-    }else{
-        var oids = ['1.3.6.1.2.1.43.11.1.1.6.1.1','1.3.6.1.2.1.43.11.1.1.8.1.1', '1.3.6.1.2.1.43.11.1.1.9.1.1',
-                    '1.3.6.1.2.1.43.11.1.1.6.1.2','1.3.6.1.2.1.43.11.1.1.8.1.2', '1.3.6.1.2.1.43.11.1.1.9.1.2',
-                    '1.3.6.1.2.1.43.11.1.1.6.1.3','1.3.6.1.2.1.43.11.1.1.8.1.3', '1.3.6.1.2.1.43.11.1.1.9.1.3',
-                    '1.3.6.1.2.1.43.11.1.1.6.1.4','1.3.6.1.2.1.43.11.1.1.8.1.4', '1.3.6.1.2.1.43.11.1.1.9.1.4'];
+        var oids = ['1.3.6.1.2.1.43.11.1.1.6.1.1', '1.3.6.1.2.1.43.11.1.1.8.1.1', '1.3.6.1.2.1.43.11.1.1.9.1.1'];
+    } else {
+        var oids = ['1.3.6.1.2.1.43.11.1.1.6.1.1', '1.3.6.1.2.1.43.11.1.1.8.1.1', '1.3.6.1.2.1.43.11.1.1.9.1.1',
+            '1.3.6.1.2.1.43.11.1.1.6.1.2', '1.3.6.1.2.1.43.11.1.1.8.1.2', '1.3.6.1.2.1.43.11.1.1.9.1.2',
+            '1.3.6.1.2.1.43.11.1.1.6.1.3', '1.3.6.1.2.1.43.11.1.1.8.1.3', '1.3.6.1.2.1.43.11.1.1.9.1.3',
+            '1.3.6.1.2.1.43.11.1.1.6.1.4', '1.3.6.1.2.1.43.11.1.1.8.1.4', '1.3.6.1.2.1.43.11.1.1.9.1.4'];
     }
 
-        var session = snmp.createSession(deviceIP[0], "public");
-        session.get(oids, function (error, varbinds) {
-            if (error) {
-                sendJSONResponse(res, 401, 0);
-                session.close();
-                return;
-            } else {
-                for (var i = 0; i < varbinds.length; i++) {
-                    if (snmp.isVarbindError(varbinds[i])) {
-                        console.log(snmp.isVarbindError(varbinds[i]))
-                    } else {
-                        values = values.concat(varbinds[i].value)
-                    }
+
+
+    var session = snmp.createSession(deviceIP[0], "public");
+    session.get(oids, function (error, varbinds) {
+        if (error) {
+            sendJSONResponse(res, 401, 0);
+            session.close();
+            return;
+        } else {
+            for (var i = 0; i < varbinds.length; i++) {
+                if (snmp.isVarbindError(varbinds[i])) {
+                    console.log(snmp.isVarbindError(varbinds[i]))
+                } else {
+                    values = values.concat(varbinds[i].value)
                 }
-                var arrData = values.toString('utf8').split(',');
-                sendJSONResponse(res, 200, {arrData});
-                session.close();
             }
-        })
+            var arrData = values.toString('utf8').split(',');
+            sendJSONResponse(res, 200, arrData);
+            session.close();
+        }
+    })
 
 
 }
@@ -103,7 +105,7 @@ function resolveName(devid) {
     })
 }
 
-function getType(devid){
+function getType(devid) {
     var mongoose = require('mongoose');
     var Loc = mongoose.model('device');
 
@@ -118,7 +120,7 @@ function getType(devid){
     })
 }
 
-async function snmpGet(devName, oids){
+async function snmpGet(devName, oids) {
 
     var snmp = require('net-snmp');
     var values = [];
@@ -127,26 +129,27 @@ async function snmpGet(devName, oids){
 
     if (deviceIP != -1) {
 
-    return new Promise(resolve => {
-        var session = snmp.createSession(deviceIP[0], "public");
-        session.get(oids, function (error, varbinds) {
-            if (error) {
-                session.close();
-                resolve ([]);
-            } else {
-                for (var i = 0; i < varbinds.length; i++) {
-                    if (snmp.isVarbindError(varbinds[i])) {
-                        console.log(snmp.isVarbindError(varbinds[i]))
-                    } else {
-                        values = values.concat(varbinds[i].value)
+        return new Promise(resolve => {
+            var session = snmp.createSession(deviceIP[0], "public");
+            session.get(oids, function (error, varbinds) {
+                if (error) {
+                    session.close();
+                    resolve([]);
+                } else {
+                    for (var i = 0; i < varbinds.length; i++) {
+                        if (snmp.isVarbindError(varbinds[i])) {
+                            console.log(snmp.isVarbindError(varbinds[i]))
+                        } else {
+                            values = values.concat(varbinds[i].value)
+                        }
                     }
+                    var arrData = values.toString('utf8').split(',');
+                    session.close();
+                    resolve(arrData);
                 }
-                var arrData = values.toString('utf8').split(',');
-                session.close();
-                resolve (arrData);
-            }
+            })
         })
-    })}else{
+    } else {
         return [];
     }
 }

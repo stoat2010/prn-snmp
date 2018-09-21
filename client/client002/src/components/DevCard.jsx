@@ -18,9 +18,7 @@ export default class DevCard extends Component {
             loadCard: true,
             reportStatus: this.props.device.inreport,
             curPrintouts: 0,
-            devToner: {
-                arrData:[]
-            }
+            devToner: []
         };
         this.readStatus = this.readStatus.bind(this);
         this.readData = this.readData.bind(this);
@@ -108,7 +106,7 @@ export default class DevCard extends Component {
             .then((res => {
                 return res.json();
             }))
-            .then(devToner => devToner.arrData && this.setState({devToner})
+            .then(devToner => {this.setState({devToner})}
             );
     }
 
@@ -205,27 +203,27 @@ export default class DevCard extends Component {
             </div>
             <div className="card-content" style={{ fontSize: 'x-small' }}>
             <div className="card-title" style={{ fontSize: 'small' }}><b>% заполнения картриджей</b></div>
-             {this.state.devToner.arrData.length > 3 ?
+             {this.state.devToner.length > 3 ?
                 <svg width='360px' height='80px'>
                     <rect width="360" height="17" x="0" y="0" rx="3" ry="3" style={{border: '1px solid #000000', fill: '#757575'}}/>
-                    <rect width={+this.state.devToner.arrData[2] / +this.state.devToner.arrData[1] *360} height="15" x="1" y="1" rx="3" ry="3" style={{border: '1px solid #000000', fill: '#000000'}}/>
+                    <rect width={+this.state.devToner[2] / +this.state.devToner[1] *360} height="15" x="1" y="1" rx="3" ry="3" style={{border: '1px solid #000000', fill: '#000000'}}/>
                     <rect width="360" height="17" x="0" y="20" rx="3" ry="3" style={{border: '1px solid #000000', fill: '#757575'}}/>
-                    <rect width={+this.state.devToner.arrData[5] / +this.state.devToner.arrData[4] *360} height="15" x="1" y="21" rx="3" ry="3" style={{border: '1px solid #000000', fill: '#1565c0'}}/>
+                    <rect width={+this.state.devToner[5] / +this.state.devToner[4] *360} height="15" x="1" y="21" rx="3" ry="3" style={{border: '1px solid #000000', fill: '#1565c0'}}/>
                     <rect width="360" height="17" x="0" y="40" rx="3" ry="3" style={{border: '1px solid #000000', fill: '#757575'}}/>
-                    <rect width={+this.state.devToner.arrData[8] / +this.state.devToner.arrData[7] *360} height="15" x="1" y="41" rx="3" ry="3" style={{border: '1px solid #000000', fill: '#d81b60'}}/>
+                    <rect width={+this.state.devToner[8] / +this.state.devToner[7] *360} height="15" x="1" y="41" rx="3" ry="3" style={{border: '1px solid #000000', fill: '#d81b60'}}/>
                     <rect width="360" height="17" x="0" y="60" rx="3" ry="3" style={{border: '1px solid #000000', fill: '#757575'}}/>
-                    <rect width={+this.state.devToner.arrData[11] / +this.state.devToner.arrData[10] *360} height="15" x="1" y="61" rx="3" ry="3" style={{border: '1px solid #000000', fill: '#f9a825'}}/>
+                    <rect width={+this.state.devToner[11] / +this.state.devToner[10] *360} height="15" x="1" y="61" rx="3" ry="3" style={{border: '1px solid #000000', fill: '#f9a825'}}/>
 
-                    <text x="170" y="13" fill="white" fontSize="13">{Math.round(+this.state.devToner.arrData[2] / +this.state.devToner.arrData[1] *100)}%</text>
-                    <text x="170" y="33" fill="white" fontSize="13">{Math.round(+this.state.devToner.arrData[5] / +this.state.devToner.arrData[4] *100)}%</text>
-                    <text x="170" y="53" fill="white" fontSize="13">{Math.round(+this.state.devToner.arrData[8] / +this.state.devToner.arrData[7] *100)}%</text>
-                    <text x="170" y="73" fill="white" fontSize="13">{Math.round(+this.state.devToner.arrData[11] / +this.state.devToner.arrData[10] *100)}%</text>
+                    <text x="170" y="13" fill="white" fontSize="13">{Math.round(+this.state.devToner[2] / +this.state.devToner[1] *100)}%</text>
+                    <text x="170" y="33" fill="white" fontSize="13">{Math.round(+this.state.devToner[5] / +this.state.devToner[4] *100)}%</text>
+                    <text x="170" y="53" fill="white" fontSize="13">{Math.round(+this.state.devToner[8] / +this.state.devToner[7] *100)}%</text>
+                    <text x="170" y="73" fill="white" fontSize="13">{Math.round(+this.state.devToner[11] / +this.state.devToner[10] *100)}%</text>
 
-            </svg> : this.state.devToner.arrData.length > 0 ? 
+            </svg> : this.state.devToner.length > 0 ? 
                     <svg width='360px' height='20px'>
                         <rect width="360" height="17" x="0" y="0" rx="3" ry="3" style={{border: '1px solid #000000', fill: '#9e9e9e'}}/>
-                        <rect width={+this.state.devToner.arrData[2] / +this.state.devToner.arrData[1] *360} height="15" x="1" y="1"  rx="3" ry="3" style={{border: '1px solid #000000', fill: '#000000'}}/>
-                        <text x="170" y="13" fill="white" fontSize="13">{Math.round(+this.state.devToner.arrData[2] / +this.state.devToner.arrData[1] *100)}%</text>
+                        <rect width={+this.state.devToner[2] / +this.state.devToner[1] *360} height="15" x="1" y="1"  rx="3" ry="3" style={{border: '1px solid #000000', fill: '#000000'}}/>
+                        <text x="170" y="13" fill="white" fontSize="13">{Math.round(+this.state.devToner[2] / +this.state.devToner[1] *100)}%</text>
                     </svg> : <svg width='360px' height='20px'><rect width="360" height="17" x="0" y="0" rx="3" ry="3" style={{border: '1px solid #000000', fill: '#9e9e9e'}}/>
                         <text x="140" y="13" fill="white" fontSize="13">Нет данных</text></svg> }
             </div>
