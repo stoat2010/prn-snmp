@@ -31,7 +31,7 @@ export default class Sidenav extends Component {
                 model: this.props.devData1[0],
                 name: this.refs['device'].value,
                 monthlimit: this.refs['monthlimit'].value,
-                type: this.refs['type'].value,
+                type: this.refs['frm'].type.value,
                 start_date: new Date()
             };
 
@@ -63,7 +63,7 @@ export default class Sidenav extends Component {
                         <FadeLoader color={'#123abc'}
                             loading={this.props.loadSNMP} />
                     </div>
-                    <form onSubmit={this.handleSubmit}>
+                    <form onSubmit={this.handleSubmit} ref="frm">
                         <div className="container grey lighten-3">
                             <table>
                                 <tbody>
@@ -100,13 +100,13 @@ export default class Sidenav extends Component {
                         <table><tbody><tr>
                         <td>
                         <label>
-                            <input name="group1" type="radio" ref="type" className="with-gap" value="0" defaultChecked />
+                            <input name="group1" type="radio" name="type" className="with-gap" value="0" defaultChecked />
                             <span>Монохром</span>
                         </label>
                         </td>
                         <td>
                         <label>
-                            <input name="group1" type="radio" ref="type" className="with-gap" value="1" />
+                            <input name="group1" type="radio" name="type" className="with-gap" value="1" />
                             <span>Цветной</span>
                         </label>
                         </td>

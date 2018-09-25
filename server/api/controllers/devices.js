@@ -31,7 +31,7 @@ module.exports.deviceCreate = function(req, res) {
 
 module.exports.deviceList = function(req, res) {
     Loc
-    .find()
+    .find().sort({build: 1, office: 1})
     .exec(function(err, device){
         sendJSONResponse(res, 200, device);
     });

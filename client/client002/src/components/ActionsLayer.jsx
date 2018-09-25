@@ -30,7 +30,7 @@ class ActionsLayer extends Component {
       loadSNMP: false,
       devName: '',
       repDate: new Date(),
-      view: false
+      view: JSON.parse(localStorage.getItem('view'))
     };
 
     this.resetForm = this.resetForm.bind(this);
@@ -102,6 +102,9 @@ class ActionsLayer extends Component {
       {
         view: newViewState
       });
+      if(!localStorage['view'])
+      {localStorage.key='view'}
+      localStorage['view']= JSON.stringify(newViewState);
 
   }
 
@@ -228,6 +231,7 @@ class ActionsLayer extends Component {
   }
 
   componentDidMount() {
+    this.setState({view: JSON.parse(localStorage['view'])})
     this.dbConn('http://192.168.1.102:3333/api/devices');
     this.dbConnInit('http://192.168.1.102:3333/api/devices');
   }
