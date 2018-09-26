@@ -66,6 +66,9 @@ module.exports.getToner = async function (req, res) {
                 if (snmp.isVarbindError(varbinds[i])) {
                     console.log(snmp.isVarbindError(varbinds[i]))
                 } else {
+                    if (varbinds[i].value < 0) {
+                        varbinds[i].value = 0;
+                    }
                     values = values.concat(varbinds[i].value)
                 }
             }
