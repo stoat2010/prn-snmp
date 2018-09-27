@@ -7,7 +7,7 @@ var sendJSONResponse = function (res, status, content) {
 
 module.exports.devStatus = async function (req, res) {
 
-    var oids = ['1.3.6.1.2.1.43.5.1.1.16.1'];
+    var oids = ['1.3.6.1.2.1.43.10.2.1.4.1.1'];
     var statusDev = await snmpGet(req.params.deviceid, oids);
     sendJSONResponse(res, 200, statusDev.length);
 }
@@ -126,6 +126,11 @@ function getType(devid) {
 async function snmpGet(devName, oids) {
 
     var snmp = require('net-snmp');
+    const options ={
+        port: 161,
+        retries: 1,
+        timeout: 2000
+    }
     var values = [];
 
     var deviceIP = await resolveName(devName);
@@ -133,7 +138,7 @@ async function snmpGet(devName, oids) {
     if (deviceIP != -1) {
 
         return new Promise(resolve => {
-            var session = snmp.createSession(deviceIP[0], "public");
+            var session = snmp.createSession(deviceIP[0], "public", options);
             session.get(oids, function (error, varbinds) {
                 if (error) {
                     session.close();

@@ -24,6 +24,7 @@ const SvgBtnClose = (props) => <Svg {...props}><path d="M19 6.41L17.59 5 12 10.5
 const SvgBtnArrUp = (props) => <Svg {...props}><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></Svg>
 const SvgBtnArrDown = (props) => <Svg {...props}><path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/></Svg>
 const SvgBtnPwrOn = (props) => <Svg {...props}><path d="M13 3h-2v10h2V3zm4.83 2.17l-1.42 1.42C17.99 7.86 19 9.81 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-2.19 1.01-4.14 2.58-5.42L6.17 5.17C4.23 6.82 3 9.26 3 12c0 4.97 4.03 9 9 9s9-4.03 9-9c0-2.74-1.23-5.18-3.17-6.83z"/></Svg>
+const SvgFlag = (props) => <Svg {...props}><path d="M14.4 6L14 4H5v17h2v-7h5.6l.4 2h7V6z"/></Svg>
 
 export {
     SvgDevOn, 
@@ -43,5 +44,6 @@ export {
     SvgBtnClose,
     SvgBtnArrUp,
     SvgBtnArrDown,
-    SvgBtnPwrOn
+    SvgBtnPwrOn,
+    SvgFlag
 }
