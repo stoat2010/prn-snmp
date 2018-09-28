@@ -202,6 +202,7 @@ export default class Row extends Component {
 
     componentDidMount() {
         this.devInfo();
+        this.setState({reportStatus: this.props.device.inreport})
     }
 
     render() {

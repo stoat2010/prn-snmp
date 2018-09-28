@@ -105,7 +105,7 @@ class ActionsLayer extends Component {
       if(!localStorage['view'])
       {localStorage.key='view'}
       localStorage['view']= JSON.stringify(newViewState);
-
+      this.Refresh();
   }
 
   toggleTopVisible() {
