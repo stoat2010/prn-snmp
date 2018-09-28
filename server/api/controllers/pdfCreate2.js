@@ -64,6 +64,8 @@ module.exports.pdfCreate2 = async function (req, res) {
         return dev1;
     });
 
+    //results.sort(function(a,b){return a.printouts-b.printouts});
+
     await Promise.all(results).then(dev => {
 
         dev.map(dev => {
