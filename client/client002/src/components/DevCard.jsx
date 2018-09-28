@@ -202,7 +202,7 @@ export default class DevCard extends Component {
             if (+this.state.devToner[2] === 0) {
                 return <SvgFlag fill="#d32f2f" />
             }else if (+this.state.devToner[2]/ +this.state.devToner[1] * 100 < 6){
-                return <SvgFlag fill="#f9100" />
+                return <SvgFlag fill="#ff9100" />
             }else if (+this.state.devToner[2]/ +this.state.devToner[1] * 100 < 11){
                 return <SvgFlag fill="#ffeb3b" />
             }
@@ -292,7 +292,7 @@ export default class DevCard extends Component {
             <div id={this.props.device._id} className="col s3">
                 <div className="card hoverable" style={{ borderStyle: 'solid', borderColor: this.borderColor, backgroundColor: this.cardColor }}>
                     <div className="card-title" style={{ fontSize: 'small' }}>
-                        {this.props.device.name}
+                    <a href={"http://"+this.props.device.device} target="blank" className="indigo-text"><b>{this.props.device.name.toUpperCase()}</b></a>
                         <div style={{ position: "absolute", right: "35px", top: "5px" }}>{this.flag()}</div>
                         <div style={{ position: "absolute", right: "5px", top: "5px" }}>{this.cl()}</div>
                     </div>
