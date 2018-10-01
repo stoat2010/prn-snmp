@@ -65,7 +65,7 @@ export default class Row extends Component {
             cache: 'default'
         };
 
-        fetch("http://192.168.1.102:3333/api/data/" + this.props.device.device, options)
+        fetch("http://192.168.1.102:3333/api/data/" + this.props.device.name, options)
             .then((res => {
                 return res.json();
             }))
@@ -79,7 +79,7 @@ export default class Row extends Component {
             cache: 'default'
         };
 
-        fetch("http://192.168.1.102:3333/api/datagraph/" + this.props.device.device, options)
+        fetch("http://192.168.1.102:3333/api/datagraph/" + this.props.device.name, options)
             .then((res => {
                 return res.json();
             }))
@@ -93,7 +93,7 @@ export default class Row extends Component {
             cache: 'default'
         };
 
-        fetch("http://192.168.1.102:3333/api/datadate/" + this.props.device.device, options)
+        fetch("http://192.168.1.102:3333/api/datadate/" + this.props.device.name, options)
             .then((res => {
                 return res.json();
             }))
@@ -187,12 +187,14 @@ export default class Row extends Component {
             .then((res => {
                 return res.json();
             }))
-            .then(devToner => devToner.length === 3 ?
-                swal({"text": devToner[0] +": " + Math.round(100 * +devToner[2] / +devToner[1]) + "%"}) :
-                swal({"html": "Черный: " + devToner[0] +": " + 100 * +devToner[2] / +devToner[1] + "%<br>" +
-                                "Синий: " + devToner[3] +": " + 100 * +devToner[5] / +devToner[4] + "%<br>" +
-                                "Красный: " + devToner[6] +": " + 100 * +devToner[8] / +devToner[7] + "%<br>" +
-                                "Желтый:" + devToner[9] +": " + 100 * +devToner[11] / +devToner[10] + "%"})
+            .then(devToner => devToner.cyan ?
+                
+                swal({"html": "Черный: " + devToner.black[0] +": " + 100 * +devToner.black[2] / +devToner.black[1] + "%<br>" +
+                                "Синий: " + devToner.cyan[0] +": " + 100 * +devToner.cyan[2] / +devToner.cyan[1] + "%<br>" +
+                                "Красный: " + devToner.magenta[0] +": " + 100 * +devToner.magenta[2] / +devToner.magenta[1] + "%<br>" +
+                                "Желтый:" + devToner.yellow[0] +": " + 100 * +devToner.yellow[2] / +devToner.yellow[1] + "%"}) : 
+                devToner.black ?swal({"text": devToner.black[0] +": " + Math.round(100 * +devToner.black[2] / +devToner.black[1]) + "%"}) :
+                                swal({"text": "Нет данных!"}) 
                 );
 
     }

@@ -45,12 +45,12 @@ module.exports.getToner = async function (req, res) {
     var deviceIP = await resolveName(req.params.deviceid)
 
     if (deviceType[0].type === 0) {
-        var oids = ['1.3.6.1.2.1.43.11.1.1.6.1.1', '1.3.6.1.2.1.43.11.1.1.8.1.1', '1.3.6.1.2.1.43.11.1.1.9.1.1'];
+        var oids = ['1.3.6.1.2.1.43.12.1.1.4.1.1','1.3.6.1.2.1.43.11.1.1.6.1.1', '1.3.6.1.2.1.43.11.1.1.8.1.1', '1.3.6.1.2.1.43.11.1.1.9.1.1'];
     } else {
-        var oids = ['1.3.6.1.2.1.43.11.1.1.6.1.1', '1.3.6.1.2.1.43.11.1.1.8.1.1', '1.3.6.1.2.1.43.11.1.1.9.1.1',
-            '1.3.6.1.2.1.43.11.1.1.6.1.2', '1.3.6.1.2.1.43.11.1.1.8.1.2', '1.3.6.1.2.1.43.11.1.1.9.1.2',
-            '1.3.6.1.2.1.43.11.1.1.6.1.3', '1.3.6.1.2.1.43.11.1.1.8.1.3', '1.3.6.1.2.1.43.11.1.1.9.1.3',
-            '1.3.6.1.2.1.43.11.1.1.6.1.4', '1.3.6.1.2.1.43.11.1.1.8.1.4', '1.3.6.1.2.1.43.11.1.1.9.1.4'];
+        var oids = ['1.3.6.1.2.1.43.12.1.1.4.1.1','1.3.6.1.2.1.43.11.1.1.6.1.1', '1.3.6.1.2.1.43.11.1.1.8.1.1', '1.3.6.1.2.1.43.11.1.1.9.1.1',
+        '1.3.6.1.2.1.43.12.1.1.4.1.2','1.3.6.1.2.1.43.11.1.1.6.1.2', '1.3.6.1.2.1.43.11.1.1.8.1.2', '1.3.6.1.2.1.43.11.1.1.9.1.2',
+        '1.3.6.1.2.1.43.12.1.1.4.1.3','1.3.6.1.2.1.43.11.1.1.6.1.3', '1.3.6.1.2.1.43.11.1.1.8.1.3', '1.3.6.1.2.1.43.11.1.1.9.1.3',
+        '1.3.6.1.2.1.43.12.1.1.4.1.4','1.3.6.1.2.1.43.11.1.1.6.1.4', '1.3.6.1.2.1.43.11.1.1.8.1.4', '1.3.6.1.2.1.43.11.1.1.9.1.4'];
     }
 
 
@@ -62,17 +62,22 @@ module.exports.getToner = async function (req, res) {
             session.close();
             return;
         } else {
-            for (var i = 0; i < varbinds.length; i++) {
+            for (var i = 0; i < varbinds.length; i=i+4) {
                 if (snmp.isVarbindError(varbinds[i])) {
                     console.log(snmp.isVarbindError(varbinds[i]))
                 } else {
-                    if (varbinds[i].value < 0) {
-                        varbinds[i].value = 0;
+                    if (varbinds[i+3].value < 0) {
+                        varbinds[i+3].value = 0;
                     }
-                    values = values.concat(varbinds[i].value)
+                        var vl = {[varbinds[i].value.toString().replace('\u0000', '')]: [varbinds[i+1].value.toString().replace(',', ''), varbinds[i+2].value, varbinds[i+3].value]};
+                        values = values.concat(vl)
                 }
             }
-            var arrData = values.toString('utf8').split(',');
+            var arrData = values.reduce(function(result,item){
+                var key = Object.keys(item)[0];
+                result[key] = item[key]
+                return result
+            });
             sendJSONResponse(res, 200, arrData);
             session.close();
         }

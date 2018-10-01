@@ -18,7 +18,7 @@ export default class DevCard extends Component {
             loadCard: true,
             reportStatus: this.props.device.inreport,
             curPrintouts: 0,
-            devToner: []
+            devToner: {}
         };
         this.readStatus = this.readStatus.bind(this);
         this.readData = this.readData.bind(this);
@@ -73,7 +73,7 @@ export default class DevCard extends Component {
             cache: 'default'
         };
 
-        fetch("http://192.168.1.102:3333/api/datagraph/" + this.props.device.device, options)
+        fetch("http://192.168.1.102:3333/api/datagraph/" + this.props.device.name, options)
             .then((res => {
                 return res.json();
             }))
@@ -87,7 +87,7 @@ export default class DevCard extends Component {
             cache: 'default'
         };
 
-        fetch("http://192.168.1.102:3333/api/datacurrent/" + this.props.device.device, options)
+        fetch("http://192.168.1.102:3333/api/datacurrent/" + this.props.device.name, options)
             .then((res => {
                 return res.json();
             }))
@@ -107,6 +107,7 @@ export default class DevCard extends Component {
                 return res.json();
             }))
             .then(devToner => { this.setState({ devToner }) }
+            
             );
     }
 
@@ -179,31 +180,30 @@ export default class DevCard extends Component {
         : <SvgDevOn fill="green" />;
 
     flag = () => {
-        console.log(this.state.devToner[2])
-        if (this.state.devToner.length > 3) {
-            if (+this.state.devToner[2] === 0 ||
-                +this.state.devToner[5] === 0 ||
-                +this.state.devToner[8] === 0 ||
-                +this.state.devToner[11] === 0) {
+        if (this.state.devToner.cyan) {
+            if (+this.state.devToner.black[2] === 0 ||
+                +this.state.devToner.cyan[2] === 0 ||
+                +this.state.devToner.magenta[2] === 0 ||
+                +this.state.devToner.yellow[2] === 0) {
                 return <SvgFlag fill="#d32f2f" />
-            }else if (+this.state.devToner[2]/ +this.state.devToner[1] * 100 < 6 ||
-                +this.state.devToner[5]/ +this.state.devToner[4] * 100 < 6 ||
-                +this.state.devToner[8]/ +this.state.devToner[7] * 100 < 6 ||
-                +this.state.devToner[11]/ +this.state.devToner[10] * 100 < 6) {
+            }else if (+this.state.devToner.black[2]/ +this.state.devToner.black[1] * 100 < 6 ||
+                +this.state.devToner.cyan[2]/ +this.state.devToner.cyan[1] * 100 < 6 ||
+                +this.state.devToner.magenta[2]/ +this.state.devToner.magenta[1] * 100 < 6 ||
+                +this.state.devToner.yellow[2]/ +this.state.devToner.yellow[1] * 100 < 6) {
                 return <SvgFlag fill="#ff9100" />
-            }else if (+this.state.devToner[2]/ +this.state.devToner[1] * 100 < 11 ||
-                +this.state.devToner[5]/ +this.state.devToner[4] * 100 < 11 ||
-                +this.state.devToner[8]/ +this.state.devToner[7] * 100 < 11 ||
-                +this.state.devToner[11]/ +this.state.devToner[10] * 100 < 11) {
+            }else if (+this.state.devToner.black[2]/ +this.state.devToner.black[1] * 100 < 11 ||
+                +this.state.devToner.cyan[2]/ +this.state.devToner.cyan[1] * 100 < 11 ||
+                +this.state.devToner.magenta[2]/ +this.state.devToner.magenta[1] * 100 < 11 ||
+                +this.state.devToner.yellow[2]/ +this.state.devToner.yellow[1] * 100 < 11) {
                 return <SvgFlag fill="#ffeb3b" />
             }
             return <div></div>
-        } else if(this.state.devToner.length > 0)  {
-            if (+this.state.devToner[2] === 0) {
+        } else if(this.state.devToner.black)  {
+            if (+this.state.devToner.black[2] < 1) {
                 return <SvgFlag fill="#d32f2f" />
-            }else if (+this.state.devToner[2]/ +this.state.devToner[1] * 100 < 6){
+            }else if (+this.state.devToner.black[2]/ +this.state.devToner.black[1] * 100 < 6){
                 return <SvgFlag fill="#ff9100" />
-            }else if (+this.state.devToner[2]/ +this.state.devToner[1] * 100 < 11){
+            }else if (+this.state.devToner.black[2]/ +this.state.devToner.black[1] * 100 < 11){
                 return <SvgFlag fill="#ffeb3b" />
             }
             return <div></div>
@@ -237,27 +237,27 @@ export default class DevCard extends Component {
             </div>
             <div className="card-content" style={{ fontSize: 'x-small' }}>
                 <div className="card-title" style={{ fontSize: 'small' }}><b>% заполнения картриджей</b></div>
-                {this.state.devToner.length > 3 ?
+                {this.state.devToner.cyan ?
                     <svg width='360px' height='80px'>
                         <rect width="360" height="17" x="0" y="0" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#757575' }} />
-                        <rect width={+this.state.devToner[2] / +this.state.devToner[1] * 360} height="15" x="1" y="1" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#000000' }} />
+                        <rect width={+this.state.devToner.black[2] / +this.state.devToner.black[1] * 360} height="15" x="1" y="1" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#000000' }} />
                         <rect width="360" height="17" x="0" y="20" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#757575' }} />
-                        <rect width={+this.state.devToner[5] / +this.state.devToner[4] * 360} height="15" x="1" y="21" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#1565c0' }} />
+                        <rect width={+this.state.devToner.cyan[2] / +this.state.devToner.cyan[1] * 360} height="15" x="1" y="21" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#1565c0' }} />
                         <rect width="360" height="17" x="0" y="40" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#757575' }} />
-                        <rect width={+this.state.devToner[8] / +this.state.devToner[7] * 360} height="15" x="1" y="41" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#d81b60' }} />
+                        <rect width={+this.state.devToner.magenta[2] / +this.state.devToner.magenta[1] * 360} height="15" x="1" y="41" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#d81b60' }} />
                         <rect width="360" height="17" x="0" y="60" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#757575' }} />
-                        <rect width={+this.state.devToner[11] / +this.state.devToner[10] * 360} height="15" x="1" y="61" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#f9a825' }} />
+                        <rect width={+this.state.devToner.yellow[2] / +this.state.devToner.yellow[1] * 360} height="15" x="1" y="61" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#f9a825' }} />
 
-                        <text x="170" y="13" fill="white" fontSize="13">{Math.round(+this.state.devToner[2] / +this.state.devToner[1] * 100)}%</text>
-                        <text x="170" y="33" fill="white" fontSize="13">{Math.round(+this.state.devToner[5] / +this.state.devToner[4] * 100)}%</text>
-                        <text x="170" y="53" fill="white" fontSize="13">{Math.round(+this.state.devToner[8] / +this.state.devToner[7] * 100)}%</text>
-                        <text x="170" y="73" fill="white" fontSize="13">{Math.round(+this.state.devToner[11] / +this.state.devToner[10] * 100)}%</text>
+                        <text x="170" y="13" fill="white" fontSize="13">{Math.round(+this.state.devToner.black[2] / +this.state.devToner.black[1] * 100)}%</text>
+                        <text x="170" y="33" fill="white" fontSize="13">{Math.round(+this.state.devToner.cyan[2] / +this.state.devToner.cyan[1] * 100)}%</text>
+                        <text x="170" y="53" fill="white" fontSize="13">{Math.round(+this.state.devToner.magenta[2] / +this.state.devToner.magenta[1] * 100)}%</text>
+                        <text x="170" y="73" fill="white" fontSize="13">{Math.round(+this.state.devToner.yellow[2] / +this.state.devToner.yellow[1] * 100)}%</text>
 
-                    </svg> : this.state.devToner.length > 0 ?
+                    </svg> : this.state.devToner.black ?
                         <svg width='360px' height='20px'>
                             <rect width="360" height="17" x="0" y="0" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#9e9e9e' }} />
-                            <rect width={+this.state.devToner[2] / +this.state.devToner[1] * 360} height="15" x="1" y="1" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#000000' }} />
-                            <text x="170" y="13" fill="white" fontSize="13">{Math.round(+this.state.devToner[2] / +this.state.devToner[1] * 100)}%</text>
+                            <rect width={+this.state.devToner.black[2] / +this.state.devToner.black[1] * 360} height="15" x="1" y="1" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#000000' }} />
+                            <text x="170" y="13" fill="white" fontSize="13">{Math.round(+this.state.devToner.black[2] / +this.state.devToner.black[1] * 100)}%</text>
                         </svg> : <svg width='360px' height='20px'><rect width="360" height="17" x="0" y="0" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#9e9e9e' }} />
                             <text x="140" y="13" fill="white" fontSize="13">Нет данных</text></svg>}
             </div>

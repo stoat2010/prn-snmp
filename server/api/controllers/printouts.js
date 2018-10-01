@@ -9,7 +9,7 @@ var sendJSONResponse = function (res, status, content) {
 module.exports.dataCreate = async function (req, res) {
     let docMonth = new Date().getMonth();
 
-    var doc = await findCurrentDoc(req.body.device)
+    var doc = await findCurrentDoc(req.body.device_name)
 
     if (doc.length === 0) {
 
@@ -30,7 +30,7 @@ module.exports.dataCreate = async function (req, res) {
         });
     }else{
         Loc.findOneAndUpdate(
-            {device: req.body.device, month: new Date().getMonth() + 1, year: new Date().getFullYear()},
+            {device_name: req.body.device_name, month: new Date().getMonth() + 1, year: new Date().getFullYear()},
             {$set: {printouts: req.body.printouts, date: req.body.date, device_name: req.body.device_name, device_serial: req.body.device_serial}},
             function (err, data) {
                 if (err) {
@@ -45,7 +45,7 @@ module.exports.dataCreate = async function (req, res) {
 
 module.exports.dataDevice = function (req, res) {
     Loc
-        .find({ device: req.params.deviceid, month: new Date().getMonth() + 1, year: new Date().getFullYear() }).count()
+        .find({ device_name: req.params.deviceid, month: new Date().getMonth() + 1, year: new Date().getFullYear() }).count()
         .exec(function (err, device) {
             if (err) {
                 sendJSONResponse(res, 440, err);
@@ -57,7 +57,7 @@ module.exports.dataDevice = function (req, res) {
 
 module.exports.dataDate = function (req, res) {
     Loc
-        .find({ device: req.params.deviceid, month: new Date().getMonth() + 1, year: new Date().getFullYear() }, { date: 1, _id: 0 })
+        .find({ device_name: req.params.deviceid, month: new Date().getMonth() + 1, year: new Date().getFullYear() }, { date: 1, _id: 0 })
         .exec(function (err, device) {
             if (err) {
                 sendJSONResponse(res, 440, err);
@@ -71,7 +71,7 @@ module.exports.dataDate = function (req, res) {
 
 module.exports.curPrintouts = function (req, res) {
     Loc
-        .find({ device: req.params.deviceid, month: new Date().getMonth() + 1, year: new Date().getFullYear() }, { printouts: 1, _id: 0 })
+        .find({ device_name: req.params.deviceid, month: new Date().getMonth() + 1, year: new Date().getFullYear() }, { printouts: 1, _id: 0 })
         .exec(function (err, device) {
             if (err) {
                 sendJSONResponse(res, 200, 0);
@@ -88,7 +88,7 @@ module.exports.dataGraph = function (req, res) {
     var prouts = [0];
 
     Loc
-        .find({ device: req.params.deviceid, year: new Date().getFullYear() }, { printouts: 1, month: 1, _id: 0 }).sort({ date: 1 }).limit(12)
+        .find({ device_name: req.params.deviceid, year: new Date().getFullYear() }, { printouts: 1, month: 1, _id: 0 }).sort({ date: 1 }).limit(12)
         .exec(async function (err, device) {
             if (err) {
                 sendJSONResponse(res, 440, err);
@@ -123,7 +123,7 @@ module.exports.dataGraph = function (req, res) {
 
 function balanceLoad(req) {
     return new Promise(resolve => {
-        LocDev.find({ device: req }, { balance: 1, _id: 0 }, function (err, balance) {
+        LocDev.find({ name: req }, { balance: 1, _id: 0 }, function (err, balance) {
             if (err) {
                 console.log(err);
             } else {
@@ -137,7 +137,7 @@ function findCurrentDoc(devid) {
     return new Promise(resolve => {
         Loc
             .find({
-                device: devid,
+                device_name: devid,
                 year: new Date().getFullYear(),
                 month: new Date().getMonth() + 1
             }, function (err, document) {
