@@ -210,8 +210,8 @@ export default class DevCard extends Component {
         }
         return <div></div>
     }
-//Переключатели для разных видов отпечатков
-    /* typeRadio = () => this.props.device.type === 1 ? this.props.device.vendor === "Hewlett-Packard" ?
+//Переключатели для разных
+    typeRadio = () => this.props.device.type === 1 ? this.props.device.vendor === "Hewlett-Packard" ?
         <table><tbody>
             <tr>
                 <td>
@@ -232,7 +232,7 @@ export default class DevCard extends Component {
                         <span style={{ fontSize: 'x-small' }}>Цветные</span>
                     </label>
                 </td>
-            </tr></tbody></table> : <div></div> : <div></div> */
+            </tr></tbody></table> : <div></div> : <div></div>
 
     cont = () => !this.state.content ?
         <div className="card-content" style={{ fontSize: 'x-small' }}>
@@ -283,6 +283,7 @@ export default class DevCard extends Component {
                             <text x="170" y="13" fill="white" fontSize="13">{Math.round(+this.state.devToner.black[2] / +this.state.devToner.black[1] * 100)}%</text>
                         </svg> : <svg width='360px' height='20px'><rect width="360" height="17" x="0" y="0" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#9e9e9e' }} />
                             <text x="140" y="13" fill="white" fontSize="13">Нет данных</text></svg>}
+                {this.typeRadio()}
             </div>
             <div className="card-content">
                 <PrintBar data={this.state.dataGraph} height={170} />
