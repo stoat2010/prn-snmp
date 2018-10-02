@@ -20,6 +20,7 @@ export default function PageHeader() {
                     {/* <li className="tab"><NavLink to = "/card" activeClassName="yellow-text">Карточки</NavLink></li> */}
                     <li className="tab disabled"><NavLink to = "/adminpoint" activeClassName="yellow-text">Администрирование</NavLink></li>
                     <li className="tab disabled"><NavLink to = "/config" activeClassName="yellow-text">Настройки</NavLink></li>
+                    <li className="tab  right"><NavLink to = "/login" activeClassName="yellow-text">Авторизация</NavLink></li>
                 </ul>
             </div>
         </nav>

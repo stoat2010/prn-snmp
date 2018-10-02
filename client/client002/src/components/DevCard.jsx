@@ -107,7 +107,7 @@ export default class DevCard extends Component {
                 return res.json();
             }))
             .then(devToner => { this.setState({ devToner }) }
-            
+
             );
     }
 
@@ -186,30 +186,53 @@ export default class DevCard extends Component {
                 +this.state.devToner.magenta[2] === 0 ||
                 +this.state.devToner.yellow[2] === 0) {
                 return <SvgFlag fill="#d32f2f" />
-            }else if (+this.state.devToner.black[2]/ +this.state.devToner.black[1] * 100 < 6 ||
-                +this.state.devToner.cyan[2]/ +this.state.devToner.cyan[1] * 100 < 6 ||
-                +this.state.devToner.magenta[2]/ +this.state.devToner.magenta[1] * 100 < 6 ||
-                +this.state.devToner.yellow[2]/ +this.state.devToner.yellow[1] * 100 < 6) {
+            } else if (+this.state.devToner.black[2] / +this.state.devToner.black[1] * 100 < 6 ||
+                +this.state.devToner.cyan[2] / +this.state.devToner.cyan[1] * 100 < 6 ||
+                +this.state.devToner.magenta[2] / +this.state.devToner.magenta[1] * 100 < 6 ||
+                +this.state.devToner.yellow[2] / +this.state.devToner.yellow[1] * 100 < 6) {
                 return <SvgFlag fill="#ff9100" />
-            }else if (+this.state.devToner.black[2]/ +this.state.devToner.black[1] * 100 < 11 ||
-                +this.state.devToner.cyan[2]/ +this.state.devToner.cyan[1] * 100 < 11 ||
-                +this.state.devToner.magenta[2]/ +this.state.devToner.magenta[1] * 100 < 11 ||
-                +this.state.devToner.yellow[2]/ +this.state.devToner.yellow[1] * 100 < 11) {
+            } else if (+this.state.devToner.black[2] / +this.state.devToner.black[1] * 100 < 11 ||
+                +this.state.devToner.cyan[2] / +this.state.devToner.cyan[1] * 100 < 11 ||
+                +this.state.devToner.magenta[2] / +this.state.devToner.magenta[1] * 100 < 11 ||
+                +this.state.devToner.yellow[2] / +this.state.devToner.yellow[1] * 100 < 11) {
                 return <SvgFlag fill="#ffeb3b" />
             }
             return <div></div>
-        } else if(this.state.devToner.black)  {
+        } else if (this.state.devToner.black) {
             if (+this.state.devToner.black[2] < 1) {
                 return <SvgFlag fill="#d32f2f" />
-            }else if (+this.state.devToner.black[2]/ +this.state.devToner.black[1] * 100 < 6){
+            } else if (+this.state.devToner.black[2] / +this.state.devToner.black[1] * 100 < 6) {
                 return <SvgFlag fill="#ff9100" />
-            }else if (+this.state.devToner.black[2]/ +this.state.devToner.black[1] * 100 < 11){
+            } else if (+this.state.devToner.black[2] / +this.state.devToner.black[1] * 100 < 11) {
                 return <SvgFlag fill="#ffeb3b" />
             }
             return <div></div>
         }
         return <div></div>
     }
+//Переключатели для разных видов отпечатков
+    /* typeRadio = () => this.props.device.type === 1 ? this.props.device.vendor === "Hewlett-Packard" ?
+        <table><tbody>
+            <tr>
+                <td>
+                    <label>
+                        <input name="group1" type="radio" name="type" value="0" defaultChecked />
+                        <span style={{ fontSize: 'x-small' }}>Всего</span>
+                    </label>
+                </td>
+                <td>
+                    <label>
+                        <input name="group1" type="radio" name="type" value="1" />
+                        <span style={{ fontSize: 'x-small' }}>Монохром</span>
+                    </label>
+                </td>
+                <td>
+                    <label>
+                        <input name="group1" type="radio" name="type" value="2" />
+                        <span style={{ fontSize: 'x-small' }}>Цветные</span>
+                    </label>
+                </td>
+            </tr></tbody></table> : <div></div> : <div></div> */
 
     cont = () => !this.state.content ?
         <div className="card-content" style={{ fontSize: 'x-small' }}>
@@ -292,7 +315,7 @@ export default class DevCard extends Component {
             <div id={this.props.device._id} className="col s3">
                 <div className="card hoverable" style={{ borderStyle: 'solid', borderColor: this.borderColor, backgroundColor: this.cardColor }}>
                     <div className="card-title" style={{ fontSize: 'small' }}>
-                    <a href={"http://"+this.props.device.device} target="blank" className="indigo-text"><b>{this.props.device.name.toUpperCase()}</b></a>
+                        <a href={"http://" + this.props.device.device} target="blank" className="indigo-text"><b>{this.props.device.name.toUpperCase()}</b></a>
                         <div style={{ position: "absolute", right: "35px", top: "5px" }}>{this.flag()}</div>
                         <div style={{ position: "absolute", right: "5px", top: "5px" }}>{this.cl()}</div>
                     </div>

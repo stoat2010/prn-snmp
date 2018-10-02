@@ -8,7 +8,7 @@ import styles from './Styles.css';
 export default function ReportFAB(props) {
 
     return (
-        <SpeedDial disabled={false} direction='up'style={styles.btnpdf}>
+        <SpeedDial disabled={false} direction='left'style={styles.btnpdf}>
             <Fab className="btn-floating btn-large waves-effect waves-light z-depth-5 blue">
                 <i className="material-icons" style={{verticalAlign: 'middle'}}>description</i>
             </Fab>
@@ -24,7 +24,7 @@ export default function ReportFAB(props) {
                     <i className="material-icons white-text" style={{verticalAlign: 'middle'}}>reorder</i>
             </SpeedDialItem>
             <SpeedDialItem  className="green white-text">
-                <a className="white-text" style={{verticalAlign: 'middle', fontStyle: 'italic'}} href="http://192.168.1.102:3333/api/xls">
+                <a className="white-text" style={{display: "flex", justifyContent: "center", fontStyle: 'italic'}} href="http://192.168.1.102:3333/api/xls">
                     e
                 </a>
             </SpeedDialItem>

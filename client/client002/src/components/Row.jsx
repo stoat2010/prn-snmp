@@ -210,7 +210,7 @@ export default class Row extends Component {
     render() {
 
         this.state.classes === 0 ? this.classN = "btn-floating btn-small waves-effect waves-light red lighten-3" : this.classN = "btn-floating btn-small waves-effect waves-light green darken-4";
-        this.state.classes === 0 ? this.classS = "disabled btn-flat white" : this.classS = "btn-flat waves-effect waves-grey white";
+        this.state.classes === 0 ? this.classS = "disabled btn-flat white centered" : this.classS = "btn-flat waves-effect waves-grey white centered";
         this.state.classes === 0 ? this.btnDisable = "#bdbdbd" : this.btnDisable = "#424242";
         //this.state.dataAllow === 1 ? this.classS = "disabled btn-flat" : this.classS = "btn-flat";
         this.props.device.serial ? this.classIP = "black-text" : this.classIP = "pink-text";
@@ -241,7 +241,7 @@ export default class Row extends Component {
                     {this.cl()}<br />
                         {this.state.dataDate === '' ? <span style={{fontSize: 'xx-small'}}></span> : <span className={this.classDate} style={{fontSize: 'xx-small'}}>{new Date(this.state.dataDate).toLocaleDateString()}</span> }
                 </div>
-                <div className="col s1" style={{ width: '6%', textAlign: 'center', fontSize: 'small',}}>
+                <div className="col s1" style={{ width: '6%', display: 'flex', justifyContent: 'center', fontSize: 'small',}}>
                 <button
                     className={this.classS}
                     id={this.props.device._id}
