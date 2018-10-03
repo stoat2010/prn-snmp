@@ -7,8 +7,6 @@ export default function PageHeader() {
 
         <nav className="nav-extended indigo darken-4">
             <div className="nav-wrapper">
-                {/* <NavLink exact to="/" className="brand-logo right"><ReactSVG path="logo-text.svg" svgStyle={{ height: 20, margin: "10"}} /></NavLink> */}
-                {/* <NavLink exact to="/" className="brand-logo left"><ReactSVG path="logo-text.svg" svgStyle={{ height: 20, margin: "10"}} /></NavLink> */}
                 <NavLink exact to="/" className="brand-logo center white-text">SNMP опрос сетевых МФУ и принтеров</NavLink>
                 <ul id="nav-mobile" className="right hide-on-med-and-down">
                     <li><NavLink to = "/login"><SvgBtnPwrOn fill="white" /></NavLink></li>
@@ -16,8 +14,7 @@ export default function PageHeader() {
             </div>
             <div className="nav-content">
                 <ul className="tabs tabs-transparent">
-                    <li className="tab"><NavLink exact to = "/" activeClassName="yellow-text">Главная</NavLink></li> 
-                    {/* <li className="tab"><NavLink to = "/card" activeClassName="yellow-text">Карточки</NavLink></li> */}
+                    <li className="tab"><NavLink exact to = "/" activeClassName="yellow-text">Главная</NavLink></li>
                     <li className="tab disabled"><NavLink to = "/adminpoint" activeClassName="yellow-text">Администрирование</NavLink></li>
                     <li className="tab disabled"><NavLink to = "/config" activeClassName="yellow-text">Настройки</NavLink></li>
                     <li className="tab  right"><NavLink to = "/login" activeClassName="yellow-text">Авторизация</NavLink></li>
