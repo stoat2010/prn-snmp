@@ -20,7 +20,9 @@ module.exports.dataCreate = async function (req, res) {
             date: req.body.date,
             month: new Date().getMonth() + 1,
             year: new Date().getFullYear(),
-            printouts: req.body.printouts
+            printouts: req.body.printouts,
+            col_printouts: req.body.col_printouts,
+            bw_printouts: req.body.bw_printouts
         }, function (err, data) {
             if (err) {
                 sendJSONResponse(res, 440, err);
@@ -31,7 +33,14 @@ module.exports.dataCreate = async function (req, res) {
     }else{
         Loc.findOneAndUpdate(
             {device_name: req.body.device_name, month: new Date().getMonth() + 1, year: new Date().getFullYear()},
-            {$set: {printouts: req.body.printouts, date: req.body.date, device_name: req.body.device_name, device_serial: req.body.device_serial}},
+            {$set: {
+                printouts: req.body.printouts, 
+                date: req.body.date, 
+                device_name: req.body.device_name, 
+                device_serial: req.body.device_serial,
+                col_printouts: req.body.col_printouts,
+                bw_printouts: req.body.bw_printouts
+            }},
             function (err, data) {
                 if (err) {
                     sendJSONResponse(res, 440, err);
@@ -86,9 +95,11 @@ module.exports.curPrintouts = function (req, res) {
 module.exports.dataGraph = function (req, res) {
 
     var prouts = [0];
+    var prouts_c = [0];
+    var prouts_b = [0];
 
     Loc
-        .find({ device_name: req.params.deviceid, year: new Date().getFullYear() }, { printouts: 1, month: 1, _id: 0 }).sort({ date: 1 }).limit(12)
+        .find({ device_name: req.params.deviceid, year: new Date().getFullYear() }, { printouts: 1, col_printouts: 1, bw_printouts: 1, month: 1, _id: 0 }).sort({ date: 1 }).limit(12)
         .exec(async function (err, device) {
             if (err) {
                 sendJSONResponse(res, 440, err);
@@ -99,31 +110,49 @@ module.exports.dataGraph = function (req, res) {
                 var firstMonth = Math.min.apply(null, months);
 
                 var arr01 = device.map(item => item.printouts);
+                var arr02 = device.map(item => item.col_printouts);
+                var arr03 = device.map(item => item.bw_printouts);
                 var k = maxMonth - arr01.length;
 
                 var bal = await balanceLoad(req.params.deviceid);
                 var bal1 = bal.map(item => item.balance);
+                var bal2 = bal.map(item => item.col_balance);
+                var bal3 = bal.map(item => item.bw_balance);
 
                 for (var j = 0; j < k; j++) {
-                    var t = arr01.unshift(0);
+                    var f = arr01.unshift(0);
+                    var c = arr02.unshift(0);
+                    var b = arr03.unshift(0);
                 };
 
-                for (var i = 1; i <= maxMonth; i++) {
+                for (var i = 1; i < maxMonth; i++) {
                     if (i === firstMonth - 1 && firstMonth > 0) {
                         var val = arr01[i] - bal1[0];
+                        var valc = arr02[i] - bal2[0];
+                        var valb = arr03[i] - bal3[0];
                     } else {
                         var val = arr01[i] - arr01[i - 1];
+                        var valc = arr02[i] - arr02[i - 1];
+                        var valb = arr03[i] - arr03[i - 1];
                     }
                     prouts.push(val);
+                    prouts_c.push(valc);
+                    prouts_b.push(valb);
                 }
-                sendJSONResponse(res, 200, prouts);
+                var resObj={
+                    black: prouts_b,
+                    color: prouts_c,
+                    all: prouts
+                }
+                console.log(resObj);
+                sendJSONResponse(res, 200, resObj);
             }
         });
 };
 
 function balanceLoad(req) {
     return new Promise(resolve => {
-        LocDev.find({ name: req }, { balance: 1, _id: 0 }, function (err, balance) {
+        LocDev.find({ name: req }, { balance: 1, col_balance: 1, bw_balance: 1, _id: 0 }, function (err, balance) {
             if (err) {
                 console.log(err);
             } else {

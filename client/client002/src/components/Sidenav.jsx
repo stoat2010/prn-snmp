@@ -34,6 +34,13 @@ export default class Sidenav extends Component {
                 type: this.refs['frm'].type.value,
                 start_date: new Date()
             };
+            if (this.refs['frm'].type.value === 1 && this.props.devData1[1] === "Hewlett-Packard" ){
+                send.col_balance = this.state.devData1[4];
+                send.bw_printouts = this.state.devData1[5];
+            }else{
+                send.col_balance = 0;
+                send.bw_balance = this.state.devData1[5];
+            }
 
             this.props.toBase(send);
             this.refs['device'].value = '';

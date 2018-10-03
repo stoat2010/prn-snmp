@@ -13,12 +13,17 @@ export default class DevCard extends Component {
         this.state = {
             classes: 0,
             devData: {},
-            dataGraph: [],
+            dataGraph: {
+                all: [],
+                black: [],
+                color: []
+            },
             content: false,
             loadCard: true,
             reportStatus: this.props.device.inreport,
             curPrintouts: 0,
-            devToner: {}
+            devToner: {},
+            graphState: 0
         };
         this.readStatus = this.readStatus.bind(this);
         this.readData = this.readData.bind(this);
@@ -27,6 +32,7 @@ export default class DevCard extends Component {
         this.changeView = this.changeView.bind(this);
         this.handleSave = this.handleSave.bind(this);
         this.handleReport = this.handleReport.bind(this);
+        this.GraphType = this.GraphType.bind(this);
 
         this.classS = "material-icons right disabled";
     }
@@ -77,7 +83,7 @@ export default class DevCard extends Component {
             .then((res => {
                 return res.json();
             }))
-            .then(dataGraph => { this.setState({ dataGraph }); });
+            .then(dataGraph => { this.setState({ dataGraph }) });
     }
 
     readCurData() {
@@ -121,6 +127,13 @@ export default class DevCard extends Component {
             date: new Date(),
             printouts: this.state.devData[0]
         };
+        if (this.props.device.type === 1 && this.props.device.vendor === "Hewlett-Packard") {
+            submitted.col_printouts = this.state.devData[1];
+            submitted.bw_printouts = this.state.devData[2];
+        } else {
+            submitted.col_printouts = 0;
+            submitted.bw_printouts = this.state.devData[0];
+        }
 
         fetch('http://192.168.1.102:3333/api/data', {
             method: 'POST',
@@ -170,6 +183,11 @@ export default class DevCard extends Component {
 
     }
 
+    GraphType(e) {
+        console.log(this.state.dataGraph);
+        this.setState({graphState: +e.currentTarget.value })
+    }
+
     devInfo() {
         this.readStatus();
         this.readData();
@@ -178,6 +196,16 @@ export default class DevCard extends Component {
 
     cl = () => this.state.classes === 0 ? <SvgDevOff fill="#d81b60" />
         : <SvgDevOn fill="green" />;
+
+    graph() {
+        if (this.state.graphState === 0) {
+            return this.state.dataGraph.all;
+        } else if (this.state.graphState === 2) {
+            return this.state.dataGraph.color;
+        }else{
+            return this.state.dataGraph.black;
+        }
+    }
 
     flag = () => {
         if (this.state.devToner.cyan) {
@@ -210,85 +238,78 @@ export default class DevCard extends Component {
         }
         return <div></div>
     }
-//Переключатели для разных
+    //Переключатели для разных
     typeRadio = () => this.props.device.type === 1 ? this.props.device.vendor === "Hewlett-Packard" ?
-        <table><tbody>
-            <tr>
-                <td>
-                    <label>
-                        <input name="group1" type="radio" name="type" value="0" defaultChecked />
+                <div className="col s12">
+                    <label className="col s4">
+                        <input name="group1" type="radio" name="type" value="0" className="with-gap" defaultChecked onChange={this.GraphType} />
                         <span style={{ fontSize: 'x-small' }}>Всего</span>
                     </label>
-                </td>
-                <td>
-                    <label>
-                        <input name="group1" type="radio" name="type" value="1" />
+                    <label className="col s4">
+                        <input name="group1" type="radio" name="type" value="1"  className="with-gap"onChange={this.GraphType} />
                         <span style={{ fontSize: 'x-small' }}>Монохром</span>
                     </label>
-                </td>
-                <td>
-                    <label>
-                        <input name="group1" type="radio" name="type" value="2" />
+                    <label className="col s4">
+                        <input name="group1" type="radio" name="type" value="2" className="with-gap" onChange={this.GraphType} />
                         <span style={{ fontSize: 'x-small' }}>Цветные</span>
                     </label>
-                </td>
-            </tr></tbody></table> : <div></div> : <div></div>
+                </div> : <div></div> : <div></div>
 
     cont = () => !this.state.content ?
-        <div className="card-content" style={{ fontSize: 'x-small' }}>
-            цех/отдел: <b>{this.props.device.unit}</b><br />
-            корпус: <b>{this.props.device.build}</b><span>&nbsp;</span>
-            кабинет: <b>{this.props.device.office}</b><br />
-            принято: <b>{new Date(this.props.device.start_date).toLocaleDateString()}</b><br />
-            начальный остаток: <b>{this.props.device.balance}</b><span>&nbsp;</span>
-            отпечатков: <span className="green-text"><b>{this.state.devData[0]}</b></span>
-            <i className="right" onClick={this.changeView}><SvgExpMore /></i>
-        </div> : <div><div className="card-content" style={{ fontSize: 'x-small' }}>
-            цех/отдел: <b>{this.props.device.unit}</b><br />
-            корпус: <b>{this.props.device.build}</b><span>&nbsp;</span>
-            кабинет: <b>{this.props.device.office}</b><br />
-            принято: <b>{new Date(this.props.device.start_date).toLocaleDateString()}</b><br />
-            начальный остаток: <b>{this.props.device.balance}</b><span>&nbsp;</span>
-            отпечатков: <span className="green-text"><b>{this.state.devData[0]}</b></span>
-            <i className="right" onClick={this.changeView}><SvgExpLess /></i>
-        </div>
-            <div className="card-content">
-                Модель: <b>{this.props.device.model}</b><br />
-                Вендор: <b>{this.props.device.vendor}</b><br />
-                S/N: <b>{this.props.device.serial}</b><br />
-
-            </div>
             <div className="card-content" style={{ fontSize: 'x-small' }}>
-                <div className="card-title" style={{ fontSize: 'small' }}><b>% заполнения картриджей</b></div>
-                {this.state.devToner.cyan ?
-                    <svg width='360px' height='80px'>
-                        <rect width="360" height="17" x="0" y="0" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#757575' }} />
-                        <rect width={+this.state.devToner.black[2] / +this.state.devToner.black[1] * 360} height="15" x="1" y="1" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#000000' }} />
-                        <rect width="360" height="17" x="0" y="20" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#757575' }} />
-                        <rect width={+this.state.devToner.cyan[2] / +this.state.devToner.cyan[1] * 360} height="15" x="1" y="21" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#1565c0' }} />
-                        <rect width="360" height="17" x="0" y="40" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#757575' }} />
-                        <rect width={+this.state.devToner.magenta[2] / +this.state.devToner.magenta[1] * 360} height="15" x="1" y="41" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#d81b60' }} />
-                        <rect width="360" height="17" x="0" y="60" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#757575' }} />
-                        <rect width={+this.state.devToner.yellow[2] / +this.state.devToner.yellow[1] * 360} height="15" x="1" y="61" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#f9a825' }} />
+                цех/отдел: <b>{this.props.device.unit}</b><br />
+                корпус: <b>{this.props.device.build}</b><span>&nbsp;</span>
+                кабинет: <b>{this.props.device.office}</b><br />
+                принято: <b>{new Date(this.props.device.start_date).toLocaleDateString()}</b><br />
+                начальный остаток: <b>{this.props.device.balance}</b><span>&nbsp;</span>
+                отпечатков: <span className="green-text"><b>{this.state.devData[0]}</b></span>
+                <i className="right" onClick={this.changeView}><SvgExpMore /></i>
+            </div> : <div><div className="card-content" style={{ fontSize: 'x-small' }}>
+                цех/отдел: <b>{this.props.device.unit}</b><br />
+                корпус: <b>{this.props.device.build}</b><span>&nbsp;</span>
+                кабинет: <b>{this.props.device.office}</b><br />
+                принято: <b>{new Date(this.props.device.start_date).toLocaleDateString()}</b><br />
+                начальный остаток: <b>{this.props.device.balance}</b><span>&nbsp;</span>
+                отпечатков: <span className="green-text"><b>{this.state.devData[0]}</b></span>
+                <i className="right" onClick={this.changeView}><SvgExpLess /></i>
+            </div>
+                <div className="card-content">
+                    Модель: <b>{this.props.device.model}</b><br />
+                    Вендор: <b>{this.props.device.vendor}</b><br />
+                    S/N: <b>{this.props.device.serial}</b><br />
 
-                        <text x="170" y="13" fill="white" fontSize="13">{Math.round(+this.state.devToner.black[2] / +this.state.devToner.black[1] * 100)}%</text>
-                        <text x="170" y="33" fill="white" fontSize="13">{Math.round(+this.state.devToner.cyan[2] / +this.state.devToner.cyan[1] * 100)}%</text>
-                        <text x="170" y="53" fill="white" fontSize="13">{Math.round(+this.state.devToner.magenta[2] / +this.state.devToner.magenta[1] * 100)}%</text>
-                        <text x="170" y="73" fill="white" fontSize="13">{Math.round(+this.state.devToner.yellow[2] / +this.state.devToner.yellow[1] * 100)}%</text>
-
-                    </svg> : this.state.devToner.black ?
-                        <svg width='360px' height='20px'>
-                            <rect width="360" height="17" x="0" y="0" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#9e9e9e' }} />
+                </div>
+                <div className="card-content" style={{ fontSize: 'x-small' }}>
+                    <div className="card-title" style={{ fontSize: 'small' }}><b>% заполнения картриджей</b></div>
+                    {this.state.devToner.cyan ?
+                        <svg width='360px' height='80px'>
+                            <rect width="360" height="17" x="0" y="0" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#757575' }} />
                             <rect width={+this.state.devToner.black[2] / +this.state.devToner.black[1] * 360} height="15" x="1" y="1" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#000000' }} />
+                            <rect width="360" height="17" x="0" y="20" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#757575' }} />
+                            <rect width={+this.state.devToner.cyan[2] / +this.state.devToner.cyan[1] * 360} height="15" x="1" y="21" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#1565c0' }} />
+                            <rect width="360" height="17" x="0" y="40" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#757575' }} />
+                            <rect width={+this.state.devToner.magenta[2] / +this.state.devToner.magenta[1] * 360} height="15" x="1" y="41" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#d81b60' }} />
+                            <rect width="360" height="17" x="0" y="60" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#757575' }} />
+                            <rect width={+this.state.devToner.yellow[2] / +this.state.devToner.yellow[1] * 360} height="15" x="1" y="61" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#f9a825' }} />
+
                             <text x="170" y="13" fill="white" fontSize="13">{Math.round(+this.state.devToner.black[2] / +this.state.devToner.black[1] * 100)}%</text>
-                        </svg> : <svg width='360px' height='20px'><rect width="360" height="17" x="0" y="0" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#9e9e9e' }} />
-                            <text x="140" y="13" fill="white" fontSize="13">Нет данных</text></svg>}
-                {this.typeRadio()}
+                            <text x="170" y="33" fill="white" fontSize="13">{Math.round(+this.state.devToner.cyan[2] / +this.state.devToner.cyan[1] * 100)}%</text>
+                            <text x="170" y="53" fill="white" fontSize="13">{Math.round(+this.state.devToner.magenta[2] / +this.state.devToner.magenta[1] * 100)}%</text>
+                            <text x="170" y="73" fill="white" fontSize="13">{Math.round(+this.state.devToner.yellow[2] / +this.state.devToner.yellow[1] * 100)}%</text>
+
+                        </svg> : this.state.devToner.black ?
+                            <svg width='360px' height='20px'>
+                                <rect width="360" height="17" x="0" y="0" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#9e9e9e' }} />
+                                <rect width={+this.state.devToner.black[2] / +this.state.devToner.black[1] * 360} height="15" x="1" y="1" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#000000' }} />
+                                <text x="170" y="13" fill="white" fontSize="13">{Math.round(+this.state.devToner.black[2] / +this.state.devToner.black[1] * 100)}%</text>
+                            </svg> : <svg width='360px' height='20px'><rect width="360" height="17" x="0" y="0" rx="3" ry="3" style={{ border: '1px solid #000000', fill: '#9e9e9e' }} />
+                                <text x="140" y="13" fill="white" fontSize="13">Нет данных</text></svg>}
+                    {this.typeRadio()}
+                </div>
+                <div className="card-content">
+                    <PrintBar data={[...this.graph()]} height={170} />
+                </div>
             </div>
-            <div className="card-content">
-                <PrintBar data={this.state.dataGraph} height={170} />
-            </div>
-        </div>
 
     rep = () => this.state.reportStatus === false ? <SvgChart fill="#d32f2f" /> : <SvgChart fill="green" />;
 
@@ -311,6 +332,8 @@ export default class DevCard extends Component {
         this.state.classes === 0 ? this.cardColor = "#eeeeee" : this.cardColor = "white"
         this.state.classes === 0 ? this.borderColor = "#eeeeee" : this.state.devData[0] == this.state.curPrintouts ? this.borderColor = "white" : this.borderColor = "#ffab91";
 
+        //console.log(this.state.graphState)
+        //console.log(this.state.dataGraph)
         return (
 
             <div id={this.props.device._id} className="col s3">

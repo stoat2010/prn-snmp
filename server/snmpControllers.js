@@ -14,14 +14,21 @@ module.exports.devStatus = async function (req, res) {
 
 module.exports.devData = async function (req, res) {
 
-    var oids = ['1.3.6.1.2.1.43.10.2.1.4.1.1'];
-    var printouts = await snmpGet(req.params.deviceid, oids);
-    sendJSONResponse(res, 200, !!printouts.length ? printouts : ['-']);
+    var oids = ['1.3.6.1.2.1.43.10.2.1.4.1.1', '1.3.6.1.4.1.11.2.3.9.4.2.1.4.1.2.7.0', '1.3.6.1.4.1.11.2.3.9.4.2.1.4.1.2.6.0'];
+    const results = oids.map(async oid => {
+
+        var value = await snmpGet(req.params.deviceid, [oid]);
+        return !!value.length ? value[0] : '-';
+    })
+
+    await Promise.all(results).then(result => {
+        sendJSONResponse(res, 200, result);
+    })
 }
 
 module.exports.devDataFull = async function (req, res) {
 
-    var oids = ['1.3.6.1.2.1.25.3.2.1.3.1', '1.3.6.1.2.1.43.8.2.1.14.1.1', '1.3.6.1.2.1.43.5.1.1.17.1', '1.3.6.1.2.1.43.10.2.1.4.1.1'];
+    var oids = ['1.3.6.1.2.1.25.3.2.1.3.1', '1.3.6.1.2.1.43.8.2.1.14.1.1', '1.3.6.1.2.1.43.5.1.1.17.1', '1.3.6.1.2.1.43.10.2.1.4.1.1', '1.3.6.1.4.1.11.2.3.9.4.2.1.4.1.2.7.0', '1.3.6.1.4.1.11.2.3.9.4.2.1.4.1.2.6.0'];
 
     const results = oids.map(async oid => {
 
