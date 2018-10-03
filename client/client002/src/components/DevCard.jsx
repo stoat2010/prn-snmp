@@ -133,7 +133,7 @@ export default class DevCard extends Component {
         } else {
             submitted.col_printouts = 0;
             submitted.bw_printouts = this.state.devData[0];
-        }
+        };
 
         fetch('http://192.168.1.102:3333/api/data', {
             method: 'POST',
@@ -239,7 +239,7 @@ export default class DevCard extends Component {
         return <div></div>
     }
     //Переключатели для разных
-    typeRadio = () => this.props.device.type === 1 ? this.props.device.vendor === "Hewlett-Packard" ?
+    typeRadio = () => this.props.device.type === 1 ? (this.props.device.vendor === "Hewlett-Packard" || this.props.device.vendor === "Xerox") ?
                 <div className="col s12">
                     <label className="col s4">
                         <input name="group1" type="radio" name="type" value="0" className="with-gap" defaultChecked onChange={this.GraphType} />

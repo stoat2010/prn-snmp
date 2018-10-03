@@ -139,6 +139,13 @@ export default class Row extends Component {
             date: new Date(),
             printouts: this.state.devData[0]
         };
+        if (this.props.device.type === 1 && this.props.device.vendor === "Hewlett-Packard") {
+            submitted.col_printouts = this.state.devData[1];
+            submitted.bw_printouts = this.state.devData[2];
+        } else {
+            submitted.col_printouts = 0;
+            submitted.bw_printouts = this.state.devData[0];
+        };
 
         fetch('http://192.168.1.102:3333/api/data', {
             method: 'POST',

@@ -1,0 +1,20 @@
+[type="radio"]:not(:checked)+span:before, [type="radio"].with-gap:not(:checked)+span:after {
+    border-radius: 50%;
+    border: 2px solid #1a237e;
+  }
+
+  [type="radio"]:checked+span:after, [type="radio"].with-gap:checked+span:after {
+    border-radius: 50%;
+    border: 2px solid #e65100;
+    background-color: #e65100;
+    -webkit-transform: scale(.5);
+    -moz-transform: scale(.5);
+    -ms-transform: scale(.5);
+    -o-transform: scale(.5);
+    transform: scale(.5);
+  }
+
+  [type="radio"]:checked+span:before, [type="radio"].with-gap:checked+span:before{
+    border-radius: 50%;
+    border: 2px solid #1a237e;
+  }
