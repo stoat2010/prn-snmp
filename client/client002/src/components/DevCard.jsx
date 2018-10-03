@@ -256,14 +256,14 @@ export default class DevCard extends Component {
                 </div> : <div></div> : <div></div>
 
     cont = () => !this.state.content ?
-            <div className="card-content" style={{ fontSize: 'x-small' }}>
+            <div className="card-content" style={{ fontSize: 'x-small' }}> 
                 цех/отдел: <b>{this.props.device.unit}</b><br />
                 корпус: <b>{this.props.device.build}</b><span>&nbsp;</span>
                 кабинет: <b>{this.props.device.office}</b><br />
                 принято: <b>{new Date(this.props.device.start_date).toLocaleDateString()}</b><br />
                 начальный остаток: <b>{this.props.device.balance}</b><span>&nbsp;</span>
                 отпечатков: <span className="green-text"><b>{this.state.devData[0]}</b></span>
-                <i className="right" onClick={this.changeView}><SvgExpMore /></i>
+            <i className="right" onClick={this.changeView}><SvgExpMore /></i> 
             </div> : <div><div className="card-content" style={{ fontSize: 'x-small' }}>
                 цех/отдел: <b>{this.props.device.unit}</b><br />
                 корпус: <b>{this.props.device.build}</b><span>&nbsp;</span>
@@ -332,8 +332,6 @@ export default class DevCard extends Component {
         this.state.classes === 0 ? this.cardColor = "#eeeeee" : this.cardColor = "white"
         this.state.classes === 0 ? this.borderColor = "#eeeeee" : this.state.devData[0] == this.state.curPrintouts ? this.borderColor = "white" : this.borderColor = "#ffab91";
 
-        //console.log(this.state.graphState)
-        //console.log(this.state.dataGraph)
         return (
 
             <div id={this.props.device._id} className="col s3">
