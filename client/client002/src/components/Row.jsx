@@ -284,7 +284,7 @@ export default class Row extends Component {
                         className="waves-effect waves-gray btn-flat"
                         style={{display: 'flex', justifyContent: 'center'}}
                         id={this.props.device._id}
-                        onClick={this.handleDelButton.bind(this, this.props.device._id)}>
+                        /* onClick={this.handleDelButton.bind(this, this.props.device._id)} */>
                         <SvgBtnDel />
                     </button>
                 </div>
