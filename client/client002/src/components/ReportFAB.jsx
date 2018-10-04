@@ -4,6 +4,7 @@ import 'onsenui/css/onsenui.css';
 import 'onsenui/css/onsen-css-components.css';
 
 import styles from './Styles.css';
+import {srvParams} from '../srvParams';
 
 export default function ReportFAB(props) {
 
@@ -13,18 +14,18 @@ export default function ReportFAB(props) {
                 <i className="material-icons" style={{verticalAlign: 'middle'}}>description</i>
             </Fab>
             <SpeedDialItem className="brown">
-                <a href="http://192.168.1.102:3333/api/pdf1">
+                <a href={(()=>"http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/pdf1")()}>
                     <i className="material-icons white-text" style={{verticalAlign: 'middle'}}>show_chart</i>
                 </a> 
             </SpeedDialItem>
-            <SpeedDialItem  className="orange" onClick={()=>props.pdfCreate({addr: 'http://192.168.1.102:3333/api/pdf2', name: 'topdevices-' + new Date().toLocaleDateString() + '.pdf'})}>
+            <SpeedDialItem  className="orange" onClick={()=>props.pdfCreate({addr: "http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/pdf2", name: 'topdevices-' + new Date().toLocaleDateString() + '.pdf'})}>
                     <i className="material-icons white-text" style={{verticalAlign: 'middle'}}>insert_chart</i>
             </SpeedDialItem>
-            <SpeedDialItem  className="pink" onClick={()=>props.pdfCreate({ addr: 'http://192.168.1.102:3333/api/pdf3', name: 'devicelimit-' + new Date().toLocaleDateString() + '.pdf'})}>
+            <SpeedDialItem  className="pink" onClick={()=>props.pdfCreate({ addr: "http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/pdf3", name: 'devicelimit-' + new Date().toLocaleDateString() + '.pdf'})}>
                     <i className="material-icons white-text" style={{verticalAlign: 'middle'}}>reorder</i>
             </SpeedDialItem>
             <SpeedDialItem  className="green white-text">
-                <a className="white-text" style={{display: "flex", justifyContent: "center", fontStyle: 'italic'}} href="http://192.168.1.102:3333/api/xls">
+                <a className="white-text" style={{display: "flex", justifyContent: "center", fontStyle: 'italic'}} href={(()=>"http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/pdf1")()}>
                     e
                 </a>
             </SpeedDialItem>

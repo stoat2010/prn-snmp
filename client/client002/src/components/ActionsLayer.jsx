@@ -10,6 +10,7 @@ import ReportFAB from './ReportFAB';
 import MainTable from './MainTable';
 import CardView from './CardView';
 import {SvgViewTable, SvgViewCard, SvgBtnAdd, SvgBtnRefresh, SvgBtnSave, SvgBtnArrUp, SvgBtnArrDown} from './Svg';
+import {srvParams} from '../srvParams';
 
 import styles from './Styles.css';
 import "ch-calendar/dist/ch-calendar.css";
@@ -61,7 +62,7 @@ class ActionsLayer extends Component {
       cache: 'default'
     };
 
-    fetch("http://192.168.1.102:3333/devdatafull/" + devid, options)
+    fetch("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/devdatafull/" + devid, options)
       .then((res => {
         return res.json();
       }))
@@ -78,7 +79,7 @@ class ActionsLayer extends Component {
       cache: 'default'
     };
 
-    fetch("http://192.168.1.102:3333/devname/" + devid, options)
+    fetch("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/devname/" + devid, options)
       .then((res => {
         if (res.status === 200) { return res.json(); }
         swal("Имя не найдено в DNS").then(this.setState({ loadSNMP: false }));
@@ -123,15 +124,15 @@ class ActionsLayer extends Component {
 
   Refresh() {
     this.setState({devices: []});
-    this.dbConn('http://192.168.1.102:3333/api/devices');
+    this.dbConn("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/devices");
   }
 
   handleChange(event) {
     var addr = '';
     if (event.target.value === '0') {
-      addr = 'http://192.168.1.102:3333/api/devices';
+      addr = "http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/devices";
     } else {
-      addr = 'http://192.168.1.102:3333/api/devcol/' + event.target.value;
+      addr = "http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/devcol/" + event.target.value;
     }
     this.dbConn(addr);
   }
@@ -139,9 +140,9 @@ class ActionsLayer extends Component {
   handleChangeBuild(event) {
     var addr = '';
     if (event.target.value === '0') {
-      addr = 'http://192.168.1.102:3333/api/devices';
+      addr = "http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/devices";
     } else {
-      addr = 'http://192.168.1.102:3333/api/buildcol/' + event.target.value;
+      addr = "http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/buildcol/" + event.target.value;
     }
     this.dbConn(addr);
   }
@@ -149,9 +150,9 @@ class ActionsLayer extends Component {
   handleChangeUnit(event) {
     var addr = '';
     if (event.target.value === '0') {
-      addr = 'http://192.168.1.102:3333/api/devices';
+      addr = "http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/devices";
     } else {
-      addr = 'http://192.168.1.102:3333/api/unitcol/' + event.target.value;
+      addr = "http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/unitcol/" + event.target.value;
     }
     this.dbConn(addr);
   }
@@ -159,9 +160,9 @@ class ActionsLayer extends Component {
   handleChangeVendor(event) {
     var addr = '';
     if (event.target.value === '0') {
-      addr = 'http://192.168.1.102:3333/api/devices';
+      addr = "http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/devices";
     } else {
-      addr = 'http://192.168.1.102:3333/api/vendorcol/' + event.target.value;
+      addr = "http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/vendorcol/" + event.target.value;
     }
     this.dbConn(addr);
   }
@@ -176,7 +177,7 @@ class ActionsLayer extends Component {
   }
 
   toBase(submitted) {
-    fetch('http://192.168.1.102:3333/api/devices', {
+    fetch("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/devices", {
       method: 'POST',
       headers: {
         'Accept': 'application/json, text/plain, */*',
@@ -185,7 +186,7 @@ class ActionsLayer extends Component {
       body: JSON.stringify(submitted)
     })
       .then(res => {
-        this.dbConn('http://192.168.1.102:3333/api/devices');
+        this.dbConn("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/devices");
       });
   }
 
@@ -231,9 +232,14 @@ class ActionsLayer extends Component {
   }
 
   componentDidMount() {
-    this.setState({view: JSON.parse(localStorage['view'])})
-    this.dbConn('http://192.168.1.102:3333/api/devices');
-    this.dbConnInit('http://192.168.1.102:3333/api/devices');
+    if(!localStorage['view'])
+      {localStorage.key='view'
+      localStorage['view']= JSON.stringify(0);}
+      this.setState({view: JSON.parse(localStorage['view'])})
+    
+    
+    this.dbConn("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/devices");
+    this.dbConnInit("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/devices");
   }
 
   cl=() => this.state.view === true ? <CardView devices={this.state.devices} dbConn={this.dbConn} /> : <MainTable devices={this.state.devices} dbConn={this.dbConn} />;

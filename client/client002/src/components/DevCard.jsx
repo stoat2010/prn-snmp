@@ -4,6 +4,7 @@ import FileSaver from 'file-saver';
 //import { FadeLoader } from 'react-spinners';
 
 import PrintBar from './Bar';
+import {srvParams} from '../srvParams';
 import { SvgDevOn, SvgDevOff, SvgBtnRefresh, SvgBtnSave, SvgDevShot, SvgBtnDel, SvgExpLess, SvgExpMore, SvgChart, SvgBtnEdit, SvgFlag } from './Svg';
 
 export default class DevCard extends Component {
@@ -51,7 +52,7 @@ export default class DevCard extends Component {
             mode: 'cors',
             cache: 'default'
         };
-        fetch("http://192.168.1.102:3333/devstatus/" + this.props.device.name, options)
+        fetch("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/devstatus/" + this.props.device.name, options)
             .then((res => {
                 return res.json();
             }))
@@ -65,7 +66,7 @@ export default class DevCard extends Component {
             cache: 'default'
         };
 
-        fetch("http://192.168.1.102:3333/devdata/" + this.props.device.name, options)
+        fetch("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/devdata/" + this.props.device.name, options)
             .then((res => {
                 return res.json();
             }))
@@ -79,7 +80,7 @@ export default class DevCard extends Component {
             cache: 'default'
         };
 
-        fetch("http://192.168.1.102:3333/api/datagraph/" + this.props.device.name, options)
+        fetch("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/datagraph/" + this.props.device.name, options)
             .then((res => {
                 return res.json();
             }))
@@ -93,7 +94,7 @@ export default class DevCard extends Component {
             cache: 'default'
         };
 
-        fetch("http://192.168.1.102:3333/api/datacurrent/" + this.props.device.name, options)
+        fetch("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/datacurrent/" + this.props.device.name, options)
             .then((res => {
                 return res.json();
             }))
@@ -108,7 +109,7 @@ export default class DevCard extends Component {
             cache: 'default'
         };
 
-        fetch("http://192.168.1.102:3333/devtoner/" + dev, options)
+        fetch("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/devtoner/" + dev, options)
             .then((res => {
                 return res.json();
             }))
@@ -127,7 +128,7 @@ export default class DevCard extends Component {
             date: new Date(),
             printouts: this.state.devData[0]
         };
-        if (this.props.device.type === 1 && this.props.device.vendor === "Hewlett-Packard") {
+        if (this.props.device.type === 1 && (this.props.device.vendor === "Hewlett-Packard" || this.props.device.vendor === "Xerox")) {
             submitted.col_printouts = this.state.devData[1];
             submitted.bw_printouts = this.state.devData[2];
         } else {
@@ -135,7 +136,7 @@ export default class DevCard extends Component {
             submitted.bw_printouts = this.state.devData[0];
         };
 
-        fetch('http://192.168.1.102:3333/api/data', {
+        fetch("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/data", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json, text/plain, */*',
@@ -170,7 +171,7 @@ export default class DevCard extends Component {
             state: !this.state.reportStatus
         };
 
-        fetch('http://192.168.1.102:3333/api/devices/' + this.props.device.device, {
+        fetch("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/devices/"+ this.props.device.device, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json, text/plain, */*',

@@ -3,6 +3,7 @@ import swal from 'sweetalert2';
 import {SvgDevOn, SvgDevOff, SvgBtnRefresh, SvgBtnSave, SvgBtnDel, SvgBtnPrint} from './Svg';
 
 import PrintBar from './Bar';
+import {srvParams} from '../srvParams';
 
 export default class Row extends Component {
 
@@ -41,7 +42,7 @@ export default class Row extends Component {
             mode: 'cors',
             cache: 'default'
         };
-        fetch("http://192.168.1.102:3333/devstatus/" + this.props.device.name, options)
+        fetch("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/devstatus/" + this.props.device.name, options)
             .then((res => {
                 return res.json();
             }))
@@ -55,7 +56,7 @@ export default class Row extends Component {
             cache: 'default'
         };
 
-        fetch("http://192.168.1.102:3333/devdata/" + this.props.device.name, options)
+        fetch("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/devdata/" + this.props.device.name, options)
             .then((res => {
                 return res.json();
             }))
@@ -69,7 +70,7 @@ export default class Row extends Component {
             cache: 'default'
         };
 
-        fetch("http://192.168.1.102:3333/api/data/" + this.props.device.name, options)
+        fetch("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/data/" + this.props.device.name, options)
             .then((res => {
                 return res.json();
             }))
@@ -83,7 +84,7 @@ export default class Row extends Component {
             cache: 'default'
         };
 
-        fetch("http://192.168.1.102:3333/api/datagraph/" + this.props.device.name, options)
+        fetch("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/datagraph/" + this.props.device.name, options)
             .then((res => {
                 return res.json();
             }))
@@ -97,7 +98,7 @@ export default class Row extends Component {
             cache: 'default'
         };
 
-        fetch("http://192.168.1.102:3333/api/datadate/" + this.props.device.name, options)
+        fetch("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/datadate/" + this.props.device.name, options)
             .then((res => {
                 return res.json();
             }))
@@ -122,9 +123,9 @@ export default class Row extends Component {
             dangerMode: true
         }).then((willDelete) => {
             if (willDelete.value) {
-                fetch('http://192.168.1.102:3333/api/devices/' + i, { method: 'delete', mode: 'cors' })
+                fetch("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/devices/" + i, { method: 'delete', mode: 'cors' })
                 .then(res => {
-                this.props.dbConn('http://192.168.1.102:3333/api/devices');
+                this.props.dbConn("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/devices");
             });
                 swal("Удалено", {icon: "success",})
             }else if (willDelete.dismiss === swal.DismissReason.cancel){
@@ -143,7 +144,7 @@ export default class Row extends Component {
             date: new Date(),
             printouts: this.state.devData[0]
         };
-        if (this.props.device.type === 1 && this.props.device.vendor === "Hewlett-Packard") {
+        if (this.props.device.type === 1 && (this.props.device.vendor === "Hewlett-Packard" || this.props.device.vendor === "Xerox")) {
             submitted.col_printouts = this.state.devData[1];
             submitted.bw_printouts = this.state.devData[2];
         } else {
@@ -151,7 +152,7 @@ export default class Row extends Component {
             submitted.bw_printouts = this.state.devData[0];
         };
 
-        fetch('http://192.168.1.102:3333/api/data', {
+        fetch("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/data", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json, text/plain, */*',
@@ -173,7 +174,7 @@ export default class Row extends Component {
             state: !this.state.reportStatus
         };
 
-        fetch('http://192.168.1.102:3333/api/devices/' + this.props.device.device, {
+        fetch("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/devices/" + this.props.device.device, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json, text/plain, */*',
@@ -194,7 +195,7 @@ export default class Row extends Component {
             cache: 'default'
         };
 
-        fetch("http://192.168.1.102:3333/devtoner/" + dev, options)
+        fetch("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/devtoner/" + dev, options)
             .then((res => {
                 return res.json();
             }))

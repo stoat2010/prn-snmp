@@ -14,7 +14,13 @@ module.exports.devStatus = async function (req, res) {
 
 module.exports.devData = async function (req, res) {
 
-    var oids = ['1.3.6.1.2.1.43.10.2.1.4.1.1', '1.3.6.1.4.1.11.2.3.9.4.2.1.4.1.2.7.0', '1.3.6.1.4.1.11.2.3.9.4.2.1.4.1.2.6.0'];
+    var device = await getType(req.params.deviceid)
+
+    if (device[0].vendor === "Xerox"){
+        var oids = ['1.3.6.1.2.1.43.10.2.1.4.1.1', '1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.33', '1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.34'];
+    }else{
+        var oids = ['1.3.6.1.2.1.43.10.2.1.4.1.1', '1.3.6.1.4.1.11.2.3.9.4.2.1.4.1.2.7.0', '1.3.6.1.4.1.11.2.3.9.4.2.1.4.1.2.6.0'];    
+    }
     const results = oids.map(async oid => {
 
         var value = await snmpGet(req.params.deviceid, [oid]);
@@ -28,7 +34,11 @@ module.exports.devData = async function (req, res) {
 
 module.exports.devDataFull = async function (req, res) {
 
-    var oids = ['1.3.6.1.2.1.25.3.2.1.3.1', '1.3.6.1.2.1.43.8.2.1.14.1.1', '1.3.6.1.2.1.43.5.1.1.17.1', '1.3.6.1.2.1.43.10.2.1.4.1.1', '1.3.6.1.4.1.11.2.3.9.4.2.1.4.1.2.7.0', '1.3.6.1.4.1.11.2.3.9.4.2.1.4.1.2.6.0'];
+    if (device.vendor === "Xerox"){
+        var oids = ['1.3.6.1.2.1.43.10.2.1.4.1.1', '1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.33', '1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.34'];
+    }else{
+        var oids = ['1.3.6.1.2.1.43.10.2.1.4.1.1', '1.3.6.1.4.1.11.2.3.9.4.2.1.4.1.2.7.0', '1.3.6.1.4.1.11.2.3.9.4.2.1.4.1.2.6.0'];    
+    }
 
     const results = oids.map(async oid => {
 
@@ -125,7 +135,7 @@ function getType(devid) {
     var Loc = mongoose.model('device');
 
     return new Promise(resolve => {
-        Loc.find({ name: devid }, { type: 1, device: 1, _id: 0 }, function (err, type) {
+        Loc.find({ name: devid }, { type: 1, device: 1, vendor: 1, _id: 0 }, function (err, type) {
             if (err) {
                 console.log(err);
             } else {

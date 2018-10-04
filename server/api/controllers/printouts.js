@@ -144,7 +144,6 @@ module.exports.dataGraph = function (req, res) {
                     color: prouts_c,
                     all: prouts
                 }
-                console.log(resObj);
                 sendJSONResponse(res, 200, resObj);
             }
         });
