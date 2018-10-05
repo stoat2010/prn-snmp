@@ -5,7 +5,7 @@ import FileSaver from 'file-saver';
 
 import PrintBar from './Bar';
 import {srvParams} from '../srvParams';
-import { SvgDevOn, SvgDevOff, SvgBtnRefresh, SvgBtnSave, SvgDevShot, SvgBtnDel, SvgExpLess, SvgExpMore, SvgChart, SvgBtnEdit, SvgFlag } from './Svg';
+import { SvgDescr, SvgDevOn, SvgDevOff, SvgBtnRefresh, SvgBtnSave, SvgDevShot, SvgBtnDel, SvgExpLess, SvgExpMore, SvgChart, SvgBtnEdit, SvgFlag } from './Svg';
 
 export default class DevCard extends Component {
 
@@ -36,6 +36,7 @@ export default class DevCard extends Component {
         this.GraphType = this.GraphType.bind(this);
 
         this.classS = "material-icons right disabled";
+        this.stsText = "";
     }
 
     getInitialState() {
@@ -59,7 +60,10 @@ export default class DevCard extends Component {
             .then(classes => { this.setState({ classes }); });
     }
 
-    readData() {
+    readData = async ()=> {
+
+        await this.readCurData();
+        
         var options = {
             method: 'GET',
             mode: 'cors',
@@ -70,7 +74,15 @@ export default class DevCard extends Component {
             .then((res => {
                 return res.json();
             }))
-            .then(devData => { this.setState({ devData }); });
+            .then(devData => {  
+                if(this.state.classes === 1 && devData[0] > this.state.curPrintouts){
+                    this.handleSave(devData);
+                    this.stsText = "Обновлено: " + new Date().toLocaleString() + ". Добавлено: " + (devData[0] - this.state.curPrintouts)
+                }else{
+                    this.stsText =  "Обновлено " + new Date().toLocaleString();
+                }
+                this.setState({ devData });
+            });
     }
 
     readGraphData() {
@@ -118,22 +130,21 @@ export default class DevCard extends Component {
             );
     }
 
-    handleSave(event) {
-        event.preventDefault();
+    handleSave(devData) {
 
         var submitted = {
             device: this.props.device.device,
             device_name: this.props.device.name,
             device_serial: this.props.device.serial,
             date: new Date(),
-            printouts: this.state.devData[0]
+            printouts: devData[0]
         };
         if (this.props.device.type === 1 && (this.props.device.vendor === "Hewlett-Packard" || this.props.device.vendor === "Xerox")) {
-            submitted.col_printouts = this.state.devData[1];
-            submitted.bw_printouts = this.state.devData[2];
+            submitted.col_printouts = devData[1];
+            submitted.bw_printouts = devData[2];
         } else {
             submitted.col_printouts = 0;
-            submitted.bw_printouts = this.state.devData[0];
+            submitted.bw_printouts = devData[0];
         };
 
         fetch("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/data", {
@@ -190,9 +201,10 @@ export default class DevCard extends Component {
     }
 
     devInfo() {
+        this.readCurData();
         this.readStatus();
         this.readData();
-        this.readCurData();
+        
     }
 
     cl = () => this.state.classes === 0 ? <SvgDevOff fill="#d81b60" />
@@ -312,7 +324,7 @@ export default class DevCard extends Component {
                 </div>
             </div>
 
-    rep = () => this.state.reportStatus === false ? <SvgChart fill="#d32f2f" /> : <SvgChart fill="green" />;
+    rep = () => this.state.reportStatus ? <SvgDescr fill="#90caf9"/> : <div></div>;
 
     componentDidMount() {
         this.readStatus();
@@ -331,16 +343,17 @@ export default class DevCard extends Component {
         this.state.classes === 0 ? this.classS = "disabled btn-flat " + this.cardColor : this.classS = "btn-flat waves-effect waves-gray " + this.cardColor;
         this.state.classes === 0 ? this.btnDisable = "#bdbdbd" : this.btnDisable = "#424242";
         this.state.classes === 0 ? this.cardColor = "#eeeeee" : this.cardColor = "white"
-        this.state.classes === 0 ? this.borderColor = "#eeeeee" : this.state.devData[0] == this.state.curPrintouts ? this.borderColor = "white" : this.borderColor = "#ffab91";
+        this.state.classes === 0 ? this.borderColor = "#eeeeee" : !this.state.reportStatus ? this.borderColor = "white" : this.borderColor = "white";
 
         return (
 
             <div id={this.props.device._id} className="col s3">
-                <div className="card hoverable" style={{ borderStyle: 'solid', borderColor: this.borderColor, backgroundColor: this.cardColor }}>
+                <div className="card hoverable" style={{ borderStyle: 'solid', borderColor: this.borderColor, backgroundColor: this.cardColor, borderRadius: '0px' }}>
                     <div className="card-title" style={{ fontSize: 'small' }}>
                         <a href={"http://" + this.props.device.device} target="blank" className="indigo-text"><b>{this.props.device.name.toUpperCase()}</b></a>
                         <div style={{ position: "absolute", right: "35px", top: "5px" }}>{this.flag()}</div>
                         <div style={{ position: "absolute", right: "5px", top: "5px" }}>{this.cl()}</div>
+                        <div style={{ position: "absolute", right: "65px", top: "5px" }}>{this.rep()}</div>
                     </div>
                     {this.cont()}
                     <div className="card-action" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -358,13 +371,13 @@ export default class DevCard extends Component {
                                 id={this.props.device._id}>
                                 <SvgBtnEdit />
                             </button>
-                            <button
+                           {/*  <button
                                 className={this.classS}
                                 style={{ display: 'flex', backgroundColor: this.cardColor }}
                                 id={this.props.device._id}
-                                onClick={this.handleSave} >
+                                onClick={()=>this.handleSave(this.state.devData)} >
                                 <SvgBtnSave fill={this.btnDisable} />
-                            </button>
+                            </button> */}
                             <button
                                 id={this.props.device._id}
                                 className="btn-flat waves-effect waves-gray"
@@ -377,7 +390,7 @@ export default class DevCard extends Component {
                                 className="btn-flat waves-effect waves-gray"
                                 style={{ display: 'flex', backgroundColor: this.cardColor }}
                                 onClick={this.handleReport} >
-                                {this.rep()}
+                                <SvgChart />
                             </button>
                         </div>
                         <button
@@ -388,6 +401,7 @@ export default class DevCard extends Component {
                             <SvgBtnDel />
                         </button>
                     </div>
+                    <div style={{fontSize: "xx-small", width: "100%", paddingLeft: 0}}>{this.stsText}</div>
                 </div>
             </div>
         )

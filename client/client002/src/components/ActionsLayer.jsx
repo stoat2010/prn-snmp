@@ -6,14 +6,16 @@ import FileSaver from 'file-saver';
 
 import TopNav from './TopNav';
 import Sidenav from './Sidenav';
+import CardView from './CardView';
 import ReportFAB from './ReportFAB';
 import MainTable from './MainTable';
-import CardView from './CardView';
+
 import {SvgViewTable, SvgViewCard, SvgBtnAdd, SvgBtnRefresh, SvgBtnSave, SvgBtnArrUp, SvgBtnArrDown} from './Svg';
 import {srvParams} from '../srvParams';
 
 import styles from './Styles.css';
 import "ch-calendar/dist/ch-calendar.css";
+import "./frmcss.css"
 
 
 class ActionsLayer extends Component {
@@ -271,11 +273,11 @@ class ActionsLayer extends Component {
           onClick={this.Refresh}>
           <SvgBtnRefresh fill="white"/>
         </button>
-        <button
+        {/* <button
           className="disabled btn-floating btn waves-effect waves-light indigo z-depth-1"
           style={styles.btnsave}>
           <SvgBtnSave fill="white"/>
-        </button>
+        </button> */}
 
         <ReportFAB pdfCreate={this.pdfCreate} />
         <Sidenav
