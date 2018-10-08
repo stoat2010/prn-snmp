@@ -26,6 +26,9 @@ const SvgBtnArrDown = (props) => <Svg {...props}><path d="M20 12l-1.41-1.41L13 1
 const SvgBtnPwrOn = (props) => <Svg {...props}><path d="M13 3h-2v10h2V3zm4.83 2.17l-1.42 1.42C17.99 7.86 19 9.81 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-2.19 1.01-4.14 2.58-5.42L6.17 5.17C4.23 6.82 3 9.26 3 12c0 4.97 4.03 9 9 9s9-4.03 9-9c0-2.74-1.23-5.18-3.17-6.83z"/></Svg>
 const SvgFlag = (props) => <Svg {...props}><path d="M14.4 6L14 4H5v17h2v-7h5.6l.4 2h7V6z"/></Svg>
 const SvgDescr = (props) => <Svg {...props}><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></Svg>
+const SvgShowChart = (props) => <Svg {...props}><path d="M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.97-4-4L2 16.99z"/><path fill="none" d="M0 0h24v24H0z"/></Svg>
+const SvgInsertChart = (props) => <Svg {...props}><path d="M9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4zm2.5 2.1h-15V5h15v14.1zm0-16.1h-15c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/><path fill="none" d="M0 0h24v24H0z"/></Svg>
+const SvgReorder = (props) => <Svg {...props}><path d="M3 15h18v-2H3v2zm0 4h18v-2H3v2zm0-8h18V9H3v2zm0-6v2h18V5H3z"/></Svg>
 
 export {
     SvgDevOn, 
@@ -47,5 +50,8 @@ export {
     SvgBtnArrDown,
     SvgBtnPwrOn,
     SvgFlag,
-    SvgDescr
+    SvgDescr,
+    SvgShowChart,
+    SvgInsertChart,
+    SvgReorder
 }

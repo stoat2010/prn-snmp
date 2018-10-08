@@ -37,6 +37,7 @@ export default class DevCard extends Component {
 
         this.classS = "material-icons right disabled";
         this.stsText = "";
+        this.totalPrintouts = 0;
     }
 
     getInitialState() {
@@ -77,7 +78,8 @@ export default class DevCard extends Component {
             .then(devData => {  
                 if(this.state.classes === 1 && devData[0] > this.state.curPrintouts){
                     this.handleSave(devData);
-                    this.stsText = "Обновлено: " + new Date().toLocaleString() + ". Добавлено: " + (devData[0] - this.state.curPrintouts)
+                    this.totalPrintouts = this.totalPrintouts + (devData[0] - this.state.curPrintouts);
+                    this.stsText = "Обновлено: " + new Date().toLocaleString() + ". Добавлено: " + (devData[0] - this.state.curPrintouts);
                 }else{
                     this.stsText =  "Обновлено " + new Date().toLocaleString();
                 }
@@ -238,7 +240,7 @@ export default class DevCard extends Component {
                 +this.state.devToner.yellow[2] / +this.state.devToner.yellow[1] * 100 < 11) {
                 return <SvgFlag fill="#ffeb3b" />
             }
-            return <div></div>
+            return <span></span>
         } else if (this.state.devToner.black) {
             if (+this.state.devToner.black[2] < 1) {
                 return <SvgFlag fill="#d32f2f" />
@@ -247,9 +249,9 @@ export default class DevCard extends Component {
             } else if (+this.state.devToner.black[2] / +this.state.devToner.black[1] * 100 < 11) {
                 return <SvgFlag fill="#ffeb3b" />
             }
-            return <div></div>
+            return <span></span>
         }
-        return <div></div>
+        return <span></span>
     }
     //Переключатели для разных
     typeRadio = () => this.props.device.type === 1 ? (this.props.device.vendor === "Hewlett-Packard" || this.props.device.vendor === "Xerox") ?
@@ -351,9 +353,7 @@ export default class DevCard extends Component {
                 <div className="card hoverable" style={{ borderStyle: 'solid', borderColor: this.borderColor, backgroundColor: this.cardColor, borderRadius: '0px' }}>
                     <div className="card-title" style={{ fontSize: 'small' }}>
                         <a href={"http://" + this.props.device.device} target="blank" className="indigo-text"><b>{this.props.device.name.toUpperCase()}</b></a>
-                        <div style={{ position: "absolute", right: "35px", top: "5px" }}>{this.flag()}</div>
-                        <div style={{ position: "absolute", right: "5px", top: "5px" }}>{this.cl()}</div>
-                        <div style={{ position: "absolute", right: "65px", top: "5px" }}>{this.rep()}</div>
+                        <div  className="card-title right">{this.rep()}{this.flag()}{this.cl()}</div>
                     </div>
                     {this.cont()}
                     <div className="card-action" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -401,7 +401,7 @@ export default class DevCard extends Component {
                             <SvgBtnDel />
                         </button>
                     </div>
-                    <div style={{fontSize: "xx-small", width: "100%", paddingLeft: 0}}>{this.stsText}</div>
+                    <div style={{fontSize: "xx-small", width: "100%", paddingLeft: 0}}>{this.stsText}<span className="right">Всего добавлено: {this.totalPrintouts}</span></div>
                 </div>
             </div>
         )

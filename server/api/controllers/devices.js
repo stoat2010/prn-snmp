@@ -19,7 +19,7 @@ module.exports.deviceCreate = function(req, res) {
         monthlimit: req.body.monthlimit,
         name: req.body.name,
         type: req.body.type,
-        col_balnce: req.body.col_balance,
+        col_balance: req.body.col_balance,
         bw_balance: req.body.bw_balance
     }, function(err, device){
         if(err){
