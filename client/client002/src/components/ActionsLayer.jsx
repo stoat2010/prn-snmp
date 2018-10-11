@@ -9,6 +9,7 @@ import Sidenav from './Sidenav';
 import CardView from './CardView';
 import ReportFAB from './ReportFAB';
 import MainTable from './MainTable';
+import EditForm from './EditForm';
 
 import {SvgViewTable, SvgViewCard, SvgBtnAdd, SvgBtnRefresh, SvgBtnSave, SvgBtnArrUp, SvgBtnArrDown} from './Svg';
 import {srvParams} from '../srvParams';
@@ -33,7 +34,8 @@ class ActionsLayer extends Component {
       loadSNMP: false,
       devName: '',
       repDate: new Date(),
-      view: JSON.parse(localStorage.getItem('view'))
+      view: JSON.parse(localStorage.getItem('view')),
+      toggleEdit: false
     };
 
     this.resetForm = this.resetForm.bind(this);
@@ -45,6 +47,7 @@ class ActionsLayer extends Component {
     this.toggleView = this.toggleView.bind(this);
     this.toggleTopVisible = this.toggleTopVisible.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
     this.handleChangeBuild = this.handleChangeBuild.bind(this);
     this.handleChangeUnit = this.handleChangeUnit.bind(this);
     this.handleChangeVendor = this.handleChangeVendor.bind(this);
@@ -178,6 +181,11 @@ class ActionsLayer extends Component {
     }
   }
 
+  handleEdit(device) {
+    this.setState({toggleEdit: !this.state.toggleEdit})
+    this.devToEdit  = device;
+  }
+
   toBase(submitted) {
     fetch("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/devices", {
       method: 'POST',
@@ -244,8 +252,9 @@ class ActionsLayer extends Component {
     this.dbConnInit("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/devices");
   }
 
-  cl=() => this.state.view === true ? <CardView devices={this.state.devices} dbConn={this.dbConn} /> : <MainTable devices={this.state.devices} dbConn={this.dbConn} />;
+  cl=() => this.state.view === true ? <CardView devices={this.state.devices} dbConn={this.dbConn} handleEdit={this.handleEdit}/> : <MainTable devices={this.state.devices} dbConn={this.dbConn} />;
   ic=() => this.state.view === true ? <SvgViewTable fill="white" /> : <SvgViewCard fill="white" />;
+  ed=() => this.state.toggleEdit && <EditForm device={this.devToEdit} handleEdit={this.handleEdit}/>;
 
   render() {
 
@@ -253,6 +262,7 @@ class ActionsLayer extends Component {
       <div style={styles.parent} className="white">
 
         {this.cl()}
+        {this.ed()}
 
         <button
           className="btn-floating btn-large waves-effect waves-light green z-depth-1"

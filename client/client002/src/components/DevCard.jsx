@@ -24,7 +24,7 @@ export default class DevCard extends Component {
             reportStatus: this.props.device.inreport,
             curPrintouts: 0,
             devToner: {},
-            graphState: 0
+            graphState: 0,
         };
         this.readStatus = this.readStatus.bind(this);
         this.readData = this.readData.bind(this);
@@ -368,7 +368,8 @@ export default class DevCard extends Component {
                             <button
                                 className="btn-flat waves-effect waves-gray"
                                 style={{ display: 'flex', backgroundColor: this.cardColor }}
-                                id={this.props.device._id}>
+                                id={this.props.device._id}
+                                onClick={()=>this.props.handleEdit(this.props.device)}>
                                 <SvgBtnEdit />
                             </button>
                            {/*  <button

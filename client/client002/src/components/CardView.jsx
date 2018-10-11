@@ -13,6 +13,7 @@ export default function CardView(props) {
                             key={device._id}
                             device={device}
                             dbConn={props.dbConn}
+                            handleEdit={props.handleEdit}
                         />
                     )}
                 </div>
