@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 
-import {SvgBtnClose} from './Svg';
+import { SvgBtnClose, SvgBtnArrLeft } from './Svg';
 
 import styles from './Styles.css.js';
 
 export default class Sidenav extends Component {
     constructor(props) {
         super(props);
-        this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleMove = this.handleMove.bind(this);
     }
 
     handleSubmit(event) {
@@ -23,8 +24,16 @@ export default class Sidenav extends Component {
             model: this.props.refs['model'].value,
             monthlimit: this.refs['monthlimit'].value,
         }
-
         this.props.toBase(send);
+    }
+
+    componentDidMount() {
+        this.props.readDataFull(this.props.device.name)
+    }
+
+    handleMove(ref, index) {
+        console.log(this.props.devData1[index]);
+        this.refs[ref].value = this.props.devData1[index];
     }
 
     render() {
@@ -37,23 +46,110 @@ export default class Sidenav extends Component {
                 backgroundColor: "rgba(243, 239, 237, 0.7)",
                 zIndex: 999999
             }}>
-                <div style={{ position: "absolute", 
-                    width: "70%", 
-                    height: "70%", 
-                    top: "15%", 
-                    left: "15%", 
-                    backgroundColor: "white", 
-                    zIndex: 1000000,
-                    borderStyle: "solid",
-                    borderColor: "#bdbdbd"
-                }}>
-                    {this.props.device.device}
-                    <button
-                        className="btn-flat white lighten-3"
-                        style={styles.btclose}
-                        onClick={()=>this.props.handleEdit({})}>
-                        <SvgBtnClose fill="black"/>
-                    </button>
+                <div className="z-depth-5"
+                    style={{
+                        position: "absolute",
+                        width: "70%",
+                        height: "70%",
+                        top: "15%",
+                        left: "15%",
+                        backgroundColor: "white",
+                        zIndex: 1000000,
+                        borderStyle: "solid",
+                        borderColor: "#bdbdbd"
+                    }}>
+                    <div className="row col s12" style={{ backgroundColor: "#616161" }}>
+                        <div className="col s2" style={{ backgroundColor: "#616161" }}></div>
+                        <div className="col s5 center-align white-text" style={{ backgroundColor: "#616161" }}>База данных</div>
+                        <div className="col s1" style={{ backgroundColor: "#616161" }}></div>
+                        <div className="col s3 center-align white-text" style={{ backgroundColor: "#616161" }}>Устройство</div>
+                        <div className="col s1" style={{ backgroundColor: "#616161" }}>
+                            <a
+                                className="btn-flat"
+                                style={{...styles.btclose, backgroundColor: "#616161"}}
+                                onClick={() => this.props.handleEdit({})}>
+                                <SvgBtnClose fill="white" />
+                            </a>
+                        </div>
+                    </div>
+                    <div className="container">
+                        <form onSubmit={this.handleSubmit} ref="frm">
+                            <div className="row col s12" style={{ backgroundColor: "#616161" }}>
+
+                            </div>
+                            <div className="row col s12" style={styles.frmTable}>
+                                <div className="col s2" style={{ fontSize: "small" }}>Модель:</div>
+                                <div className="col s5" style={{ fontSize: "small" }}>
+                                    <input id="model" type="text" className="validate" ref="model" defaultValue={this.props.device.model} style={{ fontSize: "small" }} />
+                                    <label htmlFor="model">Модель</label>
+                                </div>
+                                <div className="col s1 center-align" style={styles.frmTable}>
+                                    <a className="btn-flat waves-effect waves-light white"
+                                        onClick={() => this.handleMove("model", 0)}>
+                                        <SvgBtnArrLeft fill="black" />
+                                    </a>
+                                </div>
+                                <div className="col s4 center-align">{this.props.devData1[0]}</div>
+                            </div>
+                            <div className="row col s12" style={styles.frmTable}>
+                                <div className="col s2" style={{ fontSize: "small" }}>Вендор:</div>
+                                <div className="col s5">
+                                    <input id="vendor" type="text" className="validate" ref="vendor" defaultValue={this.props.device.vendor} style={{ fontSize: "small" }} />
+                                    <label htmlFor="vendor">Производитель</label>
+                                </div>
+                                <div className="col s1 center-align" style={styles.frmTable}>
+                                    <a className="btn-flat waves-effect waves-light white"
+                                        onClick={() => this.handleMove("vendor", 1)}>
+                                        <SvgBtnArrLeft fill="black" />
+                                    </a>
+                                </div>
+                                <div className="col s4 center-align">{this.props.devData1[1]}</div>
+                            </div>
+                            <div className="row col s12" style={styles.frmTable}>
+                                <div className="col s2" style={{ fontSize: "small" }}>Отпечатков в месяц:</div>
+                                <div className="col s5">
+                                    <input id="monthlimit" type="text" className="validate" ref="unit" defaultValue={this.props.device.monthlimit} style={{ fontSize: "small" }} />
+                                    <label htmlFor="monthlimit">В месяц</label>
+                                </div>
+                                <div className="col s1"></div>
+                                <div className="col s4"></div>
+                            </div>
+                            <div className="row col s12" style={styles.frmTable}>
+                                <div className="col s2" style={{ fontSize: "small" }}>Цех / отдел:</div>
+                                <div className="col s5">
+                                    <input id="unit" type="text" className="validate" ref="unit" defaultValue={this.props.device.unit} style={{ fontSize: "small" }} />
+                                    <label htmlFor="unit">Цех/отдел</label>
+                                </div>
+                                <div className="col s1"></div>
+                                <div className="col s4"></div>
+                            </div>
+                            <div className="row col s12" style={styles.frmTable}>
+                                <div className="col s2" style={{ fontSize: "small" }}>Корпус:</div>
+                                <div className="col s5">
+                                    <input id="build" type="text" className="validate" ref="build" defaultValue={this.props.device.build} style={{ fontSize: "small" }} />
+                                    <label htmlFor="build">Корпус</label>
+                                </div>
+                                <div className="col s1"></div>
+                                <div className="col s4"></div>
+                            </div>
+                            <div className="row col s12" style={styles.frmTable}>
+                                <div className="col s2" style={{ fontSize: "small" }}>Кабинет:</div>
+                                <div className="col s5">
+                                    <input id="office" type="text" className="validate" ref="office" defaultValue={this.props.device.office} style={{ fontSize: "small" }} />
+                                    <label htmlFor="office">Кабинет</label>
+                                </div>
+                                <div className="col s1"></div>
+                                <div className="col s4"></div>
+                            </div>
+                            <div className="center-align">
+                                <button
+                                    className="btn waves-effect waves-light"
+                                    type="submit"
+                                    name="action">Изменить
+                                </button>
+                            </div>
+                        </form >
+                    </div>
                 </div>
             </div>
         )

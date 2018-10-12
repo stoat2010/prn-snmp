@@ -23,6 +23,7 @@ const SvgBtnPrint = (props) => <Svg {...props}><path d="M19 8H5c-1.66 0-3 1.34-3
 const SvgBtnClose = (props) => <Svg {...props}><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></Svg>
 const SvgBtnArrUp = (props) => <Svg {...props}><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></Svg>
 const SvgBtnArrDown = (props) => <Svg {...props}><path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/></Svg>
+const SvgBtnArrLeft = (props) => <Svg {...props}><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></Svg>
 const SvgBtnPwrOn = (props) => <Svg {...props}><path d="M13 3h-2v10h2V3zm4.83 2.17l-1.42 1.42C17.99 7.86 19 9.81 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-2.19 1.01-4.14 2.58-5.42L6.17 5.17C4.23 6.82 3 9.26 3 12c0 4.97 4.03 9 9 9s9-4.03 9-9c0-2.74-1.23-5.18-3.17-6.83z"/></Svg>
 const SvgFlag = (props) => <Svg {...props}><path d="M14.4 6L14 4H5v17h2v-7h5.6l.4 2h7V6z"/></Svg>
 const SvgDescr = (props) => <Svg {...props}><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></Svg>
@@ -48,6 +49,7 @@ export {
     SvgBtnClose,
     SvgBtnArrUp,
     SvgBtnArrDown,
+    SvgBtnArrLeft,
     SvgBtnPwrOn,
     SvgFlag,
     SvgDescr,

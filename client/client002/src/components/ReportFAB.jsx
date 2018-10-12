@@ -10,7 +10,7 @@ import {SvgDescr, SvgShowChart, SvgInsertChart, SvgReorder} from './Svg';
 export default function ReportFAB(props) {
 
     return (
-        <SpeedDial disabled={false} direction='left'style={styles.btnpdf}>
+        <SpeedDial disabled={false} direction='left' style={styles.btnpdf}>
             <Fab className="btn-floating btn-large waves-effect waves-light z-depth-5 blue">
                 {/* <i className="material-icons" style={{verticalAlign: 'middle'}}>description</i> */}
                 <SvgDescr fill="white"/>

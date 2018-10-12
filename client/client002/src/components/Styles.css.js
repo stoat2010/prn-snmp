@@ -171,5 +171,15 @@ export default {
         'borderStyle': 'solid',
         'borderRadius': '5px 5px 5px 5px',
         'borderColor': '#1a237e',
+    },
+    frmTable: {
+        display: "flex", 
+        flexDirection: "row", 
+        justifyContent: "space-around", 
+        alignItems: "center"
+    },
+    btncentered: {
+        'display': 'flex',
+        'justifyContent': 'center'
     }
 };

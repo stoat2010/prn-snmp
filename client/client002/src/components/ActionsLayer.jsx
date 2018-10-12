@@ -71,7 +71,7 @@ class ActionsLayer extends Component {
       .then((res => {
         return res.json();
       }))
-      .then(devData1 => { this.setState({ devData1, loadSNMP: false }); });
+      .then(devData1 => { this.setState({ devData1, loadSNMP: false }); console.log(devid) });
   }
 
   readName(devid) {
@@ -254,7 +254,7 @@ class ActionsLayer extends Component {
 
   cl=() => this.state.view === true ? <CardView devices={this.state.devices} dbConn={this.dbConn} handleEdit={this.handleEdit}/> : <MainTable devices={this.state.devices} dbConn={this.dbConn} />;
   ic=() => this.state.view === true ? <SvgViewTable fill="white" /> : <SvgViewCard fill="white" />;
-  ed=() => this.state.toggleEdit && <EditForm device={this.devToEdit} handleEdit={this.handleEdit}/>;
+  ed=() => this.state.toggleEdit && <EditForm device={this.devToEdit} handleEdit={this.handleEdit} readDataFull={this.readDataFull} devData1={this.state.devData1}/>;
 
   render() {
 
