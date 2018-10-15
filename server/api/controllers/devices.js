@@ -103,3 +103,24 @@ module.exports.deviceToReport = function (req, res) {
                 })
             }
 }
+
+module.exports.deviceDataUpdate = function(req, res) {
+    if (req.body.device){
+        Loc
+            .updateOne({name: req.body.device}, { $set: {
+                                                    "build": req.body.build,
+                                                    "office": req.body.office,
+                                                    "unit": req.body.unit,
+                                                    "monthlimit": req.body.monthlimit,
+                                                    "vendor": req.body.vendor,
+                                                    "model": req.body.model
+                                                }})
+            .exec(function(err, result){
+                if (err) {
+                    sendJSONResponse(res, 404, err);
+                    return;
+                    }
+                    sendJSONResponse(res, 201, 0);
+                })
+    } 
+}

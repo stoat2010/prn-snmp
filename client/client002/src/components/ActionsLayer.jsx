@@ -53,6 +53,7 @@ class ActionsLayer extends Component {
     this.handleChangeVendor = this.handleChangeVendor.bind(this);
     this.handleIP = this.handleIP.bind(this);
     this.pdfCreate = this.pdfCreate.bind(this);
+    this.devDataUpdate = this.devDataUpdate.bind(this);
     this.sideStyle = styles.sidenav;
     this.topStyle = styles.topnav;
   }
@@ -200,6 +201,22 @@ class ActionsLayer extends Component {
       });
   }
 
+  devDataUpdate(submitted) {
+    fetch("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/device" , {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(submitted)
+    })
+      .then(res => {
+        this.dbConn("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/devices");
+        this.setState({toggleEdit: false})
+        return res.json();
+      }).then(status => status === 0 ? swal("Данные изменены") : swal("Ошибка записи") );
+  }
+
   dbConn(addr) {
     fetch(addr, { cache: 'no-cache' })
       .then(res => {
@@ -254,7 +271,7 @@ class ActionsLayer extends Component {
 
   cl=() => this.state.view === true ? <CardView devices={this.state.devices} dbConn={this.dbConn} handleEdit={this.handleEdit}/> : <MainTable devices={this.state.devices} dbConn={this.dbConn} />;
   ic=() => this.state.view === true ? <SvgViewTable fill="white" /> : <SvgViewCard fill="white" />;
-  ed=() => this.state.toggleEdit && <EditForm device={this.devToEdit} handleEdit={this.handleEdit} readDataFull={this.readDataFull} devData1={this.state.devData1}/>;
+  ed=() => this.state.toggleEdit && <EditForm device={this.devToEdit} handleEdit={this.handleEdit} readDataFull={this.readDataFull} devData1={this.state.devData1} devDataUpdate={this.devDataUpdate} />;
 
   render() {
 

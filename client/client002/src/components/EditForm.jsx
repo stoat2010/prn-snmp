@@ -16,15 +16,15 @@ export default class Sidenav extends Component {
         var send = {};
 
         send = {
-            device: this.props.devName,
+            device: this.props.device.name,
             build: this.refs['build'].value,
             office: this.refs['office'].value,
             unit: this.refs['unit'].value,
             vendor: this.refs['vendor'].value,
-            model: this.props.refs['model'].value,
+            model: this.refs['model'].value,
             monthlimit: this.refs['monthlimit'].value,
         }
-        this.props.toBase(send);
+        this.props.devDataUpdate(send);
     }
 
     componentDidMount() {
@@ -32,7 +32,6 @@ export default class Sidenav extends Component {
     }
 
     handleMove(ref, index) {
-        console.log(this.props.devData1[index]);
         this.refs[ref].value = this.props.devData1[index];
     }
 
@@ -50,19 +49,19 @@ export default class Sidenav extends Component {
                     style={{
                         position: "absolute",
                         width: "70%",
-                        height: "70%",
-                        top: "15%",
+                        height: "80%",
+                        top: "10%",
                         left: "15%",
                         backgroundColor: "white",
                         zIndex: 1000000,
                         borderStyle: "solid",
-                        borderColor: "#bdbdbd"
+                        borderColor: "#616161"
                     }}>
                     <div className="row col s12" style={{ backgroundColor: "#616161" }}>
                         <div className="col s2" style={{ backgroundColor: "#616161" }}></div>
-                        <div className="col s5 center-align white-text" style={{ backgroundColor: "#616161" }}>База данных</div>
+                        <div className="col s5 center-align white-text" style={{ backgroundColor: "#616161" }}><h6>База данных</h6></div>
                         <div className="col s1" style={{ backgroundColor: "#616161" }}></div>
-                        <div className="col s3 center-align white-text" style={{ backgroundColor: "#616161" }}>Устройство</div>
+                        <div className="col s3 center-align white-text" style={{ backgroundColor: "#616161" }}><h6>Устройство</h6></div>
                         <div className="col s1" style={{ backgroundColor: "#616161" }}>
                             <a
                                 className="btn-flat"
@@ -72,7 +71,7 @@ export default class Sidenav extends Component {
                             </a>
                         </div>
                     </div>
-                    <div className="container">
+                    <div>
                         <form onSubmit={this.handleSubmit} ref="frm">
                             <div className="row col s12" style={{ backgroundColor: "#616161" }}>
 
@@ -108,7 +107,7 @@ export default class Sidenav extends Component {
                             <div className="row col s12" style={styles.frmTable}>
                                 <div className="col s2" style={{ fontSize: "small" }}>Отпечатков в месяц:</div>
                                 <div className="col s5">
-                                    <input id="monthlimit" type="text" className="validate" ref="unit" defaultValue={this.props.device.monthlimit} style={{ fontSize: "small" }} />
+                                    <input id="monthlimit" type="text" className="validate" ref="monthlimit" defaultValue={this.props.device.monthlimit} style={{ fontSize: "small" }} />
                                     <label htmlFor="monthlimit">В месяц</label>
                                 </div>
                                 <div className="col s1"></div>
