@@ -261,7 +261,7 @@ class ActionsLayer extends Component {
   componentDidMount() {
     if(!localStorage['view'])
       {localStorage.key='view'
-      localStorage['view']= JSON.stringify(0);}
+      localStorage['view']= JSON.stringify(1);}
       this.setState({view: JSON.parse(localStorage['view'])})
     
     
@@ -269,8 +269,8 @@ class ActionsLayer extends Component {
     this.dbConnInit("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/devices");
   }
 
-  cl=() => this.state.view === true ? <CardView devices={this.state.devices} dbConn={this.dbConn} handleEdit={this.handleEdit}/> : <MainTable devices={this.state.devices} dbConn={this.dbConn} />;
-  ic=() => this.state.view === true ? <SvgViewTable fill="white" /> : <SvgViewCard fill="white" />;
+  cl=() => this.state.view === 1 ? <CardView devices={this.state.devices} dbConn={this.dbConn} handleEdit={this.handleEdit}/> : <MainTable devices={this.state.devices} dbConn={this.dbConn} />;
+  ic=() => this.state.view === 1 ? <SvgViewTable fill="white" /> : <SvgViewCard fill="white" />;
   ed=() => this.state.toggleEdit && <EditForm device={this.devToEdit} handleEdit={this.handleEdit} readDataFull={this.readDataFull} devData1={this.state.devData1} devDataUpdate={this.devDataUpdate} />;
 
   render() {
@@ -288,15 +288,16 @@ class ActionsLayer extends Component {
           <SvgBtnAdd fill="white" />
         </button>
 
-        <button
+        {/* <button
           className="btn-floating btn waves-effect waves-light indigo z-depth-1"
           style={styles.btnview}
           onClick={this.toggleView}>
           {this.ic()}
-        </button>
+        </button> */}
         <button
           className="btn-floating btn waves-effect waves-light indigo z-depth-1"
-          style={styles.btnrefresh}
+          /* style={styles.btnrefresh} */
+          style={styles.btnview}
           onClick={this.Refresh}>
           <SvgBtnRefresh fill="white"/>
         </button>
