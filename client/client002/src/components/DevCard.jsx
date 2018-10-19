@@ -349,7 +349,7 @@ export default class DevCard extends Component {
 
         return (
 
-            <div id={this.props.device._id} className="col s3">
+            <div id={this.props.device._id} className="col s12 m6 l4 xl3">
                 <div className="card hoverable" style={{ borderStyle: 'solid', borderColor: this.borderColor, backgroundColor: this.cardColor, borderRadius: '0px' }}>
                     <div className="card-title" style={{ fontSize: 'small' }}>
                         <a href={"http://" + this.props.device.device} target="blank" className="indigo-text"><b>{this.props.device.name.toUpperCase()}</b></a>

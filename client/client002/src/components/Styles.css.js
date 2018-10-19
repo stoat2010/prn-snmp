@@ -152,9 +152,10 @@ export default {
     },
     parent: {
         'position': 'flex',
-        'height': '100%',
-        'minHeight': '100% !important',
-        'overflow': 'hidden'
+        'height': '100vh',
+        'overflow': 'hidden',
+        'display': 'flex',
+        'flexDirection': 'column'
     },
     cellCap: {
         textAlign: 'center',

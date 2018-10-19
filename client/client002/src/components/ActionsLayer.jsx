@@ -11,8 +11,8 @@ import ReportFAB from './ReportFAB';
 import MainTable from './MainTable';
 import EditForm from './EditForm';
 
-import {SvgViewTable, SvgViewCard, SvgBtnAdd, SvgBtnRefresh, SvgBtnSave, SvgBtnArrUp, SvgBtnArrDown} from './Svg';
-import {srvParams} from '../srvParams';
+import { SvgViewTable, SvgViewCard, SvgBtnAdd, SvgBtnRefresh, SvgBtnSave, SvgBtnArrUp, SvgBtnArrDown } from './Svg';
+import { srvParams } from '../srvParams';
 
 import styles from './Styles.css';
 import "ch-calendar/dist/ch-calendar.css";
@@ -109,10 +109,9 @@ class ActionsLayer extends Component {
       {
         view: newViewState
       });
-      if(!localStorage['view'])
-      {localStorage.key='view'}
-      localStorage['view']= JSON.stringify(newViewState);
-      this.Refresh();
+    if (!localStorage['view']) { localStorage.key = 'view' }
+    localStorage['view'] = JSON.stringify(newViewState);
+    this.Refresh();
   }
 
   toggleTopVisible() {
@@ -129,7 +128,7 @@ class ActionsLayer extends Component {
   }
 
   Refresh() {
-    this.setState({devices: []});
+    this.setState({ devices: [] });
     this.dbConn("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/devices");
   }
 
@@ -183,8 +182,8 @@ class ActionsLayer extends Component {
   }
 
   handleEdit(device) {
-    this.setState({toggleEdit: !this.state.toggleEdit})
-    this.devToEdit  = device;
+    this.setState({ toggleEdit: !this.state.toggleEdit })
+    this.devToEdit = device;
   }
 
   toBase(submitted) {
@@ -202,7 +201,7 @@ class ActionsLayer extends Component {
   }
 
   devDataUpdate(submitted) {
-    fetch("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/device" , {
+    fetch("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/device", {
       method: 'PUT',
       headers: {
         'Accept': 'application/json, text/plain, */*',
@@ -212,9 +211,9 @@ class ActionsLayer extends Component {
     })
       .then(res => {
         this.dbConn("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/devices");
-        this.setState({toggleEdit: false})
+        this.setState({ toggleEdit: false })
         return res.json();
-      }).then(status => status === 0 ? swal("Данные изменены") : swal("Ошибка записи") );
+      }).then(status => status === 0 ? swal("Данные изменены") : swal("Ошибка записи"));
   }
 
   dbConn(addr) {
@@ -259,19 +258,20 @@ class ActionsLayer extends Component {
   }
 
   componentDidMount() {
-    if(!localStorage['view'])
-      {localStorage.key='view'
-      localStorage['view']= JSON.stringify(1);}
-      this.setState({view: JSON.parse(localStorage['view'])})
-    
-    
+    if (!localStorage['view']) {
+    localStorage.key = 'view'
+      localStorage['view'] = JSON.stringify(1);
+    }
+    this.setState({ view: JSON.parse(localStorage['view']) })
+
+
     this.dbConn("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/devices");
     this.dbConnInit("http://" + srvParams.srvAddr + ":" + srvParams.srvPort + "/api/devices");
   }
 
-  cl=() => this.state.view === 1 ? <CardView devices={this.state.devices} dbConn={this.dbConn} handleEdit={this.handleEdit}/> : <MainTable devices={this.state.devices} dbConn={this.dbConn} />;
-  ic=() => this.state.view === 1 ? <SvgViewTable fill="white" /> : <SvgViewCard fill="white" />;
-  ed=() => this.state.toggleEdit && <EditForm device={this.devToEdit} handleEdit={this.handleEdit} readDataFull={this.readDataFull} devData1={this.state.devData1} devDataUpdate={this.devDataUpdate} />;
+  cl = () => this.state.view === 1 ? <CardView devices={this.state.devices} dbConn={this.dbConn} handleEdit={this.handleEdit} /> : <MainTable devices={this.state.devices} dbConn={this.dbConn} />;
+  ic = () => this.state.view === 1 ? <SvgViewTable fill="white" /> : <SvgViewCard fill="white" />;
+  ed = () => this.state.toggleEdit && <EditForm device={this.devToEdit} handleEdit={this.handleEdit} readDataFull={this.readDataFull} devData1={this.state.devData1} devDataUpdate={this.devDataUpdate} />;
 
   render() {
 
@@ -280,34 +280,35 @@ class ActionsLayer extends Component {
 
         {this.cl()}
         {this.ed()}
+        <div className= "blue lighten-5" style={{flex: "1"}}>
+          <button
+            className="btn-floating btn-large waves-effect waves-light green z-depth-1"
+            style={styles.btnadd}
+            onClick={this.toggleVisible}>
+            <SvgBtnAdd fill="white" />
+          </button>
 
-        <button
-          className="btn-floating btn-large waves-effect waves-light green z-depth-1"
-          style={styles.btnadd}
-          onClick={this.toggleVisible}>
-          <SvgBtnAdd fill="white" />
-        </button>
-
-        {/* <button
+          {/* <button
           className="btn-floating btn waves-effect waves-light indigo z-depth-1"
           style={styles.btnview}
           onClick={this.toggleView}>
           {this.ic()}
         </button> */}
-        <button
-          className="btn-floating btn waves-effect waves-light indigo z-depth-1"
-          /* style={styles.btnrefresh} */
-          style={styles.btnview}
-          onClick={this.Refresh}>
-          <SvgBtnRefresh fill="white"/>
-        </button>
-        {/* <button
+          <button
+            className="btn-floating btn waves-effect waves-light indigo z-depth-1"
+            /* style={styles.btnrefresh} */
+            style={styles.btnview}
+            onClick={this.Refresh}>
+            <SvgBtnRefresh fill="white" />
+          </button>
+          {/* <button
           className="disabled btn-floating btn waves-effect waves-light indigo z-depth-1"
           style={styles.btnsave}>
           <SvgBtnSave fill="white"/>
         </button> */}
 
-        <ReportFAB pdfCreate={this.pdfCreate} />
+          <ReportFAB pdfCreate={this.pdfCreate} />
+        </div>
         <Sidenav
           toggleVisible={this.toggleVisible}
           toBase={this.toBase}

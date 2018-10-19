@@ -6,7 +6,7 @@ export default function CardView(props) {
 
         return (
             
-            <div style={{ position: 'flex', overflow: 'auto', height: '775px' }}>
+            <div style={{ position: 'flex', overflow: 'auto', flex: '4' }}>
                 <div className="row col s12" >
                     {props.devices.map(device =>
                         <DevCard
