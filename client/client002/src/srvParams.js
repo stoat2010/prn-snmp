@@ -1,5 +1,5 @@
 const srvParams = {
-    srvAddr: '127.0.0.1',
+    srvAddr: '192.168.1.102',
     srvPort: '3333'
 };
 

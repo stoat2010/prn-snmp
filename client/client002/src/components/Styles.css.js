@@ -8,9 +8,8 @@ export default {
         'justifyContent': 'center'
     },
     btnview: {
-        'position': 'absolute',
-        'bottom': '10px',
-        'left': '3%',
+        'position': 'relative',
+
         'display': 'flex',
         'justifyContent': 'center'
     },
@@ -23,15 +22,12 @@ export default {
     },
     btnsave: {
         'position': 'absolute',
-        'bottom': '10px',
-        'left': '9%',
         'display': 'flex',
         'justifyContent': 'center'
     },
     btnpdf: {
-        'position': 'absolute',
-        'bottom': '6px',
-        'right': '5%'
+        'position': 'relative',
+        'margin': "0 5px"
     },
     btnExpand: {
         'width': '100%'

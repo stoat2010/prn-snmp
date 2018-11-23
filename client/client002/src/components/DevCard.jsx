@@ -353,7 +353,11 @@ export default class DevCard extends Component {
                 <div className="card hoverable" style={{ borderStyle: 'solid', borderColor: this.borderColor, backgroundColor: this.cardColor, borderRadius: '0px' }}>
                     <div className="card-title" style={{ fontSize: 'small' }}>
                         <a href={"http://" + this.props.device.device} target="blank" className="indigo-text"><b>{this.props.device.name.toUpperCase()}</b></a>
-                        <div  className="card-title right">{this.rep()}{this.flag()}{this.cl()}</div>
+                        <div  className="card-title right">
+                            {this.rep()}
+                            {this.flag()} 
+                            {/* this.cl() */} 
+                        </div>
                     </div>
                     {this.cont()}
                     <div className="card-action" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>

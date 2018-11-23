@@ -259,7 +259,7 @@ class ActionsLayer extends Component {
 
   componentDidMount() {
     if (!localStorage['view']) {
-    localStorage.key = 'view'
+      localStorage.key = 'view'
       localStorage['view'] = JSON.stringify(1);
     }
     this.setState({ view: JSON.parse(localStorage['view']) })
@@ -280,34 +280,24 @@ class ActionsLayer extends Component {
 
         {this.cl()}
         {this.ed()}
-        <div className= "blue lighten-5" style={{flex: "1"}}>
-          <button
-            className="btn-floating btn-large waves-effect waves-light green z-depth-1"
-            style={styles.btnadd}
-            onClick={this.toggleVisible}>
-            <SvgBtnAdd fill="white" />
-          </button>
-
-          {/* <button
-          className="btn-floating btn waves-effect waves-light indigo z-depth-1"
-          style={styles.btnview}
-          onClick={this.toggleView}>
-          {this.ic()}
-        </button> */}
-          <button
-            className="btn-floating btn waves-effect waves-light indigo z-depth-1"
-            /* style={styles.btnrefresh} */
-            style={styles.btnview}
-            onClick={this.Refresh}>
-            <SvgBtnRefresh fill="white" />
-          </button>
-          {/* <button
-          className="disabled btn-floating btn waves-effect waves-light indigo z-depth-1"
-          style={styles.btnsave}>
-          <SvgBtnSave fill="white"/>
-        </button> */}
-
-          <ReportFAB pdfCreate={this.pdfCreate} />
+        <div className="blue lighten-5" style={{ flex: "1" }}>
+          
+          <div className="right" style={{ display: 'flex', marginTop: '1em', alignItems: "center", paddingRight:"1.5em", flexDirection: 'row', justifyContent: 'space-between' }}>
+            
+            <button
+              className="btn-floating btn-large waves-effect waves-light green z-depth-1"
+              style={{ display: 'flex', justifyContent: "center", margin: "0 5px"}}
+              onClick={this.toggleVisible}>
+              <SvgBtnAdd fill="white" />
+            </button>
+            <button
+              className="btn-floating btn-large waves-effect waves-light indigo z-depth-1"
+              style={{ display: 'flex', justifyContent: "center", margin: "0 5px"}}
+              onClick={this.Refresh}>
+              <SvgBtnRefresh fill="white" />
+            </button>
+            <ReportFAB pdfCreate={this.pdfCreate} />
+          </div>
         </div>
         <Sidenav
           toggleVisible={this.toggleVisible}
