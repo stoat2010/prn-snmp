@@ -22,7 +22,10 @@ module.exports.dataCreate = async function (req, res) {
             year: new Date().getFullYear(),
             printouts: req.body.printouts,
             col_printouts: req.body.col_printouts,
-            bw_printouts: req.body.bw_printouts
+            bw_printouts: req.body.bw_printouts,
+            start_printouts: req.body.printouts,
+            start_col_printouts: req.body.col_printouts,
+            start_bw_printouts: req.body.bw_printouts
         }, function (err, data) {
             if (err) {
                 sendJSONResponse(res, 440, err);
